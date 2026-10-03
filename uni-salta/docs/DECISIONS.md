@@ -22,3 +22,8 @@ Plan original: `uni-salta/PLAN.md` (revisión 2). Lo construido difiere así:
 * INVENCIBLE revienta enemigos en caramelitos y tapa los huecos del suelo con puente arcoíris.
 * Hay 5 animales nuevos (uno por mundo del 2 al 6) y a Thor (bóxer marrón con pechito blanco).
 * El nombre del unicornio lo elige quien juega. Se guarda en el dispositivo.
+
+## As built (final QA)
+- Floor gaps render as a violet misty pit (`Game.drawPits`) so the sky horizon never reads as ground.
+- Higgsfield spend: about 49 credits (about USD 3.1), see `docs/CREDITS.md`. The key lives only in `~/.config/higgsfield/key` and is not in the repo.
+- Not done: moving platforms, December party hat, sleepy title, cloud wink. Audio verified numerically only, needs a human listen via `?sounds`.
