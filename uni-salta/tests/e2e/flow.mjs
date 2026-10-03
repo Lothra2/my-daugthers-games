@@ -1,0 +1,30 @@
+// Walks the whole UI flow and saves screenshots: title -> mode -> name -> game -> pause -> results.
+import { launch, startServer } from './helpers.mjs';
+const out = process.argv[2] || '/tmp/flow';
+const [w, h, dpr] = [Number(process.argv[3] || 932), Number(process.argv[4] || 430), Number(process.argv[5] || 3)];
+import fs from 'node:fs'; fs.mkdirSync(out, { recursive: true });
+const s = await startServer(8300 + Math.floor(Math.random() * 300));
+const { browser, page, errors } = await launch({ width: w, height: h, dpr });
+const shot = async (n, wait = 0) => { await page.waitForTimeout(wait); await page.screenshot({ path: `${out}/${n}.png` }); };
+await page.goto(s.url + '/index.html?lang=es');
+await page.waitForFunction(() => window.UNISALTA && window.UNISALTA.ui && window.UNISALTA.game && window.UNISALTA.game.scene.isActive('Title'), null, { timeout: 30000 });
+await shot('01_title', 3200);
+await page.mouse.click(w / 2, h / 2); // audio unlock tap on empty area
+await page.click('#title .play button', { force: true });
+await shot('02_mode', 700);
+await page.click('.modebtn.pink', { force: true });
+await shot('03_name', 700);
+await page.fill('#name-input', 'Sophie');
+await page.click('#name .btn.big', { force: true });
+await page.waitForFunction(() => window.UNISALTA.game.scene.isActive('Game'), null, { timeout: 15000 });
+await shot('04_wipe', 100);
+await shot('05_game_card', 1400);
+await shot('06_game', 4000);
+await page.evaluate(() => window.UNISALTA.bus.emit('pause_request'));
+await shot('07_pause', 600);
+await page.click('#pause .btn.big', { force: true });
+await page.waitForTimeout(500);
+await page.evaluate(() => { const g = window.UNISALTA.game.scene.getScene('Game'); g.sim.score = 4210; g.sim.coins = 37; g.sim.stomps = 4; g.sim.lives = 0; g.sim.dying = 0.01; });
+await shot('08_results', 3200);
+console.log('errors', JSON.stringify(errors.slice(0, 6)));
+await browser.close(); s.stop();

@@ -1,0 +1,119 @@
+{
+ "block_idle": {
+  "cell": [
+   43,
+   47
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   21,
+   23
+  ]
+ },
+ "block_empty": {
+  "cell": [
+   43,
+   47
+  ],
+  "frames": 1,
+  "fps": 1,
+  "loop": false,
+  "pivot": [
+   21,
+   23
+  ]
+ },
+ "rescue_bob": {
+  "cell": [
+   80,
+   63
+  ],
+  "frames": 4,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   40,
+   31
+  ]
+ },
+ "rescue_fly": {
+  "cell": [
+   76,
+   64
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   38,
+   32
+  ]
+ },
+ "rescue_thumb": {
+  "cell": [
+   79,
+   63
+  ],
+  "frames": 2,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   39,
+   31
+  ]
+ },
+ "candy_coin_spin": {
+  "cell": [
+   33,
+   32
+  ],
+  "frames": 4,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   16,
+   16
+  ]
+ },
+ "candy_yellow": {
+  "cell": [
+   37,
+   60
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   18,
+   30
+  ]
+ },
+ "candy_green": {
+  "cell": [
+   44,
+   42
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   22,
+   21
+  ]
+ },
+ "candy_red": {
+  "cell": [
+   42,
+   42
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   21,
+   21
+  ]
+ }
+}

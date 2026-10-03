@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#9C7FE0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="UNI-SALTA, un juego de saltos con un unicornio gatito. Una idea de Sophie.">
+  <title>UNI-SALTA</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="src/ui/ui.css">
+</head>
+<body>
+  <div id="app">
+    <div id="game"></div>
+    <div id="ui"></div>
+    <div id="rotate"><div class="rot-card"><div class="rot-icon"></div><p id="rotate-text">Gira tu pantalla</p></div></div>
+    <noscript>UNI-SALTA necesita JavaScript.</noscript>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -38,12 +38,12 @@ export const CFG = {
 
   // worlds: speeds (px/s), length (m)
   WORLD_SPEED: [[230, 260], [270, 300], [310, 340], [350, 380], [390, 420], [430, 460]],
-  WORLD_LEN_M: [450, 500, 550, 600, 650, 700],
+  WORLD_LEN_M: [360, 400, 440, 480, 520, 560],
   LAP_SPEED_MULT: 1.08,
   SPEED_CAP: 560,
   EASY_SPEED: [150, 200],
   EASY_CAP: 250,
-  EASY_LEN_M: 360,
+  EASY_LEN_M: 300,
 
   // scoring
   PTS_COIN: 10, PTS_POWER: 50, PTS_HEART: 100, PTS_PERFECT: 100, PTS_STOMP: [100, 200, 400, 800, 1000],

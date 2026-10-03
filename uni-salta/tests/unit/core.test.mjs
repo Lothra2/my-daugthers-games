@@ -57,7 +57,7 @@ test('same seed gives the same level', () => {
 
 test('generator respects the tier cap and breather rules', () => {
   const s = new Sim({ seed: 3, world: 1 });
-  for (let i = 0; i < 6000 && !s.over; i++) { s.power = { kind: 'inv', t: 5, total: 5, warned: true }; s.step(NONE); }
+  for (let i = 0; i < 3300 && !s.over; i++) { s.power = { kind: 'inv', t: 5, total: 5, warned: true }; s.step(NONE); }
   const used = s.gen.history.map((id) => CHUNKS.find((c) => c.id === id));
   assert.ok(used.every((c) => c.tier <= 1), 'world 1 only uses tier 0 and 1');
   assert.ok(used.length > 8);

@@ -58,6 +58,7 @@ export class Sim {
     this.sprintGrace = 0;
     this.gen = { spawnX: this.x - 200, history: [], lastTier: 0, powerDue: 2200, heartCd: 0, formation: 1, count: 0 };
     this.warmup = 1.2;               // seconds before the first hazard can matter
+    this.worldMap = [{ x: -1e9, world: this.world, lap: this.lap }];
     this.initialChunks();
     this.update_speed(true);
     this.ensureLevel();
@@ -67,12 +68,16 @@ export class Sim {
   emit(type, data = {}) { this.events.push({ type, ...data }); }
   get camX() { return this.x - CFG.PLAYER_X; }
   get meters() { return Math.max(0, Math.floor((this.x - this.startX) / CFG.METER)); }
+  worldAt(x) { let r = this.worldMap[0]; for (const w of this.worldMap) if (x >= w.x) r = w; return r; }
+  gateX() { return this.worldStartX + this.worldLenM() * CFG.METER; }
+  nextWorldNum() { return (this.world % 6) + 1; }
+  worldAtX(x) { return x >= this.gateX() ? this.nextWorldNum() : this.world; }
   worldLenM() { return this.mode === 'easy' ? CFG.EASY_LEN_M : CFG.WORLD_LEN_M[this.world - 1]; }
   worldMeters() { return Math.max(0, (this.x - this.worldStartX) / CFG.METER); }
   progress() { return Math.min(1, this.worldMeters() / this.worldLenM()); }
-  tierCap() {
+  tierCap(w = this.world, lap = this.lap) {
     if (this.mode === 'easy') return 1;
-    return Math.min(5, TIER_CAP[this.world - 1] + (this.lap - 1));
+    return Math.min(5, TIER_CAP[w - 1] + (lap - 1));
   }
 
   targetSpeed() {
@@ -127,15 +132,18 @@ export class Sim {
       return CHUNKS.find((c) => c.id === id);
     }
     const g = this.gen;
+    const wx = this.worldAtX(g.spawnX);
+    if (!g.gateDone && g.spawnX >= this.gateX()) { g.gateDone = true; this.worldBreather = 2; }
+    const lapx = wx === 1 && this.world === 6 ? this.lap + 1 : this.lap;
     const sprint = this.power && this.power.kind === 'fast';
     const needBreather = this.worldBreather > 0 || g.lastTier >= 4 || this.afterHit > 0 || (this.sprintGrace > 0);
-    let pool = CHUNKS.filter((c) => c.modes.includes(this.mode) && c.worlds.includes(this.world));
+    let pool = CHUNKS.filter((c) => c.modes.includes(this.mode) && c.worlds.includes(wx));
     if (sprint) {
       pool = CHUNKS.filter((c) => c.tags.includes('sprint'));
     } else {
       pool = pool.filter((c) => !c.tags.includes('sprint'));
       if (needBreather) pool = pool.filter((c) => c.tier === 0);
-      else pool = pool.filter((c) => c.tier <= this.tierCap());
+      else pool = pool.filter((c) => c.tier <= this.tierCap(wx, lapx));
     }
     const recent = g.history.slice(-3);
     let pool2 = pool.filter((c) => !recent.slice(-c.cd).includes(c.id));
@@ -144,7 +152,7 @@ export class Sim {
     // prefer tiers near the cap, still keep variety
     const weights = pool2.map((c) => {
       let w = c.weight;
-      if (!needBreather && !sprint) w *= 1 + Math.max(0, c.tier - 1) * 0.4 * (this.tierCap() >= c.tier ? 1 : 0);
+      if (!needBreather && !sprint) w *= 1 + Math.max(0, c.tier - 1) * 0.4 * (this.tierCap(wx, lapx) >= c.tier ? 1 : 0);
       return w;
     });
     const total = weights.reduce((a, b) => a + b, 0);
@@ -605,7 +613,8 @@ export class Sim {
       this.maxWorld = Math.max(this.maxWorld, this.lap === 1 ? this.world : 6);
       this.maxLap = Math.max(this.maxLap, this.lap);
       this.worldStartX = this.x;
-      this.worldBreather = 2;
+      this.worldMap.push({ x: this.x, world: this.world, lap: this.lap });
+      this.gen.gateDone = false;
       this.emit('world_enter', { world: this.world, lap: this.lap });
     }
   }
