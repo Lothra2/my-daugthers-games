@@ -15,6 +15,7 @@ const ES = {
   'over.msg.close': '¡Casi llegas al Mundo {n}!', 'over.msg.candy': '¡Comiste {n} caramelitos!', 'over.msg.stomp': '¡{n} pisotones!', 'over.msg.far': '¡Llegaste lejísimos!',
   'scores.title': 'Récords', 'scores.empty': 'Todavía no hay récords', 'scores.normal': 'Arcoíris', 'scores.easy': 'Nubecita',
   'gallery.title': 'Los dibujos de Sophie', 'gallery.sub': 'Sophie, 7 años', 'gallery.locked': 'Llega al Mundo 3 para desbloquear',
+  'cut.fast': 'Los obstáculos se vuelven caramelos', 'cut.slow': 'El tiempo se hace lento', 'cut.inv': 'Nada te puede hacer daño',
   'call.perfect': '¡Perfecto!', 'call.fast': '¡Súper rápido!', 'call.slow': 'Despaaacio...', 'call.inv': '¡Arcoíris!', 'call.ouch': '¡Ay!', 'call.heart': '¡Una vida más!', 'call.record': '¡Nuevo récord!', 'call.go': '¡Uni-salta!', 'call.lap': '¡Otra vuelta!', 'call.wave': '¡Bien!',
   'rotate': 'Gira tu pantalla', 'hint.jump': 'SALTA', 'hint.crouch': 'AGÁCHATE',
 };
@@ -34,6 +35,7 @@ const EN = {
   'over.msg.close': 'So close to World {n}!', 'over.msg.candy': 'You ate {n} candies!', 'over.msg.stomp': '{n} stomps!', 'over.msg.far': 'You went so far!',
   'scores.title': 'Records', 'scores.empty': 'No records yet', 'scores.normal': 'Rainbow', 'scores.easy': 'Little Cloud',
   'gallery.title': "Sophie's drawings", 'gallery.sub': 'Sophie, age 7', 'gallery.locked': 'Reach World 3 to unlock',
+  'cut.fast': 'Obstacles turn into candy', 'cut.slow': 'Time slows down', 'cut.inv': 'Nothing can hurt you',
   'call.perfect': 'Perfect!', 'call.fast': 'Super fast!', 'call.slow': 'Sloooow...', 'call.inv': 'Rainbow!', 'call.ouch': 'Oops!', 'call.heart': 'Extra life!', 'call.record': 'New record!', 'call.go': 'Uni-salta!', 'call.lap': 'Another lap!', 'call.wave': 'Nice!',
   'rotate': 'Turn your screen', 'hint.jump': 'JUMP', 'hint.crouch': 'DUCK',
 };

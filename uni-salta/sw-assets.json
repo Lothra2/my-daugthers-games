@@ -1,5 +1,8 @@
 [
 "./",
+"assets/cutscene/power_fast.png",
+"assets/cutscene/power_inv.png",
+"assets/cutscene/power_slow.png",
 "assets/fonts/PixelifySans-latin.woff2",
 "assets/fonts/pixfont.png",
 "assets/fonts/pixfont.xml",
@@ -169,6 +172,7 @@
 "src/vendor/motion.js",
 "src/vendor/phaser.min.js",
 "src/vendor/zzfx.js",
+"src/view/Cutscene.js",
 "src/view/Game.js",
 "src/view/Preload.js",
 "src/view/Title.js",

@@ -18,6 +18,7 @@ export class Preload extends Phaser.Scene {
     const meta = app.meta;
     this.load.setPath('assets/');
     for (const [key, m] of Object.entries(meta)) this.load.spritesheet(key, `sprites/${key}.png`, { frameWidth: m.cell[0], frameHeight: m.cell[1] });
+    for (const k of ['fast', 'slow', 'inv']) this.load.image(`power_${k}`, `cutscene/power_${k}.png`);
     this.load.image('ui_heart_full', 'ui/ui_heart_full.png');
     this.load.image('ui_heart_empty', 'ui/ui_heart_empty.png');
     for (let w = 1; w <= 6; w++) {

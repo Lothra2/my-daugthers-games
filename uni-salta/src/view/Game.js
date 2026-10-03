@@ -6,6 +6,7 @@ import { makeRng } from '../core/rng.js';
 import { WORLDS } from '../data/worlds.js';
 import { Fx, RAINBOW_HEX } from './fx.js';
 import { Parallax } from './parallax.js';
+import { PowerCut } from './Cutscene.js';
 
 const lerp = (a, b, t) => a + (b - a) * t;
 const HANG_TOP_H = 196;       // height of the top of a fully dropped hanging snake (cloud included)
@@ -49,6 +50,8 @@ export class Game extends Phaser.Scene {
     this.gfx = this.add.graphics().setDepth(25);          // rainbow trail
     this.dbg = this.add.graphics().setDepth(90);
     this.fx = new Fx(this);
+    this.cut = new PowerCut(this);
+    this.auraGfx = this.add.graphics().setDepth(29);
     this.fx.reduceFlash = app.save.settings.reduceFlash;
 
     // player
@@ -98,14 +101,16 @@ export class Game extends Phaser.Scene {
     this.sky = this.add.tileSprite(0, 0, W, H, 'sky_w1').setOrigin(0, 0).setDepth(0);
     this.skyB = this.add.tileSprite(0, 0, W, H, 'sky_w1').setOrigin(0, 0).setDepth(0.5).setAlpha(0);
     this.streaks = this.add.tileSprite(0, 0, W, H, 'streaks_w1').setOrigin(0, 0).setDepth(1);
+    this.streaksB = this.add.tileSprite(0, 0, W, H, 'streaks_w1').setOrigin(0, 0).setDepth(1.05).setVisible(false);
     this.glow = this.add.image(W, 0, 'glow_w1').setOrigin(1, 0).setDepth(1.2);
+    this.seamGfx = this.add.graphics().setDepth(13);
     this.moon = this.add.image(Math.round(W * 0.78), Math.round(H * 0.14), 'prop_w4_0').setDepth(2.5).setAlpha(0);
   }
 
   onResize(size) {
     const W = size.width, H = size.height;
     this.W = W; this.H = H; this.groundY = H - CFG.FLOOR_H;
-    for (const s of [this.sky, this.skyB, this.streaks]) s.setSize(W, H);
+    for (const s of [this.sky, this.skyB, this.streaks, this.streaksB]) s.setSize(W, H);
     this.glow.setX(W);
     for (const r of [this.slowTint, this.lapTint, this.flash]) r.setPosition(W / 2, H / 2).setSize(W, H);
     this.moon.setPosition(Math.round(W * 0.78), Math.round(H * 0.14));
@@ -123,6 +128,66 @@ export class Game extends Phaser.Scene {
     return s.worldAt(x).world;
   }
 
+  setSkyTex(obj, prefix, w) {
+    const k = prefix + w;
+    if (obj.texture.key !== k) obj.setTexture(k);
+  }
+
+  // the world gate on screen, if any: where it is and which world lies on each side
+  computeSeam(camX) {
+    const s = this.sim, W = this.W;
+    let b = null;
+    const g = s.gateX();
+    if (g - camX < W + 120) b = g;
+    for (const m of s.worldMap) if (m.x > -1e8 && m.x - camX > -40 && m.x - camX < W + 120) b = m.x;
+    if (b == null) return null;
+    return { id: Math.round(b), x: Math.round(b - camX), left: this.worldVis(b - 2), right: this.worldVis(b + 2) };
+  }
+
+  // shimmering rainbow veil standing in the gate, plus drifting sparkles: reads as a portal into the next world
+  drawSeam(seam, dt) {
+    const g = this.seamGfx;
+    g.clear();
+    if (!seam || seam.x < -30 || seam.x > this.W + 30) return;
+    const H = this.H, gy = this.groundY, x = seam.x, t = this.t;
+    const cols = RAINBOW_HEX;
+    // wide dithered halo
+    for (let i = 0; i < 6; i++) {
+      const c = cols[i];
+      const w = 3 + (i % 2);
+      for (let y = 0; y < gy + 6; y += 4) {
+        const wob = Math.round(Math.sin(y * 0.045 + t * 5 + i) * 3);
+        g.fillStyle(c, 0.9).fillRect(x - 9 + i * 3 + wob, y, w, 4);
+      }
+    }
+    for (let k = 1; k <= 5; k++) {
+      g.fillStyle(0xFFF7C8, 0.07 * (6 - k)).fillRect(x - 9 - k * 6, 0, 6, gy);
+      g.fillStyle(0xFFF7C8, 0.05 * (6 - k)).fillRect(x + 9 + (k - 1) * 6, 0, 6, gy);
+    }
+    // portal glow filling the arch with the colours of the world on the other side
+    const base = gy + 8, R = 140;
+    const rc = WORLDS[seam.right].sky, c1 = parseInt(rc[2].slice(1), 16), c2 = parseInt(rc[3].slice(1), 16);
+    for (let dy = 0; dy < R; dy += 3) {
+      const hw = Math.floor(Math.sqrt(R * R - dy * dy));
+      const a = 0.3 + 0.18 * Math.sin(t * 3 + dy * 0.05);
+      g.fillStyle(c1, a).fillRect(x - hw, base - dy - 3, hw * 2, 3);
+    }
+    for (let k = 0; k < 3; k++) {
+      const r = ((t * 46 + k * 47) % 140);
+      for (let dy = 0; dy < r; dy += 3) {
+        const hw0 = Math.sqrt(Math.max(0, r * r - dy * dy)), hw1 = Math.sqrt(Math.max(0, (r - 6) * (r - 6) - dy * dy));
+        const edge = Math.max(2, Math.floor(hw0 - hw1));
+        g.fillStyle(0xFFFFFF, 0.5 * (1 - r / 140)).fillRect(x - Math.floor(hw0), base - dy - 3, edge, 3).fillRect(x + Math.floor(hw0) - edge, base - dy - 3, edge, 3);
+      }
+      g.fillStyle(0xFFFFFF, 0.5 * (1 - r / 140)).fillRect(x - Math.floor(r), base - Math.floor(r) - 3, Math.floor(r) * 2, 3);
+    }
+    this.seamT = (this.seamT || 0) - dt;
+    if (this.seamT <= 0 && x > 0 && x < this.W) {
+      this.seamT = 0.035;
+      this.fx.emit({ x: x + (Math.random() - 0.5) * 18, y: 10 + Math.random() * (gy - 20), key: Math.random() < 0.5 ? 'px_spark' : 'px_star', vx: -20 + Math.random() * 60, vy: 14 + Math.random() * 20, life: 0.9, tint: RAINBOW_HEX[Math.floor(Math.random() * 6)], twinkle: true, screen: true, scale: 0.8 + Math.random() * 0.6, depth: 15 });
+    }
+  }
+
   // ------------------------------------------------------------------ frame loop
   update(time, delta) {
     const app = this.app;
@@ -131,7 +196,9 @@ export class Game extends Phaser.Scene {
     if (this.paused) return;
     // intro: the unicorn drops in from the title sky
     if (this.introT < 1.1) { this.introUpdate(dt); }
-    this.acc += dt * (this.flags.ff || 1);
+    if (this.cut.on) { this.cut.update(dt); this.fx.update(dt, this.camX || 0, this.groundY); return; }
+    if (this.slowmoT > 0) this.slowmoT -= dt;
+    this.acc += dt * (this.flags.ff || 1) * (this.slowmoT > 0 ? 0.45 : 1);
     let steps = 0;
     const maxSteps = this.flags.ff ? 400 : 6;
     while (this.acc >= CFG.TICK && steps < maxSteps) {
@@ -211,22 +278,28 @@ export class Game extends Phaser.Scene {
     const col = k === 'fast' ? GOLD : k === 'slow' ? 0x6FE09A : 0xFF5C70;
     fx.burst(e.x, e.y, 'px_ring', 1, 0, 0.5, { scale: 1, scale1: 7, tint: col, g: 0 });
     fx.burst(this.sim.x, this.sim.p.y + 40, 'px_star', 14, 280, 0.8, { tint: k === 'inv' ? RAINBOW_HEX : col, g: -240 });
-    fx.floatText(this.sim.x + 90, 190, this.app.i18n.t(k === 'fast' ? 'call.fast' : k === 'slow' ? 'call.slow' : 'call.inv'), { tint: col, big: true, life: 1.3 });
-    this.flashScreen(col, k === 'fast' ? 0.5 : 0.3);
+    if (!this.flags.nocut && !this.flags.ff && !this.flags.autoplay) {
+      const t = (key) => this.app.i18n.t(key);
+      this.cut.start(k, t(k === 'fast' ? 'call.fast' : k === 'slow' ? 'call.slow' : 'call.inv'), t('cut.' + k), CFG.PLAYER_X, Math.round(this.groundY - this.sim.p.y - 40));
+    } else {
+      fx.floatText(this.sim.x + 90, 190, this.app.i18n.t(k === 'fast' ? 'call.fast' : k === 'slow' ? 'call.slow' : 'call.inv'), { tint: col, big: true, life: 1.3 });
+      this.flashScreen(col, k === 'fast' ? 0.5 : 0.3);
+    }
     if (k === 'slow') this.slowTint.setAlpha(0.14);
   }
 
   onWorldEnter(e) {
     const w = e.world;
-    this.skyB.setTexture(`sky_w${w}`).setAlpha(0);
-    this.tweens.add({ targets: this.skyB, alpha: 1, duration: 2200, onComplete: () => { this.sky.setTexture(`sky_w${w}`); this.skyB.setAlpha(0); } });
-    this.glow.setTexture(`glow_w${w}`);
-    this.streaks.setTexture(`streaks_w${w}`);
     this.visWorld = w;
     this.lapTint.setAlpha(Math.min(0.25, (e.lap - 1) * 0.1));
     this.app.bus.emit('world_card', { world: w, lap: e.lap });
-    const px = this.sim.x;
-    this.fx.burst(px + 60, 160, 'px_star', 30, 340, 1.2, { tint: RAINBOW_HEX, g: -200, spin: 1 });
+    const px = this.sim.x, fx = this.fx;
+    // crossing the gate: slow motion beat, colour ring, rainbow star burst, soft flash
+    this.slowmoT = 0.5;
+    fx.burst(px, this.sim.p.y + 40, 'px_ring', 3, 0, 0.7, { scale: 1, scale1: 14, tint: [0xFFE23A, 0xFF9EC7, 0x7AC8FF], g: 0 });
+    fx.burst(px + 40, this.sim.p.y + 60, 'px_star', 44, 460, 1.3, { tint: RAINBOW_HEX, g: -220, spin: 1, twinkle: true });
+    this.flashScreen(0xFFF3C8, 0.45);
+    this.shake = 3; this.shakeT = 0.25;
   }
 
   finishRun() {
@@ -260,18 +333,33 @@ export class Game extends Phaser.Scene {
     if (this.shakeT > 0) { this.shakeT -= dt; const m = this.shake; sx = Math.round((Math.random() - 0.5) * 2 * m); sy = Math.round((Math.random() - 0.5) * 2 * m); if (this.shakeT <= 0) this.shake = 0; }
     this.cameras.main.setScroll(sx, sy);
 
-    // sky layers drift
+    // sky layers drift. When a world gate is on screen the new world's sky, streaks and sun begin at the gate.
     const tp = camX * 0.04 + this.t * 6;
     this.sky.tilePositionX = 0; this.skyB.tilePositionX = 0;
+    const seam = this.seam = this.computeSeam(camX);
+    const cur = seam ? seam.left : this.worldVis(camX + W / 2);
+    this.setSkyTex(this.sky, 'sky_w', cur); this.setSkyTex(this.streaks, 'streaks_w', cur);
+    if (seam) {
+      const sx = Math.max(0, Math.min(W, seam.x));
+      this.setSkyTex(this.skyB, 'sky_w', seam.right); this.setSkyTex(this.streaksB, 'streaks_w', seam.right);
+      this.skyB.setVisible(sx < W).setAlpha(1).setPosition(sx, 0).setSize(W - sx, H);
+      this.streaksB.setVisible(sx < W).setPosition(sx, 0).setSize(W - sx, H);
+      this.streaksB.tilePositionX = Math.round(tp) - sx; this.streaksB.tilePositionY = Math.round(this.t * 3);
+      this.setSkyTex(this.glow, 'glow_w', seam.x < W - 40 ? seam.right : seam.left);
+    } else {
+      this.skyB.setVisible(false); this.streaksB.setVisible(false);
+      this.setSkyTex(this.glow, 'glow_w', cur);
+    }
     this.streaks.tilePositionX = Math.round(tp); this.streaks.tilePositionY = Math.round(this.t * 3);
+    this.drawSeam(seam, dt);
     // world moon (world 4)
-    const w4 = this.worldVis(camX + W / 2) === 4;
+    const w4 = (seam ? (seam.x < W * 0.5 ? seam.right : seam.left) : this.worldVis(camX + W / 2)) === 4;
     this.moon.setAlpha(lerp(this.moon.alpha, w4 ? 1 : 0, 0.05));
     // parallax
     const wv = (x) => this.worldVis(x);
-    this.par.far.update(camX, W, groundY, wv, this.t);
-    this.par.mid.update(camX, W, groundY, wv, this.t);
-    this.par.near.update(camX, W, groundY, wv, this.t);
+    this.par.far.update(camX, W, groundY, wv, this.t, seam);
+    this.par.mid.update(camX, W, groundY, wv, this.t, seam);
+    this.par.near.update(camX, W, groundY, wv, this.t, seam);
 
     this.renderGate(camX);
     this.renderFloor(camX);
@@ -535,7 +623,8 @@ export class Game extends Phaser.Scene {
     else spr.clearTint();
     if (pw && pw.kind === 'inv' && Math.random() < 0.5) this.fx.emit({ x: s.x - 10 + Math.random() * 20, y: p.y + 30 + Math.random() * 40, key: 'px_star', tint: RAINBOW_HEX[Math.floor(Math.random() * 6)], life: 0.5, vy: -30, scale: 0.8, twinkle: true });
     if (pw && pw.kind === 'fast') { this.speedLineT -= dt; if (this.speedLineT <= 0) { this.speedLineT = 0.03; this.fx.emit({ x: Math.random() * this.W, y: 20 + Math.random() * (this.groundY - 20), key: 'px_line', vx: -1500, life: 0.18, screen: true, scale: 1 + Math.random() * 3, tint: 0xFFF7B0, fade: true }); } }
-    if (pw && pw.kind === 'slow') { this.ghostT = (this.ghostT || 0) - dt; if (this.ghostT <= 0) { this.ghostT = 0.07; this.ghost(spr); } }
+    if (pw && (pw.kind === 'slow' || pw.kind === 'fast')) { this.ghostT = (this.ghostT || 0) - dt; if (this.ghostT <= 0) { this.ghostT = pw.kind === 'fast' ? 0.045 : 0.07; this.ghost(spr, pw.kind === 'fast' ? 0xFFE23A : 0x6FE09A); } }
+    this.drawAura(spr, pw, dt);
     // rescue cloud
     if (s.rescue) { this.rescueCloud.setVisible(true).setPosition(CFG.PLAYER_X, Math.round(sy + 12)).setDepth(29); if (this.rescueCloud.anims.currentAnim?.key !== 'rescue_bob') this.rescueCloud.play('rescue_bob'); }
     else this.rescueCloud.setVisible(false);
@@ -543,8 +632,38 @@ export class Game extends Phaser.Scene {
     if (pw) this.updateGhosts(dt);
   }
 
-  ghost(spr) {
-    const g = this.add.sprite(spr.x, spr.y, spr.texture.key, spr.frame.name).setOrigin(spr.originX, spr.originY).setDepth(28).setTint(0x6FE09A).setAlpha(0.5);
+  // lasting transformation look while a power runs: lightning and afterimages, a time bubble, a rainbow star halo
+  drawAura(spr, pw, dt) {
+    const g = this.auraGfx; g.clear();
+    if (!pw || this.sim.dying > 0 || this.sim.over) return;
+    const cx = Math.round(spr.x), cy = Math.round(spr.y - 36), t = this.t;
+    const warn = pw.t < 1.5 && Math.floor(t * 10) % 2 === 0;
+    if (pw.kind === 'slow') {
+      const R = 46;
+      for (let dy = -R; dy <= R; dy += 2) {
+        const hw = Math.floor(Math.sqrt(R * R - dy * dy));
+        const edge = Math.abs(dy) > R - 7 ? hw : 2;
+        g.fillStyle(0x6FE09A, warn ? 0.2 : 0.55).fillRect(cx - hw, cy + dy, edge, 2).fillRect(cx + hw - edge, cy + dy, edge, 2);
+        g.fillStyle(0xD6FFE4, 0.12).fillRect(cx - hw + edge, cy + dy, Math.max(0, hw * 2 - edge * 2), 2);
+      }
+      g.fillStyle(0xFFFFFF, 0.7).fillRect(cx - 28, cy - 30, 8, 3).fillRect(cx - 32, cy - 24, 3, 8);
+    } else if (pw.kind === 'inv') {
+      for (let i = 0; i < 6; i++) {
+        const a = t * 3 + i * Math.PI / 3, r = 38 + Math.sin(t * 4 + i) * 4;
+        const x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r * 0.9;
+        g.fillStyle(RAINBOW_HEX[i], warn ? 0.4 : 1).fillRect(Math.round(x) - 3, Math.round(y) - 1, 7, 3).fillRect(Math.round(x) - 1, Math.round(y) - 3, 3, 7);
+      }
+    } else if (pw.kind === 'fast') {
+      this.boltT = (this.boltT || 0) - dt;
+      if (this.boltT <= 0) {
+        this.boltT = 0.06;
+        this.fx.emit({ x: this.sim.x + (Math.random() - 0.5) * 50, y: this.sim.p.y + 10 + Math.random() * 60, key: 'px_zig', tint: Math.random() < 0.5 ? 0xFFE23A : 0xFFFFFF, life: 0.18, scale: 1 + Math.random(), vx: -60, fade: true });
+      }
+    }
+  }
+
+  ghost(spr, tint = 0x6FE09A) {
+    const g = this.add.sprite(spr.x, spr.y, spr.texture.key, spr.frame.name).setOrigin(spr.originX, spr.originY).setDepth(28).setTint(tint).setAlpha(0.5).setScale(spr.scaleX, spr.scaleY);
     this.ghosts.push({ g, wx: this.sim.x, y: spr.y, age: 0 });
   }
   updateGhosts(dt) {

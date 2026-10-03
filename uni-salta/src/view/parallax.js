@@ -10,30 +10,47 @@ export class Parallax {
     this.nextL = 0;
     this.rng = (() => { let a = 12345 + name.length * 77; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
     this.started = false;
+    this.seamId = null;
   }
 
-  update(camX, W, groundY, worldAt, t) {
+  spawn(world, groundY) {
+    const cfg = WORLDS[world].layers[this.name];
+    if (!cfg) { this.nextL += 320; return null; }
+    const it = cfg.items[Math.floor(this.rng() * cfg.items.length)];
+    const spr = this.scene.add.image(0, 0, `prop_w${world}_${it.i}`).setDepth(DEPTH[this.name]);
+    spr.setAlpha(it.alpha ?? 1);
+    const h = spr.height;
+    let y;
+    if (it.place === 'ground') { spr.setOrigin(0, 1); y = groundY - (this.name === 'near' ? 0 : 6); }
+    else {
+      spr.setOrigin(0, 0);
+      const maxY = Math.max(10, groundY - 130 - h);
+      y = 8 + Math.floor(this.rng() * maxY);
+    }
+    const s = { spr, L: this.nextL, place: it.place, base: y, ph: this.rng() * 6.28, w: spr.width, h, world };
+    this.sprites.push(s);
+    this.nextL += spr.width + cfg.gap[0] + this.rng() * (cfg.gap[1] - cfg.gap[0]);
+    return s;
+  }
+
+  // seam = { id, x (screen), left, right } while a world gate is on screen, else null.
+  // Props of the old world exist only left of the seam and props of the new world only right of it.
+  update(camX, W, groundY, worldAt, t, seam) {
     const sp = SPEED[this.name];
     const lc = camX * sp;
     if (!this.started) { this.nextL = lc - 40; this.started = true; }
-    while (this.nextL < lc + W + 160) {
-      const world = worldAt(camX + W + 160);
-      const cfg = WORLDS[world].layers[this.name];
-      if (!cfg) { this.nextL += 320; continue; }
-      const it = cfg.items[Math.floor(this.rng() * cfg.items.length)];
-      const spr = this.scene.add.image(0, 0, `prop_w${world}_${it.i}`).setDepth(DEPTH[this.name]);
-      spr.setAlpha(it.alpha ?? 1);
-      const h = spr.height;
-      let y;
-      if (it.place === 'ground') { spr.setOrigin(0, 1); y = groundY - (this.name === 'near' ? 0 : 6); }
-      else {
-        spr.setOrigin(0, 0);
-        const maxY = Math.max(10, groundY - 130 - h);
-        y = 8 + Math.floor(this.rng() * maxY);
-      }
-      this.sprites.push({ spr, L: this.nextL, place: it.place, base: y, ph: this.rng() * 6.28, w: spr.width, h });
-      this.nextL += spr.width + cfg.gap[0] + this.rng() * (cfg.gap[1] - cfg.gap[0]);
+    if (seam && seam.id !== this.seamId) {
+      this.seamId = seam.id;
+      for (let i = this.sprites.length - 1; i >= 0; i--) if (this.sprites[i].world !== seam.left) { this.sprites[i].spr.destroy(); this.sprites.splice(i, 1); }
+      // prefill the whole screen with the new world, hidden until the seam sweeps over it
+      this.nextL = lc - 90;
+      while (this.nextL < lc + W + 220) this.spawn(seam.right, groundY);
+    } else if (!seam && this.seamId !== null) {
+      this.seamId = null;
+      const cur = worldAt(camX + W / 2);
+      for (let i = this.sprites.length - 1; i >= 0; i--) if (this.sprites[i].world !== cur) { this.sprites[i].spr.destroy(); this.sprites.splice(i, 1); }
     }
+    while (this.nextL < lc + W + 160) this.spawn(seam ? seam.right : worldAt(camX + W + 160), groundY);
     for (let i = this.sprites.length - 1; i >= 0; i--) {
       const s = this.sprites[i];
       const x = Math.round(s.L - lc);
@@ -42,8 +59,9 @@ export class Parallax {
       let y = s.base + bob;
       if (s.place === 'ground') y = groundY - (this.name === 'near' ? 0 : 6);
       s.spr.setPosition(x, y);
+      s.spr.setVisible(!seam || ((x + s.w / 2 < seam.x) === (s.world === seam.left)));
     }
   }
 
-  clear() { for (const s of this.sprites) s.spr.destroy(); this.sprites.length = 0; this.started = false; }
+  clear() { for (const s of this.sprites) s.spr.destroy(); this.sprites.length = 0; this.started = false; this.seamId = null; }
 }
