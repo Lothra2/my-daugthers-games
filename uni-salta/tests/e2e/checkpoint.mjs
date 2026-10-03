@@ -1,0 +1,20 @@
+// Reaches a checkpoint flag, forces a death and checks the revive keeps the run alive. -> /tmp/cp_*.png
+import { launch, startServer } from './helpers.mjs';
+const s = await startServer(9600 + Math.floor(Math.random() * 80));
+const { browser, page, errors } = await launch({ width: 932, height: 430, dpr: 1 });
+await page.goto(`${s.url}/index.html?skipTitle&autoplay&seed=8&world=2`);
+await page.waitForFunction(() => window.UNISALTA?.game?.scene.isActive('Game'), null, { timeout: 30000 });
+await page.waitForTimeout(1500);
+await page.waitForFunction(() => { const g = window.UNISALTA.game.scene.getScene('Game'); return g.sim.entities.some((e) => e.kind === 'flag' && e.x - g.sim.x < 260 && e.x > g.sim.x); }, null, { timeout: 90000, polling: 100 });
+await page.screenshot({ path: '/tmp/cp_0.png' });
+await page.waitForFunction(() => !!window.UNISALTA.game.scene.getScene('Game').sim.snap, null, { timeout: 20000 });
+await page.waitForTimeout(2500);
+await page.screenshot({ path: '/tmp/cp_1.png' });
+const before = await page.evaluate(() => { const g = window.UNISALTA.game.scene.getScene('Game'); const sm = g.sim; const x = sm.x; sm.lives = 1; sm.p.invul = 0; sm.loseHeart('hit'); return { x, after: sm.x, lives: sm.lives, over: sm.over, dying: sm.dying }; });
+console.log('revive', JSON.stringify(before));
+await page.waitForTimeout(500);
+await page.screenshot({ path: '/tmp/cp_2.png' });
+await page.waitForTimeout(3000);
+const st = await page.evaluate(() => { const g = window.UNISALTA.game.scene.getScene('Game'); return { tick: g.sim.tick, x: g.sim.x, lives: g.sim.lives, over: g.sim.over }; });
+console.log('later', JSON.stringify(st), 'errors', JSON.stringify(errors.slice(0, 3)));
+await browser.close(); s.stop();

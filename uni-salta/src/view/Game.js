@@ -36,6 +36,8 @@ export class Game extends Phaser.Scene {
     this.thor = null; this.thorTimer = 12 + Math.random() * 25; this.thorHappy = false;
     this.trail = [];
     this.ghosts = [];
+    // the scene object is reused on restart, so anything created lazily must be reset here
+    this.pitGfx = null; this.bossSpr = null; this.bossGfx = null; this.bossName = null; this.deaths = []; this.boltT = 0; this.seamT = 0; this.slowmoT = 0; this.bossShootT = 0; this.bossBoomT = 0; this.ghostT = 0; this.seam = null;
     this.names = new Map();
     this.worldBadgeShown = 0;
     this.lastHud = 0;
@@ -52,6 +54,7 @@ export class Game extends Phaser.Scene {
     this.dbg = this.add.graphics().setDepth(90);
     this.fx = new Fx(this);
     this.cut = new PowerCut(this);
+    this.flagGfx = this.add.graphics().setDepth(15);
     this.auraGfx = this.add.graphics().setDepth(29);
     this.fx.reduceFlash = app.save.settings.reduceFlash;
 
@@ -191,7 +194,17 @@ export class Game extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ frame loop
+  // A render or logic error must never freeze the game: log it, keep going, and after a long streak leave
+  // for the results screen so the player is never stuck.
   update(time, delta) {
+    try { this.updateInner(time, delta); this.errStreak = 0; } catch (err) {
+      this.errStreak = (this.errStreak || 0) + 1;
+      if (this.errStreak <= 3) console.error(err);
+      if (this.errStreak === 45 && !this.ended) { try { this.finishRun(); } catch (e2) { /* ignore */ } }
+    }
+  }
+
+  updateInner(time, delta) {
     const app = this.app;
     const dt = Math.min(delta, 100) / 1000;
     this.t += dt;
@@ -246,9 +259,11 @@ export class Game extends Phaser.Scene {
       case 'perfect': fx.floatText(px + 70, 150, this.app.i18n.t('call.perfect'), { tint: 0xFFE23A, big: true, life: 1.1 }); fx.burst(px + 60, 120, 'px_star', 14, 230, 0.8, { tint: RAINBOW_HEX, g: -260 }); break;
       case 'streak': this.rainbowSky(); break;
       case 'power_start': this.powerFx(e); break;
-      case 'power_end': this.player.clearTint(); this.slowTint.setAlpha(0); break;
+      case 'power_end': this.player.clearTint(); this.slowTint.setAlpha(0); this.clearGhosts(); this.auraGfx.clear(); break;
       case 'heart_get': fx.burst(e.x, e.y, 'px_heart', 8, 200, 0.8, { tint: 0xFF5C70, g: -150 }); fx.floatText(px + 60, 140, this.app.i18n.t('call.heart'), { tint: 0xFF9EC7, life: 1.1 }); break;
       case 'block_hit': fx.burst(e.x, e.y + 20, 'px_spark', 8, 200, 0.6, { tint: [GOLD, 0xffffff], g: -300 }); this.bump(e.id); break;
+      case 'checkpoint': this.fx.burst(e.x + 20, 80, 'px_star', 22, 320, 1, { tint: RAINBOW_HEX, g: -200, twinkle: true }); this.fx.floatText(e.x + 60, 150, this.app.i18n.t('cp.saved'), { tint: 0xFFE23A, big: true, life: 1.4 }); this.flashScreen(0xFFF3C8, 0.25); break;
+      case 'revive': this.onRevive(); break;
       case 'boss_start': this.flashScreen(0xFF4D5E, 0.5); this.shakeNow(4, 0.6); fx.floatText(this.W / 2, 120, this.app.i18n.t('boss.warn'), { screen: true, sx: this.W / 2, sy: 120, big: true, tint: 0xFF5C70, life: 1.7 }); break;
       case 'boss_ready': fx.floatText(this.W / 2, 100, this.app.i18n.t('boss.hint'), { screen: true, sx: this.W / 2, sy: 100, tint: 0xFFFFFF, life: 3.2 }); break;
       case 'boss_shoot': this.bossShootT = 0.28; fx.burst(s.x + s.boss.sx - 30, 90, 'px_star', 4, 160, 0.4, { tint: e.good ? 0xFFE23A : 0x9D6BFF, g: 0 }); break;
@@ -310,6 +325,19 @@ export class Game extends Phaser.Scene {
     fx.burst(px + 40, this.sim.p.y + 60, 'px_star', 44, 460, 1.3, { tint: RAINBOW_HEX, g: -220, spin: 1, twinkle: true });
     this.flashScreen(0xFFF3C8, 0.45);
     this.shake = 3; this.shakeT = 0.25;
+  }
+
+  onRevive() {
+    this.fx.clear(); this.clearGhosts(); this.trail = [];
+    for (const k of ['far', 'mid', 'near']) this.par[k].clear();
+    this.hitT = 0; this.stompT = 0; this.landT = 0; this.playerAnimKey = null;
+    if (this.cut.on) this.cut.end();
+    this.player.clearTint();
+    this.flashScreen(0xFFFFFF, 0.7);
+    this.shakeNow(3, 0.3);
+    this.fx.burst(this.sim.x, 80, 'px_heart', 14, 260, 1, { tint: [0xFF5C70, 0xFF9EC7], g: -120 });
+    this.fx.floatText(this.W / 2, 110, this.app.i18n.t('cp.revive'), { screen: true, sx: this.W / 2, sy: 110, big: true, tint: 0xFFFFFF, life: 1.8 });
+    this.hud(true);
   }
 
   finishRun() {
@@ -468,6 +496,7 @@ export class Game extends Phaser.Scene {
     const s = this.sim, groundY = this.groundY, W = this.W;
     const seen = new Set();
     const t = this.t;
+    this.flagGfx.clear();
     for (const e of s.entities) {
       if (!e.alive && e.kind !== 'hz') continue;
       if (e.kind === 'plat') { seen.add('p' + e.id); this.renderPlatform(e, camX); continue; }
@@ -496,6 +525,8 @@ export class Game extends Phaser.Scene {
         this.renderHazard(e, x, camX);
       } else if (e.kind === 'proj') {
         this.renderProj(e, x);
+      } else if (e.kind === 'flag') {
+        this.drawFlag(e, x);
       }
     }
     // remove sprites of entities that vanished
@@ -557,6 +588,22 @@ export class Game extends Phaser.Scene {
     if (e.type === 'ssh') st.spr.setPosition(x, Math.round(groundY - by));
     if (e.type === 'fly') st.spr.setPosition(x + 14, Math.round(groundY - (e.y + by)));
     if (e.type === 'jelly') st.spr.setPosition(x, Math.round(groundY - (e.y + by) ));
+  }
+
+  // checkpoint flag: a grey pennant until you pass it, then a waving rainbow one
+  drawFlag(e, x) {
+    const g = this.flagGfx, gy = this.groundY, t = this.t;
+    g.fillStyle(0x1E1330, 1).fillRect(x - 2, gy - 78, 5, 80);
+    g.fillStyle(0xFFF4DC, 1).fillRect(x - 1, gy - 78, 2, 80);
+    g.fillStyle(0xFFE23A, 1).fillRect(x - 4, gy - 82, 9, 6);
+    const cols = e.on ? RAINBOW_HEX : [0xA79BC8, 0x9588B8, 0xA79BC8, 0x9588B8, 0xA79BC8, 0x9588B8];
+    for (let i = 0; i < 6; i++) {
+      const w = 34 - i * 2;
+      const wave = Math.round(Math.sin(t * (e.on ? 7 : 2) + i * 0.7) * (e.on ? 3 : 1));
+      g.fillStyle(cols[i], 1).fillRect(x + 3, gy - 76 + i * 5 + wave * 0, w, 5);
+      g.fillStyle(cols[i], 1).fillRect(x + 3 + w, gy - 76 + i * 5 + wave, 3, 5);
+    }
+    if (e.on && Math.random() < 0.2) this.fx.emit({ x: e.x + 10 + Math.random() * 30, y: 20 + Math.random() * 60, key: 'px_spark', life: 0.5, tint: RAINBOW_HEX[Math.floor(Math.random() * 6)], twinkle: true, scale: 0.8 });
   }
 
   renderProj(e, x) {
@@ -712,7 +759,7 @@ export class Game extends Phaser.Scene {
     if (s.rescue) { this.rescueCloud.setVisible(true).setPosition(CFG.PLAYER_X, Math.round(sy + 12)).setDepth(29); if (this.rescueCloud.anims.currentAnim?.key !== 'rescue_bob') this.rescueCloud.play('rescue_bob'); }
     else this.rescueCloud.setVisible(false);
     if (this.rescueCloud.visible) this.rescueCloud.setOrigin(0.5, 0.2);
-    if (pw) this.updateGhosts(dt);
+    this.updateGhosts(dt);
   }
 
   // lasting transformation look while a power runs: lightning and afterimages, a time bubble, a rainbow star halo
@@ -749,6 +796,8 @@ export class Game extends Phaser.Scene {
     const g = this.add.sprite(spr.x, spr.y, spr.texture.key, spr.frame.name).setOrigin(spr.originX, spr.originY).setDepth(28).setTint(tint).setAlpha(0.5).setScale(spr.scaleX, spr.scaleY);
     this.ghosts.push({ g, wx: this.sim.x, y: spr.y, age: 0 });
   }
+  clearGhosts() { for (const q of this.ghosts) q.g.destroy(); this.ghosts.length = 0; }
+
   updateGhosts(dt) {
     for (let i = this.ghosts.length - 1; i >= 0; i--) {
       const q = this.ghosts[i];

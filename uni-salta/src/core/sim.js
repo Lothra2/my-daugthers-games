@@ -14,16 +14,16 @@ export const BOSS_WORLDS = { 6: 'queen', 9: 'king' };   // the boss waits at the
 // boss attack cycles: [seconds after cycle start, 'low' | 'high' | 'good', height of a good orb]
 const BOSS_CYCLES = [
   [ // phase 1
-    [[0, 'low'], [1.2, 'high'], [2.6, 'good', 100]],
-    [[0, 'high'], [1.2, 'low'], [2.5, 'good', 110]],
+    [[0, 'low'], [1.2, 'high'], [2.6, 'good', 98]],
+    [[0, 'high'], [1.2, 'low'], [2.5, 'good', 100]],
   ],
   [ // phase 2
-    [[0, 'low'], [0.95, 'low'], [2.1, 'high'], [3.3, 'good', 100]],
-    [[0, 'high'], [1.0, 'low'], [2.0, 'high'], [3.3, 'good', 95]],
+    [[0, 'low'], [0.95, 'low'], [2.1, 'high'], [3.3, 'good', 98]],
+    [[0, 'high'], [1.0, 'low'], [2.0, 'high'], [3.3, 'good', 96]],
   ],
   [ // phase 3
-    [[0, 'low'], [0.85, 'high'], [1.7, 'low'], [2.8, 'good', 105], [3.6, 'high']],
-    [[0, 'high'], [0.9, 'high'], [1.9, 'low'], [3.0, 'good', 100], [3.8, 'low']],
+    [[0, 'low'], [0.85, 'high'], [1.7, 'low'], [2.8, 'good', 100], [3.6, 'high']],
+    [[0, 'high'], [0.9, 'high'], [1.9, 'low'], [3.0, 'good', 98], [3.8, 'low']],
   ],
 ];
 
@@ -41,7 +41,7 @@ export class Sim {
 
   clone() {
     const o = Object.create(Sim.prototype);
-    const data = structuredClone({ ...this, rng: undefined, events: [] });
+    const data = structuredClone({ ...this, rng: undefined, events: [], snap: null });
     Object.assign(o, data);
     o.rng = makeRng(0);
     o.rng.state = this.rng.state;
@@ -76,6 +76,7 @@ export class Sim {
     this.afterHit = 0;
     this.sprintGrace = 0;
     this.boss = null; this.gateOverride = null;
+    this.snap = null; this.cpPlan = []; this.cpIdx = 0; this.revives = 0;
     this.gen = { spawnX: this.x - 200, history: [], lastTier: 0, powerDue: 2200, heartCd: 0, formation: 1, count: 0 };
     this.warmup = 1.2;               // seconds before the first hazard can matter
     this.worldMap = [{ x: -1e9, world: this.world, lap: this.lap }];
@@ -138,6 +139,7 @@ export class Sim {
     // a calm opening: floor under the start and a breather chunk
     this.floor.push({ x0: this.x - 400, x1: this.x + 640 });
     this.gen.spawnX = this.x + 640;
+    this.planCheckpoints();
     this.placeChunk(CHUNKS.find((c) => c.id === (this.mode === 'easy' ? 'soft_candy_01' : 'breather_line_01')), this.gen.spawnX, false);
   }
 
@@ -199,6 +201,12 @@ export class Sim {
     g.history.push(ch.id);
     g.lastTier = ch.tier;
     g.count++;
+    this.chunkCoins = [];
+    // checkpoint flag on the calm first tiles of the first chunk past each planned spot
+    if (countable && this.cpIdx < this.cpPlan.length && x0 >= this.cpPlan[this.cpIdx] && !ch.tags.includes('sprint') && !ch.tags.includes('arena')) {
+      this.addEntity({ kind: 'flag', x: x0 + 3 * T * F, on: false, n: this.cpIdx + 1 });
+      this.cpIdx++;
+    }
     if (countable) {
       if (this.worldBreather > 0) this.worldBreather--;
       if (this.afterHit > 0) this.afterHit--;
@@ -270,6 +278,13 @@ export class Sim {
     }
   }
 
+  nearGap(x, pad) {
+    for (let i = 0; i < this.floor.length - 1; i++) {
+      if (x > this.floor[i].x1 - pad && x < this.floor[i + 1].x0 + pad) return true;
+    }
+    return false;
+  }
+
   spawnCoins(it, x0, F = 1) {
     const T = CFG.TILE;
     const pts = [];
@@ -285,9 +300,19 @@ export class Sim {
       }
     } else if (it.shape === 'wave') for (let i = 0; i < n; i++) pts.push([cx + i * sp, it.h + 34 * Math.sin(i * 0.65)]);
     else if (it.shape === 'column') for (let i = 0; i < n; i++) pts.push([cx, it.h + i * 36]);
+    // never stack candy: skip spots too close to candy already placed in this chunk, and low candy hovering
+    // over or right beside a gap (it would tempt a jump at the wrong time)
+    const keep = [];
+    for (const [px, py] of pts) {
+      if (this.chunkCoins.some(([qx, qy]) => Math.abs(qx - px) < 30 && Math.abs(qy - py) < 30)) continue;
+      if (py < 80 && this.nearGap(px, 46)) continue;
+      keep.push([px, py]);
+    }
+    for (const q of keep) this.chunkCoins.push(q);
+    if (!keep.length) return;
     const fid = this.gen.formation++;
-    this.formations[fid] = { total: pts.length, done: 0, missed: false, x: cx };
-    for (const [px, py] of pts) this.addEntity({ kind: 'coin', x: px, y: py, f: fid });
+    this.formations[fid] = { total: keep.length, done: 0, missed: false, x: cx };
+    for (const [px, py] of keep) this.addEntity({ kind: 'coin', x: px, y: py, f: fid });
   }
 
   // ------------------------------------------------------------------ main step
@@ -420,6 +445,7 @@ export class Sim {
     for (const e of this.entities) {
       if (!e.alive) continue;
       if (e.kind === 'plat') { /* static */ continue; }
+      if (e.kind === 'flag') continue;
       if (e.kind === 'pick') { e.ay = Math.sin((this.t + e.id) * 3) * 2; continue; }
       if (e.kind === 'proj') { this.stepProj(e, d); continue; }
       if (e.kind !== 'hz') continue;
@@ -521,6 +547,8 @@ export class Sim {
         const dx = Math.max(pb.x - e.x, 0, e.x - (pb.x + pb.w));
         const dy = Math.max(pb.y - (e.y + (e.ay || 0)), 0, (e.y + (e.ay || 0)) - (pb.y + pb.h));
         if (dx * dx + dy * dy < 26 * 26) this.takePick(e);
+      } else if (e.kind === 'flag') {
+        if (!e.on && this.x >= e.x) { e.on = true; this.saveCheckpoint('flag'); }
       } else if (e.kind === 'proj') {
         if (!e.ret) this.collideProj(e, pb);
       } else if (e.kind === 'block') {
@@ -654,6 +682,7 @@ export class Sim {
     if (this.mode === 'easy') return;
     this.lives--;
     this.emit('lose_heart', { lives: this.lives, why });
+    if (this.lives <= 0 && this.snap) { this.revive(); return; }
     if (this.lives <= 0) { this.dying = 1.3; this.emit('dying'); }
   }
 
@@ -677,9 +706,49 @@ export class Sim {
     this.worldStartX = this.x;
     this.gateOverride = null;
     this.boss = null;
+    this.snap = null;
+    this.planCheckpoints();
     this.worldMap.push({ x: this.x, world: this.world, lap: this.lap });
     this.gen.gateDone = false;
     this.emit('world_enter', { world: this.world, lap: this.lap });
+  }
+
+  // ------------------------------------------------------------------ checkpoints
+  // Two flags per world (about a third and two thirds in) and one at the boss door. Dying with a saved flag
+  // rewinds to it with full hearts and keeps your score, once per flag.
+  planCheckpoints() {
+    this.cpIdx = 0;
+    if (this.mode === 'easy') { this.cpPlan = []; return; }
+    const len = this.worldLenM() * CFG.METER;
+    this.cpPlan = [0.36, 0.7].map((f) => this.worldStartX + len * f);
+  }
+
+  saveCheckpoint(kind) {
+    const keep = { snap: null, events: [], rng: undefined };
+    const data = structuredClone({ ...this, ...keep });
+    data.rngState = this.rng.state;
+    this.snap = data;
+    this.emit('checkpoint', { kind, x: this.x });
+  }
+
+  revive() {
+    const o = this.snap;
+    this.snap = null;
+    const keepScore = { score: this.score, coins: this.coins, stomps: this.stomps, perfects: this.perfects, maxWorld: this.maxWorld, maxLap: this.maxLap, meterPaid: Math.max(this.meterPaid, o.meterPaid), nextMilestone: Math.max(this.nextMilestone, o.nextMilestone), revives: this.revives + 1 };
+    const rs = o.rngState;
+    delete o.rngState;
+    const rng = this.rng;
+    Object.assign(this, o, keepScore);
+    this.rng = rng;
+    this.rng.state = rs;
+    this.events = [];
+    this.snap = null;
+    this.lives = CFG.LIVES;
+    this.dying = 0; this.over = false; this.hitstop = 0; this.rescue = null; this.power = null;
+    this.prevX = this.x; this.p.prevY = this.p.y;
+    this.p.invul = CFG.INVUL_RESPAWN + 0.5;
+    this.afterHit = 2;
+    this.emit('revive', { x: this.x, revives: this.revives });
   }
 
   // ------------------------------------------------------------------ boss fight
@@ -689,6 +758,7 @@ export class Sim {
     const max = (easy ? CFG.BOSS_HP_EASY : CFG.BOSS_HP)[kind] + (easy ? 0 : Math.min(6, (this.lap - 1) * 2));
     this.boss = { kind, hp: max, max, state: 'enter', t: 0, dist: this.bossDist || CFG.BOSS_DIST, sx: 700, cycle: null, ci: 0, cycleT: 0, windup: 0, cool: 0, hurtT: 0, shots: 0, phase: 0, flash: 0 };
     this.emit('boss_start', { kind, hp: max });
+    if (this.mode === 'normal') this.saveCheckpoint('boss');
   }
 
   bossPhase(b) { const f = b.hp / b.max; return f > 0.67 ? 0 : f > 0.34 ? 1 : 2; }
@@ -709,9 +779,12 @@ export class Sim {
 
   stepBoss(dt, ts) {
     const b = this.boss;
-    if (!b) return;
+    if (!b || b.state === 'gone') return;
     const d = dt * ts;
     b.t += d;
+    // safety net: a fight that drags on without damage weakens the boss so nobody is ever stuck
+    b.fightT = (b.fightT || 0) + (b.state === 'fight' ? d : 0);
+    if (b.fightT > 22 && b.state === 'fight' && b.hurtT <= 0) { b.fightT = 0; this.emit('boss_tired'); this.hitBoss(); }
     if (b.flash > 0) b.flash -= dt;
     if (b.state === 'enter') {
       b.sx = b.dist + Math.max(0, 1 - b.t / 1.6) * 360;
@@ -782,7 +855,7 @@ export class Sim {
   }
 
   collideProj(e, pb) {
-    const cx = e.x, cy = e.y, r = e.good ? 27 : 14;
+    const cx = e.x, cy = e.y, r = e.good ? 34 : 14;
     const dx = Math.max(pb.x - cx, 0, cx - (pb.x + pb.w)), dy = Math.max(pb.y - cy, 0, cy - (pb.y + pb.h));
     if (dx * dx + dy * dy > r * r) return;
     if (e.good) { e.ret = true; this.score += 100; this.emit('orb_reflect', { x: e.x, y: e.y }); return; }

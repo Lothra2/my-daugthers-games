@@ -103,6 +103,8 @@ export function createAudio(app) {
       case 'power_end': play('power_end'); endPower(e.kind); break;
       case 'world_clear': play('world_gate'); jingle('world_clear'); break;
       case 'world_enter': if (!power || power !== 'inv') playSong(worldSong(e.world)); A.world = e.world; A.music && updateSpeedLayer(); break;
+      case 'checkpoint': play('secret'); break;
+      case 'revive': play('heart'); break;
       case 'boss_start': play('boss_roar'); playSong('boss'); break;
       case 'boss_shoot': play('boss_shoot', { vol: e.good ? 0.5 : 0.8 }); break;
       case 'orb_reflect': play('orb_reflect'); break;

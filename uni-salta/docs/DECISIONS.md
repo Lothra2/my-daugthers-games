@@ -27,3 +27,10 @@ Plan original: `uni-salta/PLAN.md` (revisión 2). Lo construido difiere así:
 - Floor gaps render as a violet misty pit (`Game.drawPits`) so the sky horizon never reads as ground.
 - Higgsfield spend: about 49 credits (about USD 3.1), see `docs/CREDITS.md`. The key lives only in `~/.config/higgsfield/key` and is not in the repo.
 - Not done: moving platforms, December party hat, sleepy title, cloud wink. Audio verified numerically only, needs a human listen via `?sounds`.
+
+## Boss freeze, checkpoints, candy spacing
+- Root cause of the boss freeze: lazily created boss objects survived a scene restart as destroyed references and threw every frame. They are now reset in `Game.create` and the frame loop is wrapped so an error can never freeze the screen.
+- A finished boss no longer keeps shooting, good orbs are easier to touch, and a fight with no progress for 22 s weakens the boss.
+- Two checkpoint flags per world (36% and 70%) plus one at the boss door. Dying with a saved flag rewinds with full hearts and keeps the score, once per flag. Not in easy mode, where nobody can die.
+- Power afterimages are cleared when the power ends.
+- Candy: never stacked within 30 px, and low candy is skipped within 46 px of a gap edge.
