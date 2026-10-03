@@ -44,7 +44,7 @@ def main():
     xml = (f'<?xml version="1.0"?>\n<font>\n<info face="pixfont" size="{SIZE}" bold="0" italic="0"/>\n'
            f'<common lineHeight="{SIZE + 2}" base="{SIZE - 2}" scaleW="{atlas.width}" scaleH="{atlas.height}" pages="1"/>\n'
            f'<pages><page id="0" file="pixfont.png"/></pages>\n<chars count="{len(lines)}">\n' + '\n'.join(lines) + '\n</chars>\n</font>\n')
-    open(os.path.join(ROOT, 'assets/fonts/pixfont.fnt'), 'w').write(xml)
+    open(os.path.join(ROOT, 'assets/fonts/pixfont.xml'), 'w').write(xml)
     prev = atlas.resize((atlas.width * 2, atlas.height * 2), Image.NEAREST)
     bg = Image.new('RGBA', prev.size, (156, 127, 224, 255)); bg.alpha_composite(prev); bg.save('/tmp/pixfont_prev.png')
     print('font', SIZE, len(lines), 'glyphs', atlas.size)

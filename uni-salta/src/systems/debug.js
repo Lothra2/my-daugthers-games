@@ -6,6 +6,6 @@ export function readFlags(search = globalThis.location?.search || '') {
     seed: num('seed'), world: num('world'), lap: num('lap'), mode: q.get('mode'), god: q.has('god'),
     speed: num('speed'), hitboxes: q.has('hitboxes'), fps: q.has('fps'), autoplay: q.has('autoplay'),
     power: q.get('power'), skipTitle: q.has('skipTitle'), sounds: q.has('sounds'), tune: q.has('tune'),
-    shot: q.get('shot'), lang: q.get('lang'), chunk: q.get('chunk'), ff: num('ff'),
+    shot: q.get('shot'), lang: q.get('lang'), chunk: q.get('chunk'), nosw: q.has('nosw'), ff: num('ff'),
   };
 }

@@ -58,6 +58,7 @@ async function boot() {
   window.addEventListener('blur', () => bus.emit('pause_request'));
   relayout();
   document.getElementById('rotate-text').textContent = i18n.t('rotate');
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !flags.nosw) navigator.serviceWorker.register('sw.js').catch(() => {});
 }
 
 boot().catch((err) => { console.error(err); document.body.insertAdjacentHTML('beforeend', '<pre style="color:#fff;padding:12px">' + String(err) + '</pre>'); });

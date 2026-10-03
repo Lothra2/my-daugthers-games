@@ -5,9 +5,16 @@
   "description": "Dev tooling only. The game itself has no build step and loads Phaser and Motion from a CDN.",
   "scripts": {
     "serve": "python3 -m http.server 8080",
-    "test": "node --test tests/unit"
+    "test": "node --test tests/unit/*.test.mjs",
+    "validate": "node tools/validate_patterns.mjs",
+    "balance": "node tools/bot_playtest.mjs 40 normal",
+    "e2e": "node tests/e2e/flow.mjs",
+    "soak": "node tests/e2e/soak.mjs 40",
+    "preview": "node tools/build_preview.mjs"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
+    "motion": "^14.0.0",
     "phaser": "^4.2.1",
     "playwright": "^1.63.0"
   },

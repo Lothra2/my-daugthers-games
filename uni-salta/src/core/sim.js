@@ -42,6 +42,7 @@ export class Sim {
     this.lives = CFG.LIVES;
     this.score = 0; this.coins = 0; this.stomps = 0; this.maxWorld = this.world; this.maxLap = this.lap;
     this.meterPaid = 0;
+    this.nextMilestone = 1000;
     this.coinsForHeart = 0;
     this.perfectStreak = 0; this.perfects = 0;
     this.stompChain = 0;
@@ -402,12 +403,12 @@ export class Sim {
         case 'beeH': case 'beeL': if (e.state === 'idle') { if (near) e.x += e.vx * d; e.by = Math.sin(e.age * 5 + e.id) * 4; } break;
         case 'ssh': e.hopT += d; { const ph = (e.hopT % 1.3) / 1.3; e.by = ph < 0.35 ? Math.sin((ph / 0.35) * Math.PI) * 46 : 0; } break;
         case 'hang':
-          if (e.state === 'wait' && distAhead < this.speed * 1.45 && distAhead > 0) { e.state = 'warn'; e.st = 0; }
+          if (e.state === 'wait' && distAhead < this.speed * 1.45 && distAhead > 0) { e.state = 'warn'; e.st = 0; this.emit('wake', { type: 'hang', x: e.x }); }
           else if (e.state === 'warn') { e.st += d; if (e.st >= 0.4) { e.state = 'drop'; e.st = 0; } }
           else if (e.state === 'drop') { e.st += d; if (e.st >= 0.3) { e.state = 'down'; e.st = 0; } }
           break;
         case 'owl':
-          if (e.state === 'sleep' && distAhead < this.speed * 1.75 && distAhead > 0) { e.state = 'wake'; e.st = 0; }
+          if (e.state === 'sleep' && distAhead < this.speed * 1.75 && distAhead > 0) { e.state = 'wake'; e.st = 0; this.emit('wake', { type: 'owl', x: e.x }); }
           else if (e.state === 'wake') { e.st += d; if (e.st >= 0.45) { e.state = 'glide'; e.st = 0; e.x0 = e.x; } }
           else if (e.state === 'glide') {
             e.st += d;
@@ -417,7 +418,7 @@ export class Sim {
           }
           break;
         case 'storm':
-          if (e.state === 'idle' && distAhead < this.speed * 1.55 && distAhead > 0) { e.state = 'charge'; e.st = 0; }
+          if (e.state === 'idle' && distAhead < this.speed * 1.55 && distAhead > 0) { e.state = 'charge'; e.st = 0; this.emit('wake', { type: 'storm', x: e.x }); }
           else if (e.state === 'charge') { e.st += d; if (e.st >= 0.8) { e.state = 'zap'; e.st = 0; } }
           else if (e.state === 'zap') { e.st += d; if (e.st >= 0.25) { e.state = 'puddle'; e.st = 0; } }
           else if (e.state === 'puddle') { e.st += d; }
@@ -604,6 +605,7 @@ export class Sim {
   stepProgress() {
     const m = this.meters;
     if (m > this.meterPaid) { this.score += m - this.meterPaid; this.meterPaid = m; }
+    if (m >= this.nextMilestone) { this.emit('milestone', { m: this.nextMilestone }); this.nextMilestone += 1000; }
     if (this.worldMeters() >= this.worldLenM()) {
       const cleared = this.world;
       this.score += CFG.PTS_WORLD * cleared;

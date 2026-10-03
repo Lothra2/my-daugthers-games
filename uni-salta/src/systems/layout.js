@@ -1,5 +1,5 @@
 // Integer-zoom pixel layout. The canvas is W x H internal pixels, shown at an integer zoom.
-export const BASE_W = 640, BASE_H = 360;
+export const BASE_W = 576, BASE_H = 324;
 export const MAX_W = 960, MAX_H = 540;
 
 export function computeLayout(innerW, innerH, dpr) {

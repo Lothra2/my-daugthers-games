@@ -30,7 +30,8 @@ export class Game extends Phaser.Scene {
     this.acc = 0; this.t = 0; this.tickCount = 0;
     this.paused = false; this.ended = false; this.entered = false;
     this.shake = 0; this.shakeT = 0;
-    this.hitT = 0; this.stompT = 0; this.landT = 0; this.crouchInT = 0; this.blinkT = 0;
+    this.hitT = 0; this.stompT = 0; this.landT = 0; this.crouchInT = 0; this.blinkT = 0; this.waveT = 0;
+    this.thor = null; this.thorTimer = 12 + Math.random() * 25; this.thorHappy = false;
     this.trail = [];
     this.ghosts = [];
     this.names = new Map();
@@ -180,7 +181,8 @@ export class Game extends Phaser.Scene {
       case 'power_end': this.player.clearTint(); this.slowTint.setAlpha(0); break;
       case 'heart_get': fx.burst(e.x, e.y, 'px_heart', 8, 200, 0.8, { tint: 0xFF5C70, g: -150 }); fx.floatText(px + 60, 140, this.app.i18n.t('call.heart'), { tint: 0xFF9EC7, life: 1.1 }); break;
       case 'block_hit': fx.burst(e.x, e.y + 20, 'px_spark', 8, 200, 0.6, { tint: [GOLD, 0xffffff], g: -300 }); this.bump(e.id); break;
-      case 'stomp': this.stompT = 0.28; fx.burst(e.x, e.y, 'px_star', 8, 260, 0.6, { tint: [GOLD, 0xffffff, 0xFFC2E0], g: -320 }); fx.burst(e.x, e.y, 'px_ring', 1, 0, 0.35, { scale: 0.8, scale1: 4, g: 0 }); fx.floatText(e.x, e.y + 40, `+${e.pts}`, { tint: 0xFFF4DC }); this.shakeNow(2, 0.1); break;
+      case 'milestone': this.waveT = 0.9; fx.floatText(px + 80, 170, this.app.i18n.t('call.wave'), { tint: 0xFFE23A, big: true, life: 1.2 }); fx.burst(px, 70, 'px_star', 10, 240, 0.8, { tint: RAINBOW_HEX, g: -200 }); break;
+      case 'stomp': this.enemyDeath(e); this.stompT = 0.28; fx.burst(e.x, e.y, 'px_star', 8, 260, 0.6, { tint: [GOLD, 0xffffff, 0xFFC2E0], g: -320 }); fx.burst(e.x, e.y, 'px_ring', 1, 0, 0.35, { scale: 0.8, scale1: 4, g: 0 }); fx.floatText(e.x, e.y + 40, `+${e.pts}`, { tint: 0xFFF4DC }); this.shakeNow(2, 0.1); break;
       case 'pop': fx.burst(e.x, e.y, 'px_star', 10, 260, 0.7, { tint: RAINBOW_HEX, g: -280 }); if (!e.silent) fx.floatText(e.x, e.y + 30, `+${e.pts}`, { tint: 0xFFE23A }); break;
       case 'hit': this.hitT = 0.4; this.shakeNow(e.easy ? 2 : 4, 0.18); fx.burst(px, py + 70, 'px_star', 6, 190, 0.7, { tint: GOLD, g: -200 }); fx.floatText(px + 20, py + 90, this.app.i18n.t('call.ouch'), { tint: 0xFFFFFF }); this.flashScreen(0xffffff, 0.35); break;
       case 'fall_gap': this.shakeNow(3, 0.2); break;
@@ -234,6 +236,7 @@ export class Game extends Phaser.Scene {
     const s = this.sim;
     const summary = { score: s.score, meters: s.meters, coins: s.coins, stomps: s.stomps, perfects: s.perfects, world: s.maxWorld, lap: s.maxLap, mode: s.mode, name: this.app.save.settings.unicornName || 'Uni', seed: s.seed };
     this.time.delayedCall(s.dying > 0 || s.over ? 1100 : 0, () => this.app.bus.emit('run_over', summary));
+    if (s.mode === 'normal' ? Math.random() < 0.22 : Math.random() < 0.5) this.time.delayedCall(1500, () => { if (this.thor) { this.thor.spr.destroy(); this.thor = null; } this.spawnThor('visit'); });
   }
 
   hud(force) {
@@ -276,6 +279,8 @@ export class Game extends Phaser.Scene {
     this.renderEntities(camX);
     this.renderPlayer(alpha, dt, camX);
     this.renderTrail(camX, alpha);
+    this.updateDeaths(dt, camX);
+    this.updateThor(dt);
     this.ambient(dt, camX);
     this.fx.update(dt, camX, groundY);
     this.hud(false);
@@ -480,12 +485,15 @@ export class Game extends Phaser.Scene {
     if (this.hitT > 0) this.hitT -= dt;
     if (this.stompT > 0) this.stompT -= dt;
     if (this.landT > 0) this.landT -= dt;
+    if (this.waveT > 0) this.waveT -= dt;
     if (this.crouchInT > 0) this.crouchInT -= dt;
     let key;
     if (s.dying > 0 || s.over) key = this.ended || s.over ? 'unicorn_tired_loop' : 'unicorn_tired_in';
     else if (s.rescue) key = 'unicorn_respawn';
     else if (this.hitT > 0) key = 'unicorn_hit';
     else if (this.stompT > 0) key = 'unicorn_stomp';
+    else if (this.waveT > 0 && p.onGround && !p.crouch) key = 'unicorn_celebrate';
+    else if (this.thorHappy) key = 'unicorn_celebrate';
     else if (!p.onGround) key = p.vy > 260 ? 'unicorn_jump_rise' : p.vy > -200 ? 'unicorn_jump_apex' : (p.fastFall ? 'unicorn_fast_fall' : 'unicorn_fall');
     else if (this.landT > 0) key = 'unicorn_land';
     else if (p.crouch) key = this.crouchInT > 0 ? 'unicorn_crouch_enter' : 'unicorn_crouch_run';
@@ -566,6 +574,64 @@ export class Game extends Phaser.Scene {
     else if (kind === 'stars') { this.ambientT = 0.08; fx.emit({ x: Math.random() * W, y: 4 + Math.random() * (g - 80), key: 'px_dot2', life: 1.4, tint: 0xFFF3A8, twinkle: true, screen: true, depth: 2.4 }); if (Math.random() < 0.012) fx.emit({ x: W * 0.8, y: 30 + Math.random() * 60, vx: -420, vy: -150, key: 'px_star', life: 1.1, tint: 0xFFF3A8, screen: true, scale: 1.2, depth: 2.6 }); }
     else if (kind === 'rain') { this.ambientT = 0.02; fx.emit({ x: Math.random() * (W + 80), y: -6, key: 'px_drop', vx: -260, vy: 520, life: 0.9, tint: [0x7AC8FF, 0xFF9EC7, 0xFFE23A][Math.floor(Math.random() * 3)], screen: true, fade: false, depth: 7 }); if (Math.random() < 0.004 && !this.app.save.settings.reduceFlash) { this.flashScreen(0xE9E0FB, 0.18); } }
     else if (kind === 'stardust') { this.ambientT = 0.1; fx.emit({ x: W + 4, y: Math.random() * g, key: 'px_spark', vx: -90, life: 3, tint: 0xF2DCFF, twinkle: true, screen: true, scale: 0.8, depth: 2.4 }); }
+  }
+
+  enemyDeath(e) {
+    const spr = e.kind === 'slime_flat' ? 'slime_flat_stomped' : e.kind === 'bee' ? 'bee_dizzy' : null;
+    if (!spr) return;
+    const m = this.app.meta[spr];
+    const s = this.add.sprite(0, 0, spr).setDepth(19).setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]);
+    s.play(spr);
+    const wx = e.x, h0 = e.kind === 'bee' ? 40 : 0;
+    this.deaths = this.deaths || [];
+    this.deaths.push({ s, wx, h0, age: 0, bee: e.kind === 'bee' });
+  }
+
+  updateDeaths(dt, camX) {
+    if (!this.deaths) return;
+    for (let i = this.deaths.length - 1; i >= 0; i--) {
+      const d = this.deaths[i];
+      d.age += dt;
+      if (d.age > 0.7) { d.s.destroy(); this.deaths.splice(i, 1); continue; }
+      const up = d.bee ? d.age * 160 - d.age * d.age * 260 : 0;
+      d.s.setPosition(Math.round(d.wx - camX + (d.bee ? d.age * 90 : 0)), Math.round(this.groundY - d.h0 - up)).setAlpha(d.age > 0.4 ? 1 - (d.age - 0.4) / 0.3 : 1);
+    }
+  }
+
+  // ---- Thor (the family's boxer): background cameo in world 1 and a visit when the run ends
+  spawnThor(mode) {
+    if (this.thor) return;
+    const spr = this.add.sprite(-60, this.groundY - 2, 'thor_run').setDepth(mode === 'visit' ? 31 : 7);
+    const m = this.app.meta.thor_run;
+    spr.setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]).play('thor_run');
+    this.thor = { spr, mode, t: 0, barked: false, state: 'run' };
+    this.app.save.data.stats.thor++;
+  }
+
+  updateThor(dt) {
+    const T = this.thor;
+    const s = this.sim;
+    if (!T) {
+      if (!this.ended && this.introT > 0.9 && s.world === 1 && s.lap === 1) {
+        this.thorTimer -= dt;
+        if (this.thorTimer <= 0 && Math.random() < 0.18) this.spawnThor('cameo');
+        if (this.thorTimer <= 0) this.thorTimer = 9999;
+      }
+      return;
+    }
+    T.t += dt;
+    const spr = T.spr;
+    const setAnim = (key) => { if (T.cur !== key) { T.cur = key; const m = this.app.meta[key]; spr.setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]); spr.play(key, true); } };
+    if (T.mode === 'cameo') {
+      if (T.state === 'run') { spr.x += 140 * dt; setAnim('thor_run'); if (!T.barked && spr.x > this.W * 0.45) { T.state = 'bark'; T.bt = 0; T.barked = true; this.app.bus.emit('sfx', { name: 'bark' }); } }
+      else { T.bt += dt; setAnim('thor_bark'); if (T.bt > 0.55) T.state = 'run'; }
+      if (spr.x > this.W + 80) { spr.destroy(); this.thor = null; }
+    } else {
+      const tx = CFG.PLAYER_X - 86;
+      if (T.state === 'run') { spr.x += 220 * dt; setAnim('thor_run'); if (spr.x >= tx) { spr.x = tx; T.state = 'sit'; T.st = 0; this.thorHappy = true; } }
+      else { T.st += dt; setAnim(T.st < 0.5 ? 'thor_sit' : 'thor_lick'); if (T.st > 0.5 && !T.barked) { T.barked = true; this.app.bus.emit('sfx', { name: 'bark' }); } }
+    }
+    spr.setPosition(Math.round(spr.x), Math.round(this.groundY - 2));
   }
 
   debugBoxes(camX) {

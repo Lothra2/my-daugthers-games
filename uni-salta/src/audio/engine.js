@@ -88,6 +88,8 @@ export function createAudio(app) {
       case 'rescue_start': play('rescue_cloud', { delay: 0.2 }); break;
       case 'heart_get': play('heart'); jingle('one_up'); break;
       case 'streak': play('secret'); break;
+      case 'milestone': play('secret'); break;
+      case 'wake': play(e.type === 'hang' ? 'snake_hiss' : e.type === 'owl' ? 'owl_hoot' : 'ui_hover'); break;
       case 'power_start':
         play(e.kind === 'fast' ? 'candy_yellow' : e.kind === 'slow' ? 'candy_green' : 'candy_red');
         startPower(e.kind);

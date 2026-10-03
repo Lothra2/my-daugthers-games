@@ -3,7 +3,7 @@ import { CFG } from '../core/config.js';
 
 const MOTION_URL = 'https://cdn.jsdelivr.net/npm/motion@14.0.0/+esm';
 let M = null;
-try { M = await import(MOTION_URL); } catch (e) { M = null; }
+try { M = await import(MOTION_URL); } catch (e) { try { M = await import('../vendor/motion.js'); } catch (e2) { M = null; } }
 
 const SPRING = { type: 'spring', stiffness: 420, damping: 20 };
 const SOFT = { type: 'spring', stiffness: 220, damping: 26 };

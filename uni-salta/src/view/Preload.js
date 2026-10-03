@@ -26,7 +26,7 @@ export class Preload extends Phaser.Scene {
       this.load.image(`floor_w${w}`, `tiles/w${w}/floor.png`);
       this.load.image(`platform_w${w}`, `tiles/w${w}/platform.png`);
     }
-    this.load.bitmapFont('pixfont', 'fonts/pixfont.png', 'fonts/pixfont.fnt');
+    this.load.bitmapFont('pixfont', 'fonts/pixfont.png', 'fonts/pixfont.xml');
   }
 
   create() {

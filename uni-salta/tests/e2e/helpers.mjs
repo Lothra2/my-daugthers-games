@@ -33,6 +33,7 @@ export async function launch({ width = 932, height = 430, dpr = 3, touch = false
   const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: dpr, hasTouch: touch, isMobile: touch, ignoreHTTPSErrors: true });
   await ctx.route(/cdn\.jsdelivr\.net|fonts\.googleapis\.com|fonts\.gstatic\.com/, async (route) => {
     const url = route.request().url();
+    if (process.env.NO_CDN) return route.abort();
     try {
       const body = cdnFetch(url);
       const type = url.endsWith('.css') || url.includes('css2') ? 'text/css' : url.includes('woff2') ? 'font/woff2' : 'application/javascript';
