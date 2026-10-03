@@ -24,9 +24,14 @@ export function createAudio(app) {
     applyVolumes();
     for (const n of SFX_NAMES) A.buffers[n] = makeBuffer(n);
     A.ready = true;
+    try { const sb = ctx.createBuffer(1, 1, 22050), ss = ctx.createBufferSource(); ss.buffer = sb; ss.connect(ctx.destination); ss.start(0); } catch (e) { /* ignore */ }
     if (A.pending) { const p = A.pending; A.pending = null; playSong(p); }
     return ctx;
   }
+
+  // iOS only unlocks audio inside a real gesture; keep trying on every one, and recover from interruptions
+  const gesture = () => { ensure(); if (A.ctx && A.ctx.state !== 'running' && !document.hidden) A.ctx.resume().catch(() => {}); };
+  for (const ev of ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']) window.addEventListener(ev, gesture, { capture: true, passive: true });
 
   function makeBuffer(name) {
     const data = zzfxG(...SFX[name]);

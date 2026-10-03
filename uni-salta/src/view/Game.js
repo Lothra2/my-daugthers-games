@@ -311,6 +311,7 @@ export class Game extends Phaser.Scene {
     while (this.floorViews.length < segs.length) {
       this.floorViews.push({ top: this.add.tileSprite(0, 0, 8, 8, 'floor_w1').setOrigin(0, 0).setDepth(10), fill: this.add.rectangle(0, 0, 8, 8, 0xffffff).setOrigin(0, 0).setDepth(9.5) });
     }
+    this.drawPits(segs, camX);
     this.floorViews.forEach((v, i) => {
       const seg = segs[i];
       if (!seg) { v.top.setVisible(false); v.fill.setVisible(false); return; }
@@ -326,6 +327,25 @@ export class Game extends Phaser.Scene {
       if (fy < H) v.fill.setVisible(true).setPosition(x, fy - 1).setSize(width, H - fy + 2).setFillStyle((t.bottom[0] << 16) | (t.bottom[1] << 8) | t.bottom[2], 1);
       else v.fill.setVisible(false);
     });
+  }
+
+  // gaps read as a deep misty pit: a violet gradient with a soft rim, so the sky horizon never looks like ground
+  drawPits(segs, camX) {
+    if (!this.pitGfx) { this.pitGfx = this.add.graphics().setDepth(9); }
+    const g = this.pitGfx, H = this.H, W = this.W;
+    g.clear();
+    for (let i = 0; i < segs.length - 1; i++) {
+      const x0 = Math.round(segs[i][1] - camX), x1 = Math.round(segs[i + 1][0] - camX);
+      if (x1 - x0 < 2 || x1 < 0 || x0 > W) continue;
+      const t = this.app.worldAssets.worlds[segs[i][2]].tiles;
+      const top = this.groundY - t.surface;
+      const steps = Math.ceil((H - top) / 6);
+      for (let k = 0; k < steps; k++) {
+        const f = Math.min(1, k / Math.max(1, steps - 1));
+        const r = Math.round(150 - 90 * f), gg = Math.round(120 - 80 * f), b = Math.round(200 - 70 * f);
+        g.fillStyle((r << 16) | (gg << 8) | b, 1).fillRect(x0, top + k * 6, x1 - x0, 6);
+      }
+    }
   }
 
   spriteFor(e, key, meta) {

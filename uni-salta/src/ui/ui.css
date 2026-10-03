@@ -131,7 +131,7 @@ body { font-family: var(--font); color: var(--cream); overscroll-behavior: none;
 .table { width: 100%; border-collapse: collapse; font-size: calc(var(--px) * 16px); font-variant-numeric: tabular-nums; }
 .table td { padding: var(--u2) calc(var(--px) * 8px); border-bottom: var(--u2) solid rgba(255,244,220,.2); }
 .table td:last-child { text-align: right; }
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--px) * 10px); max-height: 62%; overflow: auto; pointer-events: auto; touch-action: pan-y; }
+.gallery { display: grid; grid-template-columns: repeat(3, calc(var(--px) * 112px)); gap: calc(var(--px) * 12px); max-height: 66vh; overflow: auto; pointer-events: auto; touch-action: pan-y; padding: calc(var(--px) * 4px); }
 .gcard { perspective: 600px; pointer-events: auto; }
 .gcard .in { position: relative; width: 100%; aspect-ratio: 1; transform-style: preserve-3d; }
 .gcard .f, .gcard .b { position: absolute; inset: 0; backface-visibility: hidden; background: #fff; border: var(--u3) solid var(--plum); display: grid; place-items: center; overflow: hidden; }
