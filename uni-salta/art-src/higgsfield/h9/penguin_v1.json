@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. A cute POPSICLE PENGUIN: a plump little penguin made of an ice-cream pop, light blue and white with a pink beak, tiny orange feet and a small red scarf. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Side view facing left. Frames: (1)-(2) standing and wobbling nervously (a warning pose); (3)-(6) fast belly slide lying flat on its tummy with flippers swept back; (7)-(8) dizzy and flattened with spiral eyes. Each creature is about 16 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "8bcc1bfa-da45-471f-8e9f-2ac6b87559fe",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 enemy penguin",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/cc3dc8ab-d6bd-41d7-99f1-81be088b4c17.png"
+ ]
+}

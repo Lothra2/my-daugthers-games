@@ -14,6 +14,10 @@ export const SONGS = {
   world4:     { bpm: 152, root: 57, mode: 'minor', prog: [[0, 'min'], [8, 'maj'], [3, 'maj'], [10, 'maj']], bars: 32, style: 'bell', seed: 24 },
   world5:     { bpm: 156, root: 64, mode: 'minor', prog: [[0, 'min'], [10, 'maj'], [8, 'maj'], [10, 'maj']], bars: 32, style: 'drive', seed: 25 },
   world6:     { bpm: 160, root: 60, mode: 'major', prog: [[0, 'maj'], [7, 'maj'], [9, 'min'], [5, 'maj']], bars: 32, style: 'grand', seed: 26 },
+  world7:     { bpm: 148, root: 62, mode: 'major', prog: [[0, 'maj'], [5, 'maj'], [9, 'min'], [7, 'maj']], bars: 32, style: 'marimba', seed: 27 },
+  world8:     { bpm: 144, root: 59, mode: 'major', prog: [[0, 'maj'], [9, 'min'], [7, 'maj'], [5, 'maj']], bars: 32, style: 'bell', seed: 28 },
+  world9:     { bpm: 162, root: 57, mode: 'minor', prog: [[0, 'min'], [5, 'maj'], [8, 'maj'], [7, 'maj']], bars: 32, style: 'drive', seed: 29 },
+  boss:       { bpm: 176, root: 52, mode: 'minor', prog: [[0, 'min'], [8, 'maj'], [5, 'min'], [7, 'maj']], bars: 16, style: 'drive', seed: 41 },
   invincible: { bpm: 180, root: 67, mode: 'major', prog: [[0, 'maj'], [5, 'maj'], [7, 'maj'], [0, 'maj']], bars: 8, style: 'rainbow', seed: 31 },
 };
 

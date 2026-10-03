@@ -37,8 +37,9 @@ export const CFG = {
   POWER_WARN: 1.5,
 
   // worlds: speeds (px/s), length (m)
-  WORLD_SPEED: [[230, 260], [270, 300], [310, 340], [350, 380], [390, 420], [430, 460]],
-  WORLD_LEN_M: [360, 400, 440, 480, 520, 560],
+  NUM_WORLDS: 9,
+  WORLD_SPEED: [[230, 260], [270, 300], [310, 340], [350, 380], [390, 420], [430, 460], [440, 470], [450, 480], [460, 490]],
+  WORLD_LEN_M: [360, 400, 440, 480, 520, 560, 480, 500, 520],
   LAP_SPEED_MULT: 1.08,
   SPEED_CAP: 560,
   EASY_SPEED: [150, 200],
@@ -50,11 +51,16 @@ export const CFG = {
   PTS_POP: 200, PTS_BLOCK: 50, PTS_WORLD: 1000, PTS_STREAK: 300,
   HEART_EVERY_COINS: 240,
 
+  // boss fights
+  BOSS_DIST: 330,
+  BOSS_HP: { queen: 8, king: 10 }, BOSS_HP_EASY: { queen: 5, king: 6 },
+  PTS_BOSS: 5000,
+
   // sprites (logical px)
   SPRITE: { unicorn: [96, 96] },
 };
 
 export const WORLD_NAMES = {
-  es: ['Nubes de Algodón', 'Valle Arcoíris', 'Bosque de Chupetas', 'Cielo Estrellado', 'Tormenta Mágica', 'Castillo Cósmico'],
-  en: ['Cotton Clouds', 'Rainbow Valley', 'Lollipop Forest', 'Starry Sky', 'Magic Storm', 'Cosmic Candy Castle'],
+  es: ['Nubes de Algodón', 'Valle Arcoíris', 'Bosque de Chupetas', 'Cielo Estrellado', 'Tormenta Mágica', 'Castillo Cósmico', 'Playa de Gominolas', 'Montaña de Helado', 'Ciudad Arcade'],
+  en: ['Cotton Clouds', 'Rainbow Valley', 'Lollipop Forest', 'Starry Sky', 'Magic Storm', 'Cosmic Candy Castle', 'Gummy Beach', 'Ice-Cream Glacier', 'Arcade City'],
 };

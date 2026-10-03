@@ -15,10 +15,10 @@ async function json(url) { const r = await fetch(url); if (!r.ok) throw new Erro
 
 async function boot() {
   const flags = readFlags();
-  const [u, e, m, wa] = await Promise.all([
-    json('src/data/anims_unicorn.json'), json('src/data/anims_entities.json'), json('src/data/anims_misc.json'), json('src/data/world_assets.json'),
+  const [u, e, m, wa, nw] = await Promise.all([
+    json('src/data/anims_unicorn.json'), json('src/data/anims_entities.json'), json('src/data/anims_misc.json'), json('src/data/world_assets.json'), json('src/data/anims_new.json'),
   ]);
-  const meta = { ...u, ...e, ...m };
+  const meta = { ...u, ...e, ...m, ...nw };
   const save = new Save();
   const i18n = new I18n(flags.lang || save.settings.lang);
   const bus = new Bus();

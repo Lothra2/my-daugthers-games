@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit for a cute 2D pixel art game background: exactly 8 separate objects arranged in a clean grid of 4 columns by 2 rows, each object fully visible, well separated with plenty of empty space around it, none touching or overlapping. Soft pastel 16-bit pixel art with hard square chunky pixels, simple flat shading with one highlight tone and one shadow tone, light from the top left, NO dark outlines (soft background art), no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else. Same warm pastel palette family as the reference drawing. Theme: ICE-CREAM GLACIER. The 8 objects are: (1) a tree shaped like an ice-cream cone with a big pink strawberry scoop on top, (2) a tall pointy blue ice crystal spire, (3) a cute snowman made of three vanilla scoops with chocolate cookie buttons, (4) a big frosted white-and-blue gumdrop mountain with a pink icing cap, (5) a pale icy blue cloud, (6) a tiny six-point snowflake cookie, (7) a floating iceberg block of blue candy ice, (8) a snowy cotton bush decorated with rainbow sprinkles. Palette: ice blue, white, strawberry pink, mint.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "002143ea-6344-4acb-bcde-cf0fe9ad3085",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 props kit w8",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/53c7359b-e77d-4551-800b-c9770cf83060.png"
+ ]
+}

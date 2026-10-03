@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit of 8 boss projectiles for a cute 2D pixel art game arranged in a clean grid of 4 columns by 2 rows, each fully visible, well separated with plenty of empty space, none touching, all the same size. TOP ROW: 4 animation frames of a dark violet and magenta spiky energy orb, a ball with an angry little face and small pointy spikes rotating a bit each frame, crackling with dark purple sparks (a BAD projectile). BOTTOM ROW: 4 animation frames of a glowing golden-and-pink star-shaped candy orb with a sparkling cute star face and a soft glow, twinkling a little different each frame (a GOOD projectile). 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading, no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "ec841cc9-a515-4454-a181-fe5681341917",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 boss projectiles",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/68ed056b-c701-4a10-91a8-90f670ac178f.png"
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A BOSS CHARACTER sprite sheet for a cute 2D pixel art game: exactly 8 poses of the SAME big boss arranged in a clean grid of 4 columns by 2 rows, each pose fully visible, well separated with plenty of empty space, none touching, all the same size, side view facing left. The boss is cute-but-royal, a bit grumpy and never scary. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no text, no labels. Solid flat cyan background, nothing else. The boss is the COSMIC SERPENT QUEEN: a huge plump violet-purple snake queen coiled upright like a spring with a big round head, a small golden crown with a pink gem, sparkly star patterns on her scales, rosy cheeks, big expressive eyes and a tiny forked pink tongue, drawn in the same cute style as the reference snake. Poses: (1) idle neutral with a haughty smile, (2) idle swaying up with the crown glinting, (3) idle swaying down with the tail curling, (4) angry wind-up with a frown and glowing purple energy gathering at the mouth, (5) shooting with the mouth wide open and a glowing orb at the mouth, (6) hurt with eyes squeezed shut and the whole body flashing white, (7) very dizzy with spiral eyes and little stars circling the head, (8) defeated with the crown fallen off, tearful big eyes and a small sad pout.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/d5b9ff8d-ca4e-47e4-97ac-3d9baec3dbdd.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "401b639a-cc32-48e9-9ca3-2f2b300e8ae6",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "H9 boss serpent queen",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/7140edc0-eb9d-4f5c-bd0e-1a80f0259c18.png"
+ ]
+}

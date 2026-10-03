@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A BOSS CHARACTER sprite sheet for a cute 2D pixel art game: exactly 8 poses of the SAME big boss arranged in a clean grid of 4 columns by 2 rows, each pose fully visible, well separated with plenty of empty space, none touching, all the same size, side view facing left. The boss is cute-but-royal, a bit grumpy and never scary. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no text, no labels. Solid flat cyan background, nothing else. The boss is the ARCADE GHOST KING: a huge plump friendly-grumpy ghost with a wavy tail, a tiny golden pixel crown, a short cyan-and-magenta neon cape, big round glowing eyes and a wide mouth, body in pale lilac with neon cyan edges. Poses: (1) idle neutral with a proud grin, (2) idle floating up with the cape fluttering, (3) idle floating down, (4) angry wind-up with a big frown and glowing magenta energy at the mouth, (5) shooting with the mouth wide open and a glowing orb at the mouth, (6) hurt with eyes squeezed shut and the whole body flashing white, (7) very dizzy with spiral eyes and little stars circling the head, (8) defeated with the crown fallen off, tearful big eyes and a small sad pout.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "48ca29ba-f4c5-4468-829f-01a1fec635ca",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 boss ghost king",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/a64fb46f-8a9a-41b3-ba85-8072b707029d.png"
+ ]
+}

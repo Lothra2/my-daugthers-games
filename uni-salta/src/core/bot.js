@@ -91,9 +91,9 @@ export class Bot {
 // Reactive bot: acts when the next hazard is `lead` seconds away, like a person reacting to a
 // visible obstacle. Running the validator with several leads proves each chunk has a timing
 // window of at least the spread between them (about 140 ms), which is the fairness bar.
-const GROUND = new Set(['sf', 'ss', 'ssh', 'snail', 'beeL', 'storm']);
-const HIGH = new Set(['fly', 'hang', 'beeH', 'owl']);
-const HALFW = { sf: 32, ss: 17, ssh: 17, snail: 20, beeL: 17, beeH: 17, storm: 26, fly: 70, hang: 14, owl: 24, jelly: 20 };
+const GROUND = new Set(['sf', 'ss', 'ssh', 'snail', 'beeL', 'storm', 'crab', 'wheel', 'ghost', 'penguin']);
+const HIGH = new Set(['fly', 'hang', 'beeH', 'owl', 'invader']);
+const HALFW = { sf: 32, ss: 17, ssh: 17, snail: 20, beeL: 17, beeH: 17, storm: 26, fly: 70, hang: 14, owl: 24, jelly: 20, crab: 24, wheel: 17, ghost: 19, penguin: 25, invader: 20 };
 
 export class ReactiveBot {
   constructor(opts = {}) {
@@ -105,7 +105,7 @@ export class ReactiveBot {
 
   closing(sim, e) {
     let v = sim.speed;
-    if (e.type === 'fly' || e.type === 'beeH' || e.type === 'beeL' || e.type === 'snail') v -= (e.vx || 0) * sim.timeScale;
+    if (e.type !== 'owl') v -= (e.vx || 0) * sim.timeScale;
     if (e.type === 'owl') v += (e.state === 'glide' ? 230 * sim.timeScale : 0);
     return Math.max(60, v);
   }
@@ -137,6 +137,13 @@ export class ReactiveBot {
       if (edge > px - 10 && (!best || edge < best.x)) best = { x: edge, kind: 'gap', tf: (edge - px) / Math.max(60, sim.speed) };
     }
     for (const e of sim.entities) {
+      if (e.alive && e.kind === 'proj' && !e.ret) {
+        const half = e.good ? 27 : 14;
+        if (e.x + half < px - 22) continue;
+        const tf = (e.x - half - (px + 16)) / this.closing(sim, e);
+        if (!best || e.x < best.x) best = { x: e.x, kind: e.good ? 'good' : e.lv === 'low' ? 'jump' : 'crouch', tf, e, half };
+        continue;
+      }
       if (!e.alive || e.kind !== 'hz' || e.x + HALFW[e.type] < px - 22) continue;
       let action = null;
       if (GROUND.has(e.type)) action = 'jump';
@@ -153,10 +160,10 @@ export class ReactiveBot {
       if (best.tf <= 0.07 + j * 0.3 && sim.p.onGround) { this.plan = 'jump'; this.k = 0; this.len = 60; return planInput('jump', this.k++); }
       return NONE;
     }
-    const act = best.tf <= lead * (best.kind === 'crouch' ? 1.1 : 1);
+    const act = best.tf <= lead * (best.kind === 'crouch' ? 1.1 : best.kind === 'good' ? 0.4 : 1);
     if (!act) return NONE;
-    if (best.kind === 'jump') { this.plan = 'jump'; this.len = 60; this.k = 0; return planInput('jump', this.k++); }
-    const w = (HALFW[best.e.type] * 2 + 46);
+    if (best.kind === 'jump' || best.kind === 'good') { this.plan = 'jump'; this.len = 60; this.k = 0; return planInput('jump', this.k++); }
+    const w = ((best.half || HALFW[best.e.type]) * 2 + 46);
     this.len = Math.max(20, Math.min(90, Math.ceil((Math.max(0, best.tf) + w / this.closing(sim, best.e) + 0.05) * 60)));
     this.plan = 'crouch'; this.k = 0;
     return { jumpDown: false, jumpPressed: false, crouchDown: true };

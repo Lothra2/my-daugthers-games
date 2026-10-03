@@ -4,10 +4,28 @@ import { CFG } from './config.js';
 import { makeRng } from './rng.js';
 import { CHUNKS } from '../data/patterns.js';
 
-const HAZARDS = new Set(['sf', 'ss', 'ssh', 'fly', 'hang', 'snail', 'beeH', 'beeL', 'owl', 'storm', 'jelly']);
-const KIND = { sf: 'slime_flat', ss: 'slime_spiky', ssh: 'slime_spiky', fly: 'snake_fly', hang: 'snake_hang', snail: 'snail', beeH: 'bee', beeL: 'bee', owl: 'owl', storm: 'storm', jelly: 'jelly' };
+const HAZARDS = new Set(['sf', 'ss', 'ssh', 'fly', 'hang', 'snail', 'beeH', 'beeL', 'owl', 'storm', 'jelly', 'crab', 'wheel', 'ghost', 'penguin', 'invader']);
+const KIND = { sf: 'slime_flat', ss: 'slime_spiky', ssh: 'slime_spiky', fly: 'snake_fly', hang: 'snake_hang', snail: 'snail', beeH: 'bee', beeL: 'bee', owl: 'owl', storm: 'storm', jelly: 'jelly', crab: 'crab', wheel: 'wheel', ghost: 'ghost', penguin: 'penguin', invader: 'invader' };
 
-export const TIER_CAP = [1, 2, 3, 4, 4, 5]; // by world
+export const TIER_CAP = [1, 2, 3, 4, 4, 5, 5, 5, 5]; // by world
+const ARENA = ['arena_coins_01', 'arena_coins_02', 'arena_coins_03'];
+export const BOSS_WORLDS = { 6: 'queen', 9: 'king' };   // the boss waits at the end of these worlds
+
+// boss attack cycles: [seconds after cycle start, 'low' | 'high' | 'good', height of a good orb]
+const BOSS_CYCLES = [
+  [ // phase 1
+    [[0, 'low'], [1.2, 'high'], [2.6, 'good', 100]],
+    [[0, 'high'], [1.2, 'low'], [2.5, 'good', 110]],
+  ],
+  [ // phase 2
+    [[0, 'low'], [0.95, 'low'], [2.1, 'high'], [3.3, 'good', 100]],
+    [[0, 'high'], [1.0, 'low'], [2.0, 'high'], [3.3, 'good', 95]],
+  ],
+  [ // phase 3
+    [[0, 'low'], [0.85, 'high'], [1.7, 'low'], [2.8, 'good', 105], [3.6, 'high']],
+    [[0, 'high'], [0.9, 'high'], [1.9, 'low'], [3.0, 'good', 100], [3.8, 'low']],
+  ],
+];
 
 export class Sim {
   constructor(opts = {}) {
@@ -57,6 +75,7 @@ export class Sim {
     this.worldBreather = 2;          // chunks to keep gentle after a world change
     this.afterHit = 0;
     this.sprintGrace = 0;
+    this.boss = null; this.gateOverride = null;
     this.gen = { spawnX: this.x - 200, history: [], lastTier: 0, powerDue: 2200, heartCd: 0, formation: 1, count: 0 };
     this.warmup = 1.2;               // seconds before the first hazard can matter
     this.worldMap = [{ x: -1e9, world: this.world, lap: this.lap }];
@@ -70,9 +89,11 @@ export class Sim {
   get camX() { return this.x - CFG.PLAYER_X; }
   get meters() { return Math.max(0, Math.floor((this.x - this.startX) / CFG.METER)); }
   worldAt(x) { let r = this.worldMap[0]; for (const w of this.worldMap) if (x >= w.x) r = w; return r; }
-  gateX() { return this.worldStartX + this.worldLenM() * CFG.METER; }
-  nextWorldNum() { return (this.world % 6) + 1; }
-  worldAtX(x) { return x >= this.gateX() ? this.nextWorldNum() : this.world; }
+  gateX() { return this.gateOverride ?? (this.worldStartX + this.worldLenM() * CFG.METER); }
+  nextWorldNum() { return (this.world % CFG.NUM_WORLDS) + 1; }
+  bossAtGate() { return !!BOSS_WORLDS[this.world] && this.gateOverride == null; }
+  gateIsPortal() { return !this.bossAtGate(); }
+  worldAtX(x) { return this.gateIsPortal() && x >= this.gateX() ? this.nextWorldNum() : this.world; }
   worldLenM() { return this.mode === 'easy' ? CFG.EASY_LEN_M : CFG.WORLD_LEN_M[this.world - 1]; }
   worldMeters() { return Math.max(0, (this.x - this.worldStartX) / CFG.METER); }
   progress() { return Math.min(1, this.worldMeters() / this.worldLenM()); }
@@ -134,11 +155,12 @@ export class Sim {
     }
     const g = this.gen;
     const wx = this.worldAtX(g.spawnX);
-    if (!g.gateDone && g.spawnX >= this.gateX()) { g.gateDone = true; this.worldBreather = 2; }
-    const lapx = wx === 1 && this.world === 6 ? this.lap + 1 : this.lap;
+    if (!g.gateDone && g.spawnX >= this.gateX() && this.gateIsPortal()) { g.gateDone = true; this.worldBreather = 2; }
+    const lapx = wx === 1 && this.world === CFG.NUM_WORLDS ? this.lap + 1 : this.lap;
+    if (this.bossAtGate() && g.spawnX >= this.gateX() - 200) { const id = this.rng.pick(ARENA); return CHUNKS.find((c) => c.id === id); }
     const sprint = this.power && this.power.kind === 'fast';
     const needBreather = this.worldBreather > 0 || g.lastTier >= 4 || this.afterHit > 0 || (this.sprintGrace > 0);
-    let pool = CHUNKS.filter((c) => c.modes.includes(this.mode) && c.worlds.includes(wx));
+    let pool = CHUNKS.filter((c) => c.modes.includes(this.mode) && c.worlds.includes(wx) && !c.tags.includes('arena'));
     if (sprint) {
       pool = CHUNKS.filter((c) => c.tags.includes('sprint'));
     } else {
@@ -149,7 +171,7 @@ export class Sim {
     const recent = g.history.slice(-3);
     let pool2 = pool.filter((c) => !recent.slice(-c.cd).includes(c.id));
     if (pool2.length === 0) pool2 = pool;
-    if (pool2.length === 0) pool2 = CHUNKS.filter((c) => c.tier === 0 && !c.tags.includes('sprint'));
+    if (pool2.length === 0) pool2 = CHUNKS.filter((c) => c.tier === 0 && !c.tags.includes('sprint') && !c.tags.includes('arena'));
     // prefer tiers near the cap, still keep variety
     const weights = pool2.map((c) => {
       let w = c.weight;
@@ -239,6 +261,11 @@ export class Sim {
       if (it.t === 'storm') { e.y = 250; e.state = 'idle'; }
       if (it.t === 'jelly') { e.lv = it.lv || (it.phase >= 3 ? 'low' : 'mid'); e.y = e.lv === 'low' ? 48 : 62; }
       if (it.t === 'ssh') { e.hopT = 0; }
+      if (it.t === 'crab') { e.vx = -30; }
+      if (it.t === 'wheel') { e.vx = 0; }
+      if (it.t === 'ghost') { e.y = 62; e.vx = 0; }
+      if (it.t === 'penguin') { e.vx = 0; e.state = 'idle'; }
+      if (it.t === 'invader') { e.y = 66; e.vx = 0; }
       this.addEntity(e);
     }
   }
@@ -298,6 +325,7 @@ export class Sim {
 
     this.stepPlayer(input, dt);
     this.stepEntities(dt, ts);
+    this.stepBoss(dt, ts);
     this.collide();
     this.stepProgress();
     this.ensureLevel();
@@ -393,6 +421,7 @@ export class Sim {
       if (!e.alive) continue;
       if (e.kind === 'plat') { /* static */ continue; }
       if (e.kind === 'pick') { e.ay = Math.sin((this.t + e.id) * 3) * 2; continue; }
+      if (e.kind === 'proj') { this.stepProj(e, d); continue; }
       if (e.kind !== 'hz') continue;
       e.age += d;
       const distAhead = e.x - this.x;
@@ -424,6 +453,22 @@ export class Sim {
           else if (e.state === 'puddle') { e.st += d; }
           break;
         case 'jelly': e.by = Math.sin(e.age * 4 + e.id) * 5; break;
+        case 'crab': {
+          // scuttle, rear up, then dash: the rear-up is the telegraph
+          const ph = e.age % 2.3;
+          e.vx = ph < 1.2 ? -30 : ph < 1.55 ? 0 : -150;
+          e.pose = ph < 1.2 ? 'walk' : ph < 1.55 ? 'warn' : 'dash';
+          if (near) e.x += e.vx * d;
+          break;
+        }
+        case 'wheel': if (near) { e.vx = -165; e.x += e.vx * d; } break;
+        case 'ghost': e.by = Math.sin(e.age * 2.4 + e.id) * 24; if (near) { e.vx = -28; e.x += e.vx * d; } break;
+        case 'penguin':
+          if (e.state === 'idle' && distAhead < this.speed * 1.5 && distAhead > 0) { e.state = 'wobble'; e.st = 0; this.emit('wake', { type: 'penguin', x: e.x }); }
+          else if (e.state === 'wobble') { e.st += d; if (e.st >= 0.5) { e.state = 'slide'; e.st = 0; e.vx = -190; } }
+          else if (e.state === 'slide') e.x += e.vx * d;
+          break;
+        case 'invader': { e.by = (Math.floor(e.age / 0.6) % 2 ? 12 : -12); if (near) { e.vx = -38; e.x += e.vx * d; } break; }
         default: break;
       }
     }
@@ -442,6 +487,11 @@ export class Sim {
       case 'owl': return e.state === 'glide' ? [{ x: e.x - 24, y: e.y - 22, w: 48, h: 44 }] : [];
       case 'storm': return e.state === 'zap' ? [{ x: e.x - 14, y: 0, w: 28, h: 280 }] : e.state === 'puddle' ? [{ x: e.x - 26, y: 0, w: 52, h: 12 }] : [];
       case 'jelly': return [{ x: e.x - 20, y: y0 - 20, w: 40, h: 40 }];
+      case 'crab': return [{ x: e.x - 24, y: 0, w: 48, h: 28 }];
+      case 'wheel': return [{ x: e.x - 17, y: 2, w: 34, h: 34 }];
+      case 'ghost': return [{ x: e.x - 19, y: y0 - 18, w: 38, h: 36 }];
+      case 'penguin': return e.state === 'slide' ? [{ x: e.x - 25, y: 0, w: 50, h: 24 }] : [{ x: e.x - 15, y: 0, w: 30, h: 40 }];
+      case 'invader': return [{ x: e.x - 20, y: y0 - 16, w: 40, h: 32 }];
       default: return [];
     }
   }
@@ -449,6 +499,9 @@ export class Sim {
   stompTop(e) {
     if (e.type === 'sf') return 34;
     if (e.type === 'snail') return 30;
+    if (e.type === 'crab') return 28;
+    if (e.type === 'ghost') return (e.y || 0) + (e.by || 0) + 18;
+    if (e.type === 'penguin') return e.state === 'slide' ? 24 : 40;
     if (e.type === 'beeL') return (e.y || 0) + (e.by || 0) + 18;
     return null;
   }
@@ -468,6 +521,8 @@ export class Sim {
         const dx = Math.max(pb.x - e.x, 0, e.x - (pb.x + pb.w));
         const dy = Math.max(pb.y - (e.y + (e.ay || 0)), 0, (e.y + (e.ay || 0)) - (pb.y + pb.h));
         if (dx * dx + dy * dy < 26 * 26) this.takePick(e);
+      } else if (e.kind === 'proj') {
+        if (!e.ret) this.collideProj(e, pb);
       } else if (e.kind === 'block') {
         if (!e.used && p.vy > 0 && pb.y + pb.h >= e.y - 2 && pb.y + pb.h <= e.y + 30 && Math.abs(this.x - e.x) < 26) this.hitBlock(e);
       } else if (e.kind === 'hz') {
@@ -606,19 +661,135 @@ export class Sim {
     const m = this.meters;
     if (m > this.meterPaid) { this.score += m - this.meterPaid; this.meterPaid = m; }
     if (m >= this.nextMilestone) { this.emit('milestone', { m: this.nextMilestone }); this.nextMilestone += 1000; }
-    if (this.worldMeters() >= this.worldLenM()) {
-      const cleared = this.world;
-      this.score += CFG.PTS_WORLD * cleared;
-      this.emit('world_clear', { world: cleared, lap: this.lap });
-      this.world++;
-      if (this.world > 6) { this.world = 1; this.lap++; this.emit('lap', { lap: this.lap }); }
-      this.maxWorld = Math.max(this.maxWorld, this.lap === 1 ? this.world : 6);
-      this.maxLap = Math.max(this.maxLap, this.lap);
-      this.worldStartX = this.x;
-      this.worldMap.push({ x: this.x, world: this.world, lap: this.lap });
-      this.gen.gateDone = false;
-      this.emit('world_enter', { world: this.world, lap: this.lap });
+    if (this.x >= this.gateX()) {
+      if (this.bossAtGate()) { if (!this.boss) this.startBoss(); } else this.advanceWorld();
     }
+  }
+
+  advanceWorld() {
+    const cleared = this.world;
+    this.score += CFG.PTS_WORLD * cleared;
+    this.emit('world_clear', { world: cleared, lap: this.lap });
+    this.world++;
+    if (this.world > CFG.NUM_WORLDS) { this.world = 1; this.lap++; this.emit('lap', { lap: this.lap }); }
+    this.maxWorld = Math.max(this.maxWorld, this.lap === 1 ? this.world : CFG.NUM_WORLDS);
+    this.maxLap = Math.max(this.maxLap, this.lap);
+    this.worldStartX = this.x;
+    this.gateOverride = null;
+    this.boss = null;
+    this.worldMap.push({ x: this.x, world: this.world, lap: this.lap });
+    this.gen.gateDone = false;
+    this.emit('world_enter', { world: this.world, lap: this.lap });
+  }
+
+  // ------------------------------------------------------------------ boss fight
+  startBoss() {
+    const kind = BOSS_WORLDS[this.world];
+    const easy = this.mode === 'easy';
+    const max = (easy ? CFG.BOSS_HP_EASY : CFG.BOSS_HP)[kind] + (easy ? 0 : Math.min(6, (this.lap - 1) * 2));
+    this.boss = { kind, hp: max, max, state: 'enter', t: 0, dist: this.bossDist || CFG.BOSS_DIST, sx: 700, cycle: null, ci: 0, cycleT: 0, windup: 0, cool: 0, hurtT: 0, shots: 0, phase: 0, flash: 0 };
+    this.emit('boss_start', { kind, hp: max });
+  }
+
+  bossPhase(b) { const f = b.hp / b.max; return f > 0.67 ? 0 : f > 0.34 ? 1 : 2; }
+
+  bossSpeed(b) {
+    const base = [265, 315, 365][b.phase] + (this.lap - 1) * 14;
+    return this.mode === 'easy' ? base * 0.72 : base;
+  }
+
+  fireOrb(b, kind, gy) {
+    const sv = this.bossSpeed(b);
+    const good = kind === 'good';
+    const y = good ? gy : kind === 'low' ? 22 : 66;
+    this.addEntity({ kind: 'proj', good, lv: kind, x: this.x + b.dist - 20, y, sv, vx: this.speed - sv, ret: false, age: 0 });
+    b.shots++;
+    this.emit('boss_shoot', { good, lv: kind });
+  }
+
+  stepBoss(dt, ts) {
+    const b = this.boss;
+    if (!b) return;
+    const d = dt * ts;
+    b.t += d;
+    if (b.flash > 0) b.flash -= dt;
+    if (b.state === 'enter') {
+      b.sx = b.dist + Math.max(0, 1 - b.t / 1.6) * 360;
+      if (b.t >= 1.7) { b.state = 'fight'; b.t = 0; b.cool = 0.8; this.emit('boss_ready', { kind: b.kind }); }
+      return;
+    }
+    if (b.state === 'dying') {
+      if (b.t >= 2.4) { this.bossGone(); }
+      return;
+    }
+    b.phase = this.bossPhase(b);
+    if (b.hurtT > 0) { b.hurtT -= d; return; }
+    if (b.windup > 0) { b.windup -= d; if (b.windup <= 0 && b.pending) { const q = b.pending; b.pending = null; this.fireOrb(b, q[1], q[2]); } return; }
+    if (!b.cycle) {
+      if (b.cool > 0) { b.cool -= d; return; }
+      const set = BOSS_CYCLES[b.phase];
+      b.cycle = set[this.rng.int(0, set.length - 1)];
+      b.cycleT = 0; b.ci = 0;
+    }
+    b.cycleT += d;
+    const nxt = b.cycle[b.ci];
+    if (nxt && b.cycleT >= nxt[0]) { b.ci++; b.pending = nxt; b.windup = 0.32; b.pose = nxt[1]; }
+    if (b.ci >= b.cycle.length && !b.pending) { b.cycle = null; b.cool = [1.2, 1.0, 0.8][b.phase]; }
+  }
+
+  hitBoss() {
+    const b = this.boss;
+    if (!b || b.state === 'dying' || b.state === 'enter') return;
+    b.hp--;
+    b.flash = 0.25; b.hurtT = 0.55; b.cycle = null; b.pending = null; b.windup = 0; b.cool = 0.9;
+    this.score += 250;
+    this.emit('boss_hit', { hp: b.hp, max: b.max, kind: b.kind });
+    if (b.hp <= 0) {
+      b.state = 'dying'; b.t = 0;
+      for (const e of this.entities) if (e.kind === 'proj') { e.alive = false; this.emit('pop', { kind: 'orb', x: e.x, y: e.y, silent: true }); }
+      this.emit('boss_defeat', { kind: b.kind });
+    } else if (b.hp === Math.ceil(b.max * 0.67) || b.hp === Math.ceil(b.max * 0.34)) {
+      this.emit('boss_phase', { phase: this.bossPhase(b) });
+      this.addEntity({ kind: 'pick', pk: 'heart', x: this.x + 260, y: 96, spawnT: this.t });
+    }
+  }
+
+  bossGone() {
+    const b = this.boss;
+    this.score += CFG.PTS_BOSS * this.lap;
+    this.emit('boss_gone', { kind: b.kind, pts: CFG.PTS_BOSS * this.lap });
+    // victory lap: a rain of candy and the gate to the next world a bit further ahead
+    const fid = this.gen.formation++;
+    this.formations[fid] = { total: 0, done: 0, missed: true, closed: true };
+    for (let i = 0; i < 24; i++) this.addEntity({ kind: 'coin', x: this.x + 160 + i * 34, y: 40 + Math.round(Math.sin(i * 0.5) * 30) + 30, f: this.newLooseFormation() });
+    if (this.lives < CFG.LIVES && this.mode === 'normal') { this.lives++; this.emit('heart_get', { x: this.x + 140, y: 100, bonus: true }); }
+    this.gateOverride = this.x + 1000;
+    this.gen.gateDone = false;
+    this.boss = { ...b, state: 'gone' };
+  }
+
+  stepProj(e, d) {
+    const b = this.boss;
+    e.age += d;
+    if (e.ret) {
+      e.x += (this.speed + 640) * d;
+      if (b && e.x >= this.x + b.sx - 40) { e.alive = false; this.hitBoss(); this.emit('orb_hit_boss', { x: e.x, y: e.y }); }
+      return;
+    }
+    e.vx = this.speed - e.sv;
+    e.x += e.vx * d;
+    if (e.x < this.x - 160) e.alive = false;
+  }
+
+  collideProj(e, pb) {
+    const cx = e.x, cy = e.y, r = e.good ? 27 : 14;
+    const dx = Math.max(pb.x - cx, 0, cx - (pb.x + pb.w)), dy = Math.max(pb.y - cy, 0, cy - (pb.y + pb.h));
+    if (dx * dx + dy * dy > r * r) return;
+    if (e.good) { e.ret = true; this.score += 100; this.emit('orb_reflect', { x: e.x, y: e.y }); return; }
+    if (this.invincible) { e.alive = false; this.emit('pop', { kind: 'orb', x: e.x, y: e.y, pts: 0, silent: true }); return; }
+    if (this.p.invul > 0 || this.rescue) return;
+    this.hitBy({ name: 'orb', x: e.x, type: 'orb', alive: true });
+    e.alive = false;
   }
 
   cull() {

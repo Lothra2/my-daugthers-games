@@ -21,7 +21,7 @@ export class Preload extends Phaser.Scene {
     for (const k of ['fast', 'slow', 'inv']) this.load.image(`power_${k}`, `cutscene/power_${k}.png`);
     this.load.image('ui_heart_full', 'ui/ui_heart_full.png');
     this.load.image('ui_heart_empty', 'ui/ui_heart_empty.png');
-    for (let w = 1; w <= 6; w++) {
+    for (let w = 1; w <= 9; w++) {
       const wa = app.worldAssets.worlds[w];
       for (let i = 0; i < wa.props.length; i++) this.load.image(`prop_w${w}_${i}`, `props/w${w}/prop_${i}.png`);
       this.load.image(`floor_w${w}`, `tiles/w${w}/floor.png`);
@@ -48,7 +48,7 @@ export class Preload extends Phaser.Scene {
       makeStreaks(this, `streaks_w${n}`, w.streak, 7 + Number(n));
     }
     // 3-slice frames for platforms
-    for (let w = 1; w <= 6; w++) {
+    for (let w = 1; w <= 9; w++) {
       const tex = this.textures.get(`platform_w${w}`);
       const src = tex.getSourceImage();
       const pw = src.width, ph = src.height;

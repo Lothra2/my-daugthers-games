@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit for a cute 2D pixel art game background: exactly 8 separate objects arranged in a clean grid of 4 columns by 2 rows, each object fully visible, well separated with plenty of empty space around it, none touching or overlapping. Soft pastel 16-bit pixel art with hard square chunky pixels, simple flat shading with one highlight tone and one shadow tone, light from the top left, NO dark outlines (soft background art), no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else. Same warm pastel palette family as the reference drawing. Theme: NEON ARCADE CITY at night. The 8 objects are: (1) a retro arcade cabinet with a glowing cyan screen and pink joystick, (2) a giant glowing pink pixel heart, (3) a tall street lamp shaped like a joystick, (4) a glowing yellow neon star sign, (5) a tall retro pillar with a glowing cyan grid pattern, (6) a floating dark-violet cloud with a smiling face and neon pink edges, (7) a floating question-mark cube block in yellow, (8) a neon rainbow arch. Palette: deep indigo, magenta, cyan, yellow.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "b874ef7b-5a3d-43cc-8881-67b366c0b69d",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 props kit w9",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/dd84387d-b711-4e41-aa59-6957e1c5cb7c.png"
+ ]
+}

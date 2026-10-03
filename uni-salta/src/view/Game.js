@@ -27,6 +27,7 @@ export class Game extends Phaser.Scene {
     const seed = this.flags.seed ?? d.seed ?? ((Date.now() ^ (Math.random() * 1e9)) >>> 0);
     const mode = this.flags.mode || d.mode || app.save.settings.lastMode || 'normal';
     this.sim = new Sim({ mode, seed, world: this.flags.world || d.world || 1, lap: this.flags.lap || 1, fixedSpeed: this.flags.speed || null, script: this.flags.chunk ? Array(6).fill(this.flags.chunk) : null });
+    this.sim.bossDist = Math.max(300, Math.min(560, W - 120 - CFG.PLAYER_X));
     this.bot = this.flags.autoplay ? new ReactiveBot({ lead: 0.27, jitter: 0.08, rng: makeRng(seed) }) : null;
     this.acc = 0; this.t = 0; this.tickCount = 0;
     this.paused = false; this.ended = false; this.entered = false;
@@ -110,6 +111,7 @@ export class Game extends Phaser.Scene {
   onResize(size) {
     const W = size.width, H = size.height;
     this.W = W; this.H = H; this.groundY = H - CFG.FLOOR_H;
+    if (this.sim) this.sim.bossDist = Math.max(300, Math.min(560, W - 120 - CFG.PLAYER_X));
     for (const s of [this.sky, this.skyB, this.streaks, this.streaksB]) s.setSize(W, H);
     this.glow.setX(W);
     for (const r of [this.slowTint, this.lapTint, this.flash]) r.setPosition(W / 2, H / 2).setSize(W, H);
@@ -124,7 +126,7 @@ export class Game extends Phaser.Scene {
 
   worldVis(x) {
     const s = this.sim;
-    if (x >= s.gateX()) return s.nextWorldNum();
+    if (s.gateIsPortal() && x >= s.gateX()) return s.nextWorldNum();
     return s.worldAt(x).world;
   }
 
@@ -138,7 +140,7 @@ export class Game extends Phaser.Scene {
     const s = this.sim, W = this.W;
     let b = null;
     const g = s.gateX();
-    if (g - camX < W + 120) b = g;
+    if (s.gateIsPortal() && g - camX < W + 120) b = g;
     for (const m of s.worldMap) if (m.x > -1e8 && m.x - camX > -40 && m.x - camX < W + 120) b = m.x;
     if (b == null) return null;
     return { id: Math.round(b), x: Math.round(b - camX), left: this.worldVis(b - 2), right: this.worldVis(b + 2) };
@@ -247,6 +249,14 @@ export class Game extends Phaser.Scene {
       case 'power_end': this.player.clearTint(); this.slowTint.setAlpha(0); break;
       case 'heart_get': fx.burst(e.x, e.y, 'px_heart', 8, 200, 0.8, { tint: 0xFF5C70, g: -150 }); fx.floatText(px + 60, 140, this.app.i18n.t('call.heart'), { tint: 0xFF9EC7, life: 1.1 }); break;
       case 'block_hit': fx.burst(e.x, e.y + 20, 'px_spark', 8, 200, 0.6, { tint: [GOLD, 0xffffff], g: -300 }); this.bump(e.id); break;
+      case 'boss_start': this.flashScreen(0xFF4D5E, 0.5); this.shakeNow(4, 0.6); fx.floatText(this.W / 2, 120, this.app.i18n.t('boss.warn'), { screen: true, sx: this.W / 2, sy: 120, big: true, tint: 0xFF5C70, life: 1.7 }); break;
+      case 'boss_ready': fx.floatText(this.W / 2, 100, this.app.i18n.t('boss.hint'), { screen: true, sx: this.W / 2, sy: 100, tint: 0xFFFFFF, life: 3.2 }); break;
+      case 'boss_shoot': this.bossShootT = 0.28; fx.burst(s.x + s.boss.sx - 30, 90, 'px_star', 4, 160, 0.4, { tint: e.good ? 0xFFE23A : 0x9D6BFF, g: 0 }); break;
+      case 'orb_reflect': fx.burst(e.x, e.y, 'px_star', 12, 300, 0.7, { tint: [0xFFE23A, 0xFFFFFF, 0xFF9EC7], g: -150 }); fx.burst(e.x, e.y, 'px_ring', 1, 0, 0.35, { scale: 0.8, scale1: 5, tint: 0xFFE23A, g: 0 }); this.shakeNow(2, 0.1); fx.floatText(e.x, e.y + 30, '+100', { tint: 0xFFE23A }); break;
+      case 'orb_hit_boss': fx.burst(e.x, e.y, 'px_star', 16, 360, 0.8, { tint: RAINBOW_HEX, g: -200 }); this.shakeNow(5, 0.25); this.flashScreen(0xFFFFFF, 0.4); break;
+      case 'boss_phase': fx.floatText(this.W / 2, 100, this.app.i18n.t('call.wave'), { screen: true, sx: this.W / 2, sy: 100, tint: 0xFFE23A, big: true, life: 1.2 }); break;
+      case 'boss_defeat': this.shakeNow(6, 2.2); this.flashScreen(0xFFFFFF, 0.6); break;
+      case 'boss_gone': fx.floatText(this.W / 2, 110, this.app.i18n.t('boss.win'), { screen: true, sx: this.W / 2, sy: 110, big: true, tint: 0xFFE23A, life: 2 }); fx.burst(s.x + 200, 160, 'px_star', 40, 420, 1.4, { tint: RAINBOW_HEX, g: -240, twinkle: true }); this.rainbowSky && this.rainbowSky(); break;
       case 'milestone': this.waveT = 0.9; fx.floatText(px + 80, 170, this.app.i18n.t('call.wave'), { tint: 0xFFE23A, big: true, life: 1.2 }); fx.burst(px, 70, 'px_star', 10, 240, 0.8, { tint: RAINBOW_HEX, g: -200 }); break;
       case 'stomp': this.enemyDeath(e); this.stompT = 0.28; fx.burst(e.x, e.y, 'px_star', 8, 260, 0.6, { tint: [GOLD, 0xffffff, 0xFFC2E0], g: -320 }); fx.burst(e.x, e.y, 'px_ring', 1, 0, 0.35, { scale: 0.8, scale1: 4, g: 0 }); fx.floatText(e.x, e.y + 40, `+${e.pts}`, { tint: 0xFFF4DC }); this.shakeNow(2, 0.1); break;
       case 'pop': fx.burst(e.x, e.y, 'px_star', 10, 260, 0.7, { tint: RAINBOW_HEX, g: -280 }); if (!e.silent) fx.floatText(e.x, e.y + 30, `+${e.pts}`, { tint: 0xFFE23A }); break;
@@ -364,6 +374,7 @@ export class Game extends Phaser.Scene {
     this.renderGate(camX);
     this.renderFloor(camX);
     this.renderEntities(camX);
+    this.renderBoss(dt);
     this.renderPlayer(alpha, dt, camX);
     this.renderTrail(camX, alpha);
     this.updateDeaths(dt, camX);
@@ -380,7 +391,7 @@ export class Game extends Phaser.Scene {
     const s = this.sim;
     const gx = s.gateX();
     const x = Math.round(gx - camX);
-    const vis = x > -260 && x < this.W + 260;
+    const vis = s.gateIsPortal() && x > -260 && x < this.W + 260;
     this.gate.setVisible(vis);
     if (vis) this.gate.setPosition(x, this.groundY + 8);
   }
@@ -483,6 +494,8 @@ export class Game extends Phaser.Scene {
         st.spr.setPosition(x, Math.round(groundY - e.y - 16 - by));
       } else if (e.kind === 'hz') {
         this.renderHazard(e, x, camX);
+      } else if (e.kind === 'proj') {
+        this.renderProj(e, x);
       }
     }
     // remove sprites of entities that vanished
@@ -523,6 +536,11 @@ export class Game extends Phaser.Scene {
       case 'beeH': case 'beeL': key = e.state === 'idle' ? 'bee_fly' : 'bee_dizzy'; oy = e.y + by - 21; break;
       case 'owl': key = e.state === 'sleep' ? 'owl_sleep' : e.state === 'wake' ? 'owl_wake' : (e.st > 1.7 ? 'owl_yawn' : 'owl_glide'); oy = e.y - 25; if (e.state === 'sleep' || e.state === 'wake') oy = e.y - 25; break;
       case 'storm': return this.renderStorm(e, x);
+      case 'crab': key = e.pose === 'warn' ? 'crab_warn' : 'crab_walk'; break;
+      case 'wheel': key = 'wheel_roll'; oy = 20; break;
+      case 'ghost': key = dxp < 170 && dxp > -60 ? 'ghost_boo' : 'ghost_float'; oy = e.y + by; break;
+      case 'penguin': key = e.state === 'slide' ? 'penguin_slide' : 'penguin_wobble'; flip = true; break;
+      case 'invader': key = dxp < 160 && dxp > -60 ? 'invader_zap' : 'invader_hover'; oy = e.y + by; break;
       case 'jelly': key = dxp < 120 && dxp > -80 ? 'jelly_giggle' : 'jelly_bob'; oy = e.y + by - 34; break;
       default: return;
     }
@@ -539,6 +557,71 @@ export class Game extends Phaser.Scene {
     if (e.type === 'ssh') st.spr.setPosition(x, Math.round(groundY - by));
     if (e.type === 'fly') st.spr.setPosition(x + 14, Math.round(groundY - (e.y + by)));
     if (e.type === 'jelly') st.spr.setPosition(x, Math.round(groundY - (e.y + by) ));
+  }
+
+  renderProj(e, x) {
+    const key = e.good ? 'orb_good' : 'orb_bad';
+    const st = this.spriteFor(e, key);
+    st.spr.setDepth(24);
+    this.play(st, key);
+    const pulse = e.good ? 1 + Math.sin(this.t * 10) * 0.08 : 1;
+    st.spr.setScale((e.ret ? 2.1 : 1.4) * pulse).setPosition(x, Math.round(this.groundY - e.y));
+    if (e.good && Math.random() < (e.ret ? 0.7 : 0.25)) this.fx.emit({ x: e.x + (Math.random() - 0.5) * 24, y: e.y + (Math.random() - 0.5) * 24, key: 'px_spark', life: 0.4, tint: e.ret ? 0xFFFFFF : 0xFFE23A, twinkle: true, scale: 0.8 });
+    if (!e.good && Math.random() < 0.3) this.fx.emit({ x: e.x + 10, y: e.y + (Math.random() - 0.5) * 16, key: 'px_dot2', life: 0.3, tint: 0x9D6BFF, vx: 60, g: 0 });
+  }
+
+  renderBoss(dt) {
+    const b = this.sim.boss, s = this.sim;
+    if (!this.bossSpr) {
+      this.bossSpr = this.add.sprite(0, 0, 'boss_queen_idle').setDepth(18).setVisible(false);
+      this.bossGfx = this.add.graphics().setDepth(61);
+      this.bossName = this.add.bitmapText(0, 0, 'pixfont', '', 16).setOrigin(0.5).setDepth(62).setVisible(false);
+      this.bossShootT = 0;
+    }
+    if (!b || b.state === 'gone') { this.bossSpr.setVisible(false); this.bossGfx.clear(); this.bossName.setVisible(false); return; }
+    if (this.bossShootT > 0) this.bossShootT -= dt;
+    let anim = 'idle';
+    if (b.state === 'dying') anim = 'defeat'; else if (b.hurtT > 0) anim = 'hurt'; else if (this.bossShootT > 0) anim = 'shoot'; else if (b.windup > 0) anim = 'windup';
+    const key = `boss_${b.kind}_${anim}`;
+    const spr = this.bossSpr;
+    if (spr.texture.key !== key || !spr.visible) {
+      const m = this.app.meta[key];
+      spr.setTexture(key).setVisible(true).play(key);
+      spr.setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]);
+    }
+    const bx = Math.round(CFG.PLAYER_X + b.sx);
+    const bob = Math.sin(this.t * 2.2) * 5;
+    const hover = b.kind === 'king' ? 34 + bob : 4 + bob * 0.3;
+    let y = this.groundY - (b.state === 'dying' ? hover * Math.max(0, 1 - b.t / 1.6) : hover);
+    let x = bx;
+    if (b.state === 'dying') { x += Math.round((Math.random() - 0.5) * 6); y += Math.round((Math.random() - 0.5) * 4); }
+    if (b.hurtT > 0) { x += Math.round(Math.sin(this.t * 80) * 3); }
+    spr.setPosition(x, Math.round(y)).setFlipX(false);
+    if (b.flash > 0 && Math.floor(this.t * 24) % 2 === 0) spr.setTint(0xFFFFFF).setTintMode(Phaser.TintModes.FILL); else spr.clearTint().setTintMode(Phaser.TintModes.MULTIPLY);
+    // dying: explosions all over the boss
+    if (b.state === 'dying') {
+      this.bossBoomT = (this.bossBoomT || 0) - dt;
+      if (this.bossBoomT <= 0) {
+        this.bossBoomT = 0.09;
+        const wx = s.x + b.sx + (Math.random() - 0.5) * 90, wy = (this.groundY - y) + 20 + Math.random() * 90;
+        this.fx.burst(wx, wy, 'px_star', 5, 240, 0.7, { tint: [0xFFE23A, 0xFF9EC7, 0xFFFFFF, 0x7AC8FF], g: -200 });
+        this.fx.burst(wx, wy, 'px_ring', 1, 0, 0.4, { scale: 0.6, scale1: 4, tint: 0xFFE23A, g: 0 });
+      }
+    }
+    // health bar
+    const g = this.bossGfx; g.clear();
+    if (b.state !== 'enter') {
+      const n = b.max, segW = Math.max(6, Math.min(16, Math.floor(200 / n))), gap = 2;
+      const total = n * (segW + gap) - gap, x0 = Math.round(this.W / 2 - total / 2), y0 = 58;
+      g.fillStyle(0x1E1330, 1).fillRect(x0 - 3, y0 - 3, total + 6, 14);
+      const col = b.kind === 'queen' ? 0xFF7AB8 : 0x5FE6F5;
+      for (let i = 0; i < n; i++) {
+        const on = i < b.hp;
+        g.fillStyle(on ? col : 0x4A3A6E, 1).fillRect(x0 + i * (segW + gap), y0, segW, 8);
+        if (on) g.fillStyle(0xFFFFFF, 0.5).fillRect(x0 + i * (segW + gap), y0, segW, 2);
+      }
+      this.bossName.setVisible(true).setText(this.app.i18n.t('boss.' + b.kind)).setPosition(Math.round(this.W / 2), y0 - 10);
+    } else this.bossName.setVisible(false);
   }
 
   renderHang(e, x) {
@@ -761,6 +844,11 @@ export class Game extends Phaser.Scene {
     q.x += (tx - q.x) * kk; q.y += (ty - q.y) * kk; q.lean += (tl - q.lean) * kk;
     spr.setScale(q.x, q.y);
     spr.setRotation(s.dying > 0 || s.over || s.rescue ? 0 : q.lean);
+    // sliding crouch: kicks up a trail of dust and sugar
+    if (p.onGround && p.crouch && s.dying <= 0) {
+      q.slideT = (q.slideT || 0) - dt;
+      if (q.slideT <= 0) { q.slideT = 0.05; this.fx.dust(s.x - 18, 0, 2, -1); if (Math.random() < 0.4) this.fx.emit({ x: s.x - 20, y: 6 + Math.random() * 12, key: 'px_spark', life: 0.35, tint: 0xFFF7B0, twinkle: true, vx: -90, scale: 0.7 }); }
+    }
     // footfall dust on the run cycle
     if (p.onGround && key.includes('run') && s.dying <= 0) {
       const fi = spr.anims.currentFrame ? spr.anims.currentFrame.index : 0;
@@ -782,18 +870,22 @@ export class Game extends Phaser.Scene {
     else if (kind === 'sugar') { this.ambientT = 0.1; fx.emit({ x: Math.random() * W, y: -4, key: 'px_dot2', vy: 40 + Math.random() * 40, vx: -30, life: 5, tint: [0xFF9EC7, 0xFFE23A, 0x6FE09A, 0x7AC8FF][Math.floor(Math.random() * 4)], screen: true, fade: false, depth: 7 }); }
     else if (kind === 'stars') { this.ambientT = 0.08; fx.emit({ x: Math.random() * W, y: 4 + Math.random() * (g - 80), key: 'px_dot2', life: 1.4, tint: 0xFFF3A8, twinkle: true, screen: true, depth: 2.4 }); if (Math.random() < 0.012) fx.emit({ x: W * 0.8, y: 30 + Math.random() * 60, vx: -420, vy: -150, key: 'px_star', life: 1.1, tint: 0xFFF3A8, screen: true, scale: 1.2, depth: 2.6 }); }
     else if (kind === 'rain') { this.ambientT = 0.02; fx.emit({ x: Math.random() * (W + 80), y: -6, key: 'px_drop', vx: -260, vy: 520, life: 0.9, tint: [0x7AC8FF, 0xFF9EC7, 0xFFE23A][Math.floor(Math.random() * 3)], screen: true, fade: false, depth: 7 }); if (Math.random() < 0.004 && !this.app.save.settings.reduceFlash) { this.flashScreen(0xE9E0FB, 0.18); } }
+    else if (kind === 'bubbles') { this.ambientT = 0.18; fx.emit({ x: Math.random() * W, y: g - 4, key: 'px_bubble', vy: -(30 + Math.random() * 30), vx: -20, life: 3, tint: 0xFFFFFF, screen: true, fade: true, g: 0, depth: 7 }); }
+    else if (kind === 'snow') { this.ambientT = 0.06; fx.emit({ x: Math.random() * (W + 60), y: -4, key: 'px_dot2', vy: 55 + Math.random() * 30, vx: -45, life: 4.5, tint: 0xFFFFFF, screen: true, fade: false, depth: 7 }); }
+    else if (kind === 'neon') { this.ambientT = 0.1; fx.emit({ x: Math.random() * W, y: g - 2, key: Math.random() < 0.5 ? 'px_spark' : 'px_dot3', vy: -(50 + Math.random() * 40), vx: -30, life: 2.2, tint: [0x5FE6F5, 0xFF4FA8, 0xFFE23A][Math.floor(Math.random() * 3)], screen: true, twinkle: true, g: 0, depth: 7 }); }
     else if (kind === 'stardust') { this.ambientT = 0.1; fx.emit({ x: W + 4, y: Math.random() * g, key: 'px_spark', vx: -90, life: 3, tint: 0xF2DCFF, twinkle: true, screen: true, scale: 0.8, depth: 2.4 }); }
   }
 
   enemyDeath(e) {
-    const spr = e.kind === 'slime_flat' ? 'slime_flat_stomped' : e.kind === 'bee' ? 'bee_dizzy' : null;
+    const spr = { slime_flat: 'slime_flat_stomped', bee: 'bee_dizzy', crab: 'crab_dizzy', penguin: 'penguin_dizzy', ghost: 'ghost_dizzy' }[e.kind] || null;
     if (!spr) return;
     const m = this.app.meta[spr];
     const s = this.add.sprite(0, 0, spr).setDepth(19).setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]);
     s.play(spr);
-    const wx = e.x, h0 = e.kind === 'bee' ? 40 : 0;
+    const flyer = e.kind === 'bee' || e.kind === 'ghost';
+    const wx = e.x, h0 = flyer ? 40 : 0;
     this.deaths = this.deaths || [];
-    this.deaths.push({ s, wx, h0, age: 0, bee: e.kind === 'bee' });
+    this.deaths.push({ s, wx, h0, age: 0, bee: flyer });
   }
 
   updateDeaths(dt, camX) {

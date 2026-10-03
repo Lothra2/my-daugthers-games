@@ -2,14 +2,15 @@
 // Every non-special chunk keeps its first 6 and last 6 tiles hazard free, so chunk joins are always fair.
 // Hazard item types:
 //   sf slime_flat, ss slime_spiky, ssh slime_spiky (hopping), fly snake_fly, hang snake_hang,
-//   snail, beeH (high bee: crouch), beeL (low bee: jump), owl, storm, jelly
+//   snail, beeH (high bee: crouch), beeL (low bee: jump), owl, storm, jelly,
+//   crab, wheel, ghost, penguin (jump), invader (crouch)
 //   plat {w tiles, h px}, block {h px}
 // Candy: coins {shape, x, n, h, peak}  power markers: powerAt (tile)
 
-const ALL = [1, 2, 3, 4, 5, 6];
-const W2 = [2, 3, 4, 5, 6];
-const W3 = [3, 4, 5, 6];
-const W4 = [4, 5, 6];
+const ALL = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const W2 = [2, 3, 4, 5, 6, 7, 8, 9];
+const W3 = [3, 4, 5, 6, 7, 8, 9];
+const W4 = [4, 5, 6, 7, 8, 9];
 const BOTH = ['normal', 'easy'];
 const NORMAL = ['normal'];
 const EASY = ['easy'];
@@ -89,21 +90,42 @@ add('owl_intro_01', { tier: 2, worlds: W4, len: 30, items: [{ t: 'owl', x: 14 },
 add('owl_combo_01', { tier: 3, worlds: W4, modes: NORMAL, len: 40, items: [{ t: 'owl', x: 12 }, { t: 'sf', x: 25 }, c('line', 9, 5, 20), arc(25, 6, 130)] });
 
 // ---------------- storm (world 5+)
-add('storm_intro_01', { tier: 2, worlds: [5, 6], len: 32, items: [{ t: 'storm', x: 15 }, arc(15, 7, 140)] });
-add('storm_double_01', { tier: 3, worlds: [5, 6], modes: NORMAL, len: 42, items: [{ t: 'storm', x: 12 }, { t: 'storm', x: 28 }, arc(12, 6, 140), arc(28, 6, 140)] });
-add('hop_spiky_01', { tier: 3, worlds: [5, 6], modes: NORMAL, len: 32, items: [{ t: 'ssh', x: 15 }, arc(15, 7, 160)] });
-add('hop_spiky_02', { tier: 4, worlds: [5, 6], modes: NORMAL, len: 40, items: [{ t: 'ssh', x: 13 }, { t: 'sf', x: 27 }, arc(13, 6, 160), arc(27, 6, 130)] });
-add('moving_platform_01', { tier: 3, worlds: [5, 6], modes: NORMAL, len: 36, floor: [[0, 12], [24, 36]], items: [{ t: 'plat', x: 15, w: 5, h: 90, move: 30 }, c('line', 15, 5, 135)] });
+add('storm_intro_01', { tier: 2, worlds: [5, 6, 7, 8, 9], len: 32, items: [{ t: 'storm', x: 15 }, arc(15, 7, 140)] });
+add('storm_double_01', { tier: 3, worlds: [5, 6, 7, 8, 9], modes: NORMAL, len: 42, items: [{ t: 'storm', x: 12 }, { t: 'storm', x: 28 }, arc(12, 6, 140), arc(28, 6, 140)] });
+add('hop_spiky_01', { tier: 3, worlds: [5, 6, 7, 8, 9], modes: NORMAL, len: 32, items: [{ t: 'ssh', x: 15 }, arc(15, 7, 160)] });
+add('hop_spiky_02', { tier: 4, worlds: [5, 6, 7, 8, 9], modes: NORMAL, len: 40, items: [{ t: 'ssh', x: 13 }, { t: 'sf', x: 27 }, arc(13, 6, 160), arc(27, 6, 130)] });
+add('moving_platform_01', { tier: 3, worlds: [5, 6, 7, 8, 9], modes: NORMAL, len: 36, floor: [[0, 12], [24, 36]], items: [{ t: 'plat', x: 15, w: 5, h: 90, move: 30 }, c('line', 15, 5, 135)] });
 
 // ---------------- jelly (world 6)
-add('jelly_intro_01', { tier: 2, worlds: [6], len: 30, items: [{ t: 'jelly', x: 14, phase: 0 }, c('line', 12, 6, 20)] });
-add('jelly_pair_01', { tier: 4, worlds: [6], modes: NORMAL, len: 40, items: [{ t: 'jelly', x: 12, phase: 0 }, { t: 'jelly', x: 24, phase: 3 }, c('line', 10, 5, 20), c('line', 22, 5, 20)] });
-add('jelly_gap_01', { tier: 5, worlds: [6], modes: NORMAL, len: 42, floor: [[0, 20], [26, 42]], items: [{ t: 'jelly', x: 11, phase: 3 }, arc(23, 6, 140)] });
+add('jelly_intro_01', { tier: 2, worlds: [6, 9], len: 30, items: [{ t: 'jelly', x: 14, phase: 0 }, c('line', 12, 6, 20)] });
+add('jelly_pair_01', { tier: 4, worlds: [6, 9], modes: NORMAL, len: 40, items: [{ t: 'jelly', x: 12, phase: 0 }, { t: 'jelly', x: 24, phase: 3 }, c('line', 10, 5, 20), c('line', 22, 5, 20)] });
+add('jelly_gap_01', { tier: 5, worlds: [6, 9], modes: NORMAL, len: 42, floor: [[0, 20], [26, 42]], items: [{ t: 'jelly', x: 11, phase: 3 }, arc(23, 6, 140)] });
 
 // ---------------- master gauntlets (world 6)
-add('master_gauntlet_01', { tier: 5, worlds: [6], modes: NORMAL, len: 52, items: [{ t: 'fly', x: 10 }, { t: 'sf', x: 20 }, { t: 'hang', x: 31 }, { t: 'ss', x: 41 }, c('line', 8, 5, 20), arc(20, 5, 130), c('line', 29, 5, 20), arc(41, 5, 150)] });
-add('master_gauntlet_02', { tier: 5, worlds: [6], modes: NORMAL, len: 58, floor: [[0, 14], [19, 58]], items: [{ t: 'owl', x: 28 }, { t: 'sf', x: 42 }, arc(16, 5, 120), c('line', 24, 5, 20), arc(42, 6, 130)] });
-add('master_gauntlet_03', { tier: 5, worlds: [6], modes: NORMAL, len: 54, items: [{ t: 'storm', x: 10 }, { t: 'jelly', x: 22, phase: 0 }, { t: 'sf', x: 34 }, { t: 'beeH', x: 44 }, arc(10, 5, 140), c('line', 20, 5, 20), arc(34, 5, 130), c('line', 42, 5, 20)] });
+add('master_gauntlet_01', { tier: 5, worlds: [6, 9], modes: NORMAL, len: 52, items: [{ t: 'fly', x: 10 }, { t: 'sf', x: 20 }, { t: 'hang', x: 31 }, { t: 'ss', x: 41 }, c('line', 8, 5, 20), arc(20, 5, 130), c('line', 29, 5, 20), arc(41, 5, 150)] });
+add('master_gauntlet_02', { tier: 5, worlds: [6, 9], modes: NORMAL, len: 58, floor: [[0, 14], [19, 58]], items: [{ t: 'owl', x: 28 }, { t: 'sf', x: 42 }, arc(16, 5, 120), c('line', 24, 5, 20), arc(42, 6, 130)] });
+add('master_gauntlet_03', { tier: 5, worlds: [6, 9], modes: NORMAL, len: 54, items: [{ t: 'storm', x: 10 }, { t: 'jelly', x: 22, phase: 0 }, { t: 'sf', x: 34 }, { t: 'beeH', x: 44 }, arc(10, 5, 140), c('line', 20, 5, 20), arc(34, 5, 130), c('line', 42, 5, 20)] });
+
+// ---------------- world 7 to 9 characters
+add('crab_intro_01', { tier: 1, worlds: [7], len: 28, items: [{ t: 'crab', x: 14 }, arc(14, 7, 120)] });
+add('crab_stomp_01', { tier: 2, worlds: [7], len: 34, items: [{ t: 'crab', x: 12 }, { t: 'crab', x: 24 }, c('column', 12, 3, 100), c('column', 24, 3, 100)] });
+add('wheel_intro_01', { tier: 2, worlds: [7, 8], len: 30, items: [{ t: 'wheel', x: 15 }, arc(15, 7, 130)] });
+add('wheel_double_01', { tier: 3, worlds: [7, 8, 9], modes: NORMAL, len: 40, items: [{ t: 'wheel', x: 12 }, { t: 'wheel', x: 27 }, arc(12, 6, 130), arc(27, 6, 130)] });
+add('beach_combo_01', { tier: 3, worlds: [7], modes: NORMAL, len: 40, items: [{ t: 'crab', x: 11 }, { t: 'beeH', x: 24 }, arc(11, 6, 130), c('line', 22, 5, 20)] });
+add('penguin_intro_01', { tier: 2, worlds: [8], len: 32, items: [{ t: 'penguin', x: 15 }, arc(15, 7, 130)] });
+add('penguin_pair_01', { tier: 3, worlds: [8], modes: NORMAL, len: 42, items: [{ t: 'penguin', x: 13 }, { t: 'penguin', x: 28 }, arc(13, 6, 130), arc(28, 6, 130)] });
+add('glacier_combo_01', { tier: 3, worlds: [8], modes: NORMAL, len: 40, items: [{ t: 'wheel', x: 11 }, { t: 'hang', x: 25 }, arc(11, 6, 130), c('line', 23, 5, 20)] });
+add('ghost_intro_01', { tier: 2, worlds: [5, 6, 9], len: 30, items: [{ t: 'ghost', x: 15 }, arc(15, 7, 170)] });
+add('ghost_pair_01', { tier: 3, worlds: [5, 6, 9], modes: NORMAL, len: 40, items: [{ t: 'ghost', x: 12 }, { t: 'ghost', x: 26 }, arc(12, 6, 170), arc(26, 6, 170)] });
+add('invader_intro_01', { tier: 2, worlds: [9], len: 30, items: [{ t: 'invader', x: 14 }, c('line', 11, 6, 20)] });
+add('invader_combo_01', { tier: 3, worlds: [9], modes: NORMAL, len: 44, items: [{ t: 'invader', x: 11 }, { t: 'wheel', x: 29 }, c('line', 9, 5, 20), arc(29, 6, 130)] });
+add('arcade_gauntlet_01', { tier: 4, worlds: [9], modes: NORMAL, len: 54, items: [{ t: 'invader', x: 10 }, { t: 'ghost', x: 25 }, { t: 'wheel', x: 41 }, c('line', 8, 5, 20), arc(25, 5, 170), arc(41, 5, 130)] });
+add('beach_gauntlet_01', { tier: 4, worlds: [7, 8], modes: NORMAL, len: 46, items: [{ t: 'wheel', x: 10 }, { t: 'beeH', x: 22 }, { t: 'crab', x: 34 }, arc(10, 5, 130), c('line', 20, 5, 20), arc(34, 5, 120)] });
+
+// ---------------- boss arena floors: flat, calm, candy only (the boss shoots, nothing else spawns)
+add('arena_coins_01', { tier: 0, len: 30, weight: 3, cd: 0, tags: ['arena'], items: [c('wave', 3, 14, 60)] });
+add('arena_coins_02', { tier: 0, len: 30, weight: 3, cd: 0, tags: ['arena'], items: [c('line', 4, 10, 34), arc(18, 5, 120)] });
+add('arena_coins_03', { tier: 0, len: 30, weight: 3, cd: 0, tags: ['arena'], items: [arc(5, 6, 130), arc(17, 6, 130)] });
 
 // ---------------- sprint (only while the yellow candy FAST power is active)
 for (let i = 0; i < 3; i++) {

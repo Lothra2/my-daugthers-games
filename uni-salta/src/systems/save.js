@@ -46,7 +46,7 @@ export class Save {
     const s = this.data.stats;
     s.runs++; s.candies += run.coins; s.stomps += run.stomps; s.perfects += run.perfects;
     s.bestLap = Math.max(s.bestLap, run.lap);
-    s.bestWorld = Math.max(s.bestWorld, run.lap > 1 ? 6 : run.world);
+    s.bestWorld = Math.max(s.bestWorld, run.lap > 1 ? 9 : run.world);
     if (s.bestWorld >= 3 || run.lap > 1) this.data.unlocks.gallery = true;
     this.flush();
   }

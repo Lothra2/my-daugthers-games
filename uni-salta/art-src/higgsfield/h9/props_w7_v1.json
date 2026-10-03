@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit for a cute 2D pixel art game background: exactly 8 separate objects arranged in a clean grid of 4 columns by 2 rows, each object fully visible, well separated with plenty of empty space around it, none touching or overlapping. Soft pastel 16-bit pixel art with hard square chunky pixels, simple flat shading with one highlight tone and one shadow tone, light from the top left, NO dark outlines (soft background art), no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else. Same warm pastel palette family as the reference drawing. Theme: GUMMY CANDY BEACH at sunset. The 8 objects are: (1) a big palm tree whose leaves are green-and-white striped candy ribbons, (2) a big pink swirl seashell, (3) a candy-striped beach umbrella in red and white, (4) a sandcastle made of golden cookie sand with tiny flags, (5) a distant tall candy-cane striped lighthouse, (6) a fluffy peach-orange sunset cloud, (7) a floating gummy starfish in coral and yellow, (8) a foamy turquoise sea wave crest. Palette: turquoise, peach, coral, sand yellow, sea foam.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "3bb9ea39-6ce7-45a1-9464-15d74b8a1ddf",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H9 props kit w7",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/58c09bcf-bad6-4863-925a-de0c34291ef6.png"
+ ]
+}

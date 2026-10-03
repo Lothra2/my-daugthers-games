@@ -142,7 +142,7 @@ export function createUI(app) {
     for (const b of row.children) { b.addEventListener('pointerenter', () => sfx('ui_hover')); b.addEventListener('click', () => sfx('ui_press')); }
     startWorld = 1;
     const wr = h('div', { class: 'worldrow' }, [h('span', { class: 'lab', text: t('mode.start') })]);
-    for (let w = 1; w <= 6; w++) {
+    for (let w = 1; w <= 9; w++) {
       const c = button(String(w), () => { startWorld = w; Array.from(wr.querySelectorAll('.chip')).forEach((x, i) => x.classList.toggle('on', i + 1 === w)); }, `chip small ${w > best ? 'locked' : ''} ${w === 1 ? 'on' : ''}`);
       c.title = t('w' + w);
       wr.append(c);
@@ -437,7 +437,7 @@ export function createUI(app) {
     if (sum.coins > 5) msgs.push(t('over.msg.candy', { n: sum.coins }));
     if (sum.stomps > 2) msgs.push(t('over.msg.stomp', { n: sum.stomps }));
     const nextW = sum.world + 1;
-    if (!easy && sum.world < 6 && sum.meters % 360 > 250) msgs.unshift(t('over.msg.close', { n: nextW }));
+    if (!easy && sum.world < 9 && sum.meters % 360 > 250) msgs.unshift(t('over.msg.close', { n: nextW }));
     if (!msgs.length) msgs.push(t('over.msg.far'));
     const big = h('div', { class: 'big', text: '0' });
     const again = button(t('over.again'), () => { clearTree('results'); app.bus.emit('restart', { mode: sum.mode, world: startWorld, intro: true }); }, 'big pink');

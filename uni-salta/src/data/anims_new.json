@@ -1,0 +1,314 @@
+{
+ "crab_walk": {
+  "cell": [
+   51,
+   39
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   25,
+   37
+  ]
+ },
+ "crab_warn": {
+  "cell": [
+   51,
+   39
+  ],
+  "frames": 1,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   25,
+   37
+  ]
+ },
+ "crab_dizzy": {
+  "cell": [
+   51,
+   39
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   25,
+   37
+  ]
+ },
+ "wheel_roll": {
+  "cell": [
+   42,
+   44
+  ],
+  "frames": 8,
+  "fps": 18,
+  "loop": true,
+  "pivot": [
+   21,
+   22
+  ]
+ },
+ "ghost_float": {
+  "cell": [
+   44,
+   48
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   22,
+   24
+  ]
+ },
+ "ghost_boo": {
+  "cell": [
+   44,
+   48
+  ],
+  "frames": 2,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   22,
+   24
+  ]
+ },
+ "ghost_dizzy": {
+  "cell": [
+   44,
+   48
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   22,
+   24
+  ]
+ },
+ "penguin_wobble": {
+  "cell": [
+   49,
+   51
+  ],
+  "frames": 3,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   24,
+   49
+  ]
+ },
+ "penguin_slide": {
+  "cell": [
+   49,
+   51
+  ],
+  "frames": 2,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   24,
+   49
+  ]
+ },
+ "penguin_dizzy": {
+  "cell": [
+   49,
+   51
+  ],
+  "frames": 3,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   24,
+   49
+  ]
+ },
+ "invader_hover": {
+  "cell": [
+   48,
+   54
+  ],
+  "frames": 6,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   24,
+   27
+  ]
+ },
+ "invader_zap": {
+  "cell": [
+   48,
+   54
+  ],
+  "frames": 1,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   24,
+   27
+  ]
+ },
+ "boss_queen_idle": {
+  "cell": [
+   131,
+   143
+  ],
+  "frames": 4,
+  "fps": 5,
+  "loop": true,
+  "pivot": [
+   65,
+   140
+  ]
+ },
+ "boss_queen_windup": {
+  "cell": [
+   131,
+   143
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   65,
+   140
+  ]
+ },
+ "boss_queen_shoot": {
+  "cell": [
+   131,
+   143
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   65,
+   140
+  ]
+ },
+ "boss_queen_hurt": {
+  "cell": [
+   131,
+   143
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   65,
+   140
+  ]
+ },
+ "boss_queen_defeat": {
+  "cell": [
+   131,
+   143
+  ],
+  "frames": 2,
+  "fps": 4,
+  "loop": true,
+  "pivot": [
+   65,
+   140
+  ]
+ },
+ "boss_king_idle": {
+  "cell": [
+   148,
+   133
+  ],
+  "frames": 4,
+  "fps": 5,
+  "loop": true,
+  "pivot": [
+   74,
+   130
+  ]
+ },
+ "boss_king_windup": {
+  "cell": [
+   148,
+   133
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   74,
+   130
+  ]
+ },
+ "boss_king_shoot": {
+  "cell": [
+   148,
+   133
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   74,
+   130
+  ]
+ },
+ "boss_king_hurt": {
+  "cell": [
+   148,
+   133
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   74,
+   130
+  ]
+ },
+ "boss_king_defeat": {
+  "cell": [
+   148,
+   133
+  ],
+  "frames": 2,
+  "fps": 4,
+  "loop": true,
+  "pivot": [
+   74,
+   130
+  ]
+ },
+ "orb_bad": {
+  "cell": [
+   36,
+   36
+  ],
+  "frames": 4,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   18,
+   18
+  ]
+ },
+ "orb_good": {
+  "cell": [
+   36,
+   36
+  ],
+  "frames": 4,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   18,
+   18
+  ]
+ }
+}

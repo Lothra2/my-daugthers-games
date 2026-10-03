@@ -52,4 +52,28 @@ export const WORLDS = {
     ambient: 'stardust',
   },
 };
+WORLDS[7] = {
+  sky: ['#5CCFE0', '#8FE0E2', '#FFD9B0', '#FFC09A'], streak: '#C8F2EE', glow: '#FFE08A', glowStrength: 1,
+  layers: {
+    far: { speed: 0.1, items: [{ i: 4, place: 'ground', alpha: 0.9 }, { i: 7, place: 'ground', alpha: 0.85 }, { i: 5, place: 'sky', alpha: 0.9 }], gap: [120, 320] },
+    mid: { speed: 0.3, items: [{ i: 0, place: 'ground' }, { i: 2, place: 'ground' }, { i: 3, place: 'ground' }, { i: 1, place: 'ground' }, { i: 6, place: 'float' }], gap: [90, 280] },
+  },
+  ambient: 'bubbles',
+};
+WORLDS[8] = {
+  sky: ['#9CD3F6', '#C2E4FA', '#E4F3FF', '#F8FCFF'], streak: '#FFFFFF', glow: '#FFFFFF', glowStrength: 0.5,
+  layers: {
+    far: { speed: 0.1, items: [{ i: 3, place: 'ground', alpha: 0.9 }, { i: 1, place: 'ground', alpha: 0.9 }, { i: 4, place: 'sky', alpha: 0.9 }], gap: [100, 300] },
+    mid: { speed: 0.3, items: [{ i: 0, place: 'ground' }, { i: 2, place: 'ground' }, { i: 7, place: 'ground' }, { i: 6, place: 'float' }, { i: 5, place: 'float' }], gap: [90, 260] },
+  },
+  ambient: 'snow',
+};
+WORLDS[9] = {
+  sky: ['#0F0A2E', '#1A1250', '#2D1B6E', '#4A2A8F'], streak: '#4B2F9A', glow: '#FF4FA8', glowStrength: 0.4,
+  layers: {
+    far: { speed: 0.08, items: [{ i: 4, place: 'ground', alpha: 0.9 }, { i: 1, place: 'sky', alpha: 0.9 }, { i: 3, place: 'sky', alpha: 0.9 }], gap: [100, 280] },
+    mid: { speed: 0.28, items: [{ i: 0, place: 'ground' }, { i: 2, place: 'ground' }, { i: 5, place: 'sky' }, { i: 6, place: 'float' }, { i: 7, place: 'sky' }], gap: [100, 300] },
+  },
+  ambient: 'neon',
+};
 export const FLOOR_BOTTOM = {}; // filled from world_assets.json at boot (bottom colour of each floor strip)
