@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A seamless-looking horizontal GROUND STRIP for a 2D side-scrolling pixel art platformer, seen straight from the side (no perspective): a long bank occupying the bottom 45 percent of the image and running off BOTH the left and right edges, its top edge is a bumpy skyline of round puffs of varied sizes, below the top edge the body continues down to the very bottom of the image with soft shading bands. 16-bit Super Nintendo pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline along the top edge, flat shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no text. Everything above the ground strip is solid flat cyan #00FFFF, nothing else. The ground is a bank of deep lavender-purple NIGHT CLOUD with pale glowing edges and tiny twinkling yellow star dots.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "38bcb5cf-4d68-4cf5-b1c8-1044e54db1c7",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H7 ground strip w4",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/cb3f0347-e4e8-4352-a6cc-0f7eae9504ae.png"
+ ]
+}

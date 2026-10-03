@@ -21,10 +21,12 @@ def bg_color(a):
     return np.median(corners, axis=0)
 
 
-def key_background(a, tol=70):
+def key_background(a, tol=70, flood=True, bg=None):
     """Boolean mask of the subject (True) using border-connected background flooding."""
-    bg = bg_color(a)
+    bg = bg_color(a) if bg is None else bg
     close = np.abs(a - bg).sum(2) < tol
+    if not flood:
+        return ~close
     lab, n = ndi.label(close)
     border = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
     bgmask = np.isin(lab, list(border))
@@ -248,4 +250,17 @@ def remove_small(arr, min_px=6):
     keep[1 + int(np.argmax(sizes))] = True
     out = arr.copy()
     out[~keep[lab]] = 0
+    return out
+
+
+def add_outline(arr, color=OUTLINE):
+    """Add a 1px outline around the opaque silhouette (outside, 4-neighbourhood)."""
+    h, w = arr.shape[:2]
+    out = np.zeros((h + 2, w + 2, 4), np.uint8)
+    out[1:-1, 1:-1] = arr
+    al = out[..., 3] > 0
+    nb = np.zeros_like(al)
+    nb[1:] |= al[:-1]; nb[:-1] |= al[1:]; nb[:, 1:] |= al[:, :-1]; nb[:, :-1] |= al[:, 1:]
+    edge = nb & ~al
+    out[edge] = (*color, 255)
     return out

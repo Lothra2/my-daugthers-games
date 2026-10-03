@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit for a cute 2D pixel art game background: exactly 8 separate objects arranged in a clean grid of 4 columns by 2 rows, each object fully visible, well separated with plenty of empty space around it, none touching or overlapping. Soft pastel 16-bit pixel art with hard square chunky pixels, simple flat shading with one highlight tone and one shadow tone, light from the top left, NO dark outlines (soft background art), no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else. Same warm pastel palette family as the reference drawing (lavender, pink and yellow). Theme: MAGIC STORM. The 8 objects are: (1) a big swirling grey-purple storm cloud, (2) a medium grey-purple storm cloud, (3) a small storm cloud, (4) a group of colorful candy raindrops (pink, blue, yellow) falling, (5) a curly wind swirl streak, (6) a purple cloud with a pink lightning glow inside, (7) a floating rocky island with a few pastel crystals, (8) a small floating island with a candy flower.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "8a6e2547-0059-410f-a94a-0d47c10d9742",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H6 props kit w5",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/96e4bf23-21ea-4689-a862-abf757c5e45e.png"
+ ]
+}

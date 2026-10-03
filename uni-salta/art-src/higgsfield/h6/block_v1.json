@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A cute STAR BLOCK for a platformer: a square golden-yellow block with a thick lighter bevel, a big white-yellow five-pointed star embossed in the middle, and tiny cloud-pink corner studs. Draw exactly 8 frames in ONE horizontal row, equally spaced, same size, plenty of empty space between: (1)-(4) idle shine cycle, a diagonal white glint sweeping across the block; (5)-(6) just got hit from below, the block bumped up a little and squashed with sparkles; (7)-(8) EMPTY used block, dull lavender-grey with a faded star shape, no sparkle. Each block is about 18 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading, light from the top left, no anti-aliasing, no gradients, no text, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/d6a6edf7-43a1-4d30-820d-22979b461aeb.png"
+  ]
+ },
+ "request_id": "3e317b24-ca4d-4dc8-b87e-6a72df91e16d",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "star block sheet",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/ee458e2b-5390-4390-8b67-3c416bd956a0.png"
+ ]
+}

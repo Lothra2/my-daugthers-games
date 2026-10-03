@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A cute smiling RESCUE CLOUD: a fluffy pink-white cloud with a happy face, closed happy eyes, blush cheeks and a small smile, small cloud arms waving. Draw exactly 8 frames in ONE horizontal row, equally spaced, same size, plenty of empty space: (1)-(4) gently bobbing and puffing with a waving arm; (5)-(6) arriving, stretched and flying, motion puffs trailing; (7)-(8) giving a thumbs up with a wink. Each cloud is about 22 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading, light from the top left, no anti-aliasing, no gradients, no text, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "5a99f364-ea33-4569-bfb4-a7a5e1b75111",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "rescue cloud sheet",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/9a860236-bb60-4761-8fd0-878cf9998597.png"
+ ]
+}

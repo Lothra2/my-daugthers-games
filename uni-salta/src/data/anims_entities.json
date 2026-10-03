@@ -1,0 +1,405 @@
+{
+ "slime_flat_idle": {
+  "cell": [
+   84,
+   46
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   42,
+   44
+  ]
+ },
+ "slime_flat_lookup": {
+  "cell": [
+   84,
+   46
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   42,
+   44
+  ]
+ },
+ "slime_flat_stomped": {
+  "cell": [
+   84,
+   46
+  ],
+  "frames": 3,
+  "fps": 12,
+  "loop": false,
+  "pivot": [
+   42,
+   44
+  ]
+ },
+ "slime_spiky_idle": {
+  "cell": [
+   53,
+   72
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   26,
+   70
+  ]
+ },
+ "slime_spiky_hop": {
+  "cell": [
+   53,
+   72
+  ],
+  "frames": 4,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   26,
+   70
+  ]
+ },
+ "snake_fly_slither": {
+  "cell": [
+   125,
+   52
+  ],
+  "frames": 6,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   62,
+   26
+  ]
+ },
+ "snake_fly_tongue": {
+  "cell": [
+   125,
+   52
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   62,
+   26
+  ]
+ },
+ "snake_hang_drop": {
+  "cell": [
+   48,
+   156
+  ],
+  "frames": 4,
+  "fps": 14,
+  "loop": false,
+  "pivot": [
+   24,
+   1
+  ]
+ },
+ "snake_hang_sway": {
+  "cell": [
+   48,
+   156
+  ],
+  "frames": 4,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   24,
+   1
+  ]
+ },
+ "snake_hang_tongue": {
+  "cell": [
+   48,
+   156
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": false,
+  "pivot": [
+   24,
+   1
+  ]
+ },
+ "snake_hang_pout": {
+  "cell": [
+   48,
+   156
+  ],
+  "frames": 1,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   24,
+   1
+  ]
+ },
+ "snail_crawl": {
+  "cell": [
+   56,
+   52
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   28,
+   50
+  ]
+ },
+ "snail_hide": {
+  "cell": [
+   56,
+   52
+  ],
+  "frames": 2,
+  "fps": 10,
+  "loop": false,
+  "pivot": [
+   28,
+   50
+  ]
+ },
+ "snail_peek": {
+  "cell": [
+   56,
+   52
+  ],
+  "frames": 2,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   28,
+   50
+  ]
+ },
+ "bee_fly": {
+  "cell": [
+   50,
+   54
+  ],
+  "frames": 4,
+  "fps": 24,
+  "loop": true,
+  "pivot": [
+   25,
+   27
+  ]
+ },
+ "bee_switch": {
+  "cell": [
+   50,
+   54
+  ],
+  "frames": 2,
+  "fps": 12,
+  "loop": false,
+  "pivot": [
+   25,
+   27
+  ]
+ },
+ "bee_dizzy": {
+  "cell": [
+   50,
+   54
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   25,
+   27
+  ]
+ },
+ "owl_sleep": {
+  "cell": [
+   63,
+   73
+  ],
+  "frames": 2,
+  "fps": 4,
+  "loop": true,
+  "pivot": [
+   31,
+   71
+  ]
+ },
+ "owl_wake": {
+  "cell": [
+   63,
+   73
+  ],
+  "frames": 2,
+  "fps": 12,
+  "loop": false,
+  "pivot": [
+   31,
+   71
+  ]
+ },
+ "owl_glide": {
+  "cell": [
+   63,
+   73
+  ],
+  "frames": 4,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   31,
+   36
+  ]
+ },
+ "owl_yawn": {
+  "cell": [
+   63,
+   73
+  ],
+  "frames": 1,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   31,
+   36
+  ]
+ },
+ "storm_float": {
+  "cell": [
+   69,
+   76
+  ],
+  "frames": 4,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   34,
+   38
+  ]
+ },
+ "storm_charge": {
+  "cell": [
+   69,
+   76
+  ],
+  "frames": 3,
+  "fps": 16,
+  "loop": false,
+  "pivot": [
+   34,
+   38
+  ]
+ },
+ "storm_zap": {
+  "cell": [
+   69,
+   76
+  ],
+  "frames": 1,
+  "fps": 20,
+  "loop": false,
+  "pivot": [
+   34,
+   38
+  ]
+ },
+ "storm_sigh": {
+  "cell": [
+   69,
+   76
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": false,
+  "pivot": [
+   34,
+   38
+  ]
+ },
+ "jelly_bob": {
+  "cell": [
+   59,
+   73
+  ],
+  "frames": 10,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   29,
+   36
+  ]
+ },
+ "jelly_giggle": {
+  "cell": [
+   59,
+   73
+  ],
+  "frames": 2,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   29,
+   36
+  ]
+ },
+ "thor_run": {
+  "cell": [
+   63,
+   63
+  ],
+  "frames": 4,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   31,
+   61
+  ]
+ },
+ "thor_bark": {
+  "cell": [
+   63,
+   63
+  ],
+  "frames": 3,
+  "fps": 10,
+  "loop": false,
+  "pivot": [
+   31,
+   61
+  ]
+ },
+ "thor_sit": {
+  "cell": [
+   63,
+   63
+  ],
+  "frames": 1,
+  "fps": 3,
+  "loop": true,
+  "pivot": [
+   31,
+   61
+  ]
+ },
+ "thor_lick": {
+  "cell": [
+   63,
+   63
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   31,
+   61
+  ]
+ }
+}

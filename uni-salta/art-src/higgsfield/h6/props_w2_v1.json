@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "A sprite kit for a cute 2D pixel art game background: exactly 8 separate objects arranged in a clean grid of 4 columns by 2 rows, each object fully visible, well separated with plenty of empty space around it, none touching or overlapping. Soft pastel 16-bit pixel art with hard square chunky pixels, simple flat shading with one highlight tone and one shadow tone, light from the top left, NO dark outlines (soft background art), no anti-aliasing, no text, no labels. Solid flat cyan background, nothing else. Same warm pastel palette family as the reference drawing (lavender, pink and yellow). Theme: RAINBOW VALLEY. The 8 objects are: (1) a big pastel rainbow arch, (2) a small floating grassy island with a tiny candy flower, (3) a puffy white-pink cloud, (4) a puffy white-lilac cloud, (5) a rolling pastel mint hill, (6) a rolling pastel peach hill, (7) a small rainbow-colored sparkle cluster of stars, (8) a floating island with two tiny round pastel trees.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp"
+  ]
+ },
+ "request_id": "42a104af-423e-4fd7-a269-c65401925fa1",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H6 props kit w2",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/8dc2299e-b5ea-4724-85be-c15186a4a7eb.png"
+ ]
+}
