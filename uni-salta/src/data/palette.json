@@ -1,0 +1,158 @@
+{
+ "outline": [
+  "#1E1330"
+ ],
+ "white": [
+  "#FFFFFF",
+  "#F6EEFA",
+  "#E4D6F0",
+  "#CDBCE3"
+ ],
+ "mane": [
+  "#FFD3EA",
+  "#FFA6D2",
+  "#FF85C4",
+  "#EC5FAE",
+  "#D44593",
+  "#A93379"
+ ],
+ "blush": [
+  "#FF9EC7"
+ ],
+ "nose": [
+  "#3A2440",
+  "#6B5E80"
+ ],
+ "gold": [
+  "#FFF7B0",
+  "#FFE23A",
+  "#FFCB2E",
+  "#FFA51F",
+  "#D98612",
+  "#9A5A0C"
+ ],
+ "lime": [
+  "#EEFF9A",
+  "#C8F03C",
+  "#93CC22",
+  "#5E9A14",
+  "#335A0C"
+ ],
+ "emerald": [
+  "#BFF5CF",
+  "#6FE09A",
+  "#2FBF6A",
+  "#16834A",
+  "#0B5A32"
+ ],
+ "red": [
+  "#FFC2CB",
+  "#FF5C70",
+  "#E8173A",
+  "#A10A26",
+  "#6E0618"
+ ],
+ "tongue": [
+  "#FF6F9A",
+  "#D63D6C"
+ ],
+ "teeth": [
+  "#FFFBE8",
+  "#E9DDB8"
+ ],
+ "sky": [
+  "#E9E0FB",
+  "#D9CCF7",
+  "#B9A3EE",
+  "#9C7FE0",
+  "#7F63C9",
+  "#5E48A6",
+  "#3F2F78",
+  "#241A4D"
+ ],
+ "cloud": [
+  "#FFF1F8",
+  "#FFE6F3",
+  "#FFC2E0",
+  "#F79CCB",
+  "#D978AE",
+  "#B25C90"
+ ],
+ "sun": [
+  "#FFFBE0",
+  "#FFF8C9",
+  "#FFEB7A",
+  "#FFD84A"
+ ],
+ "ui": [
+  "#FFF4DC",
+  "#FFE2A8",
+  "#FFC46B",
+  "#E08A2E",
+  "#9A5A1E"
+ ],
+ "rainbow": [
+  "#FF4D5E",
+  "#FF9A3C",
+  "#5CD66A",
+  "#4DA6FF",
+  "#9D6BFF"
+ ],
+ "boxer": [
+  "#D9A066",
+  "#B9773D",
+  "#8A5328",
+  "#5C3416",
+  "#2E1A0B"
+ ],
+ "peach": [
+  "#FFE3C8",
+  "#FFC9A0",
+  "#F59F6B",
+  "#D9743F"
+ ],
+ "owl": [
+  "#C9B2FF",
+  "#9F7EF2",
+  "#7556CC",
+  "#4F3A94",
+  "#33246B"
+ ],
+ "storm": [
+  "#CFC6EB",
+  "#A79DD0",
+  "#7E73AE",
+  "#584E86",
+  "#3A315F"
+ ],
+ "jelly": [
+  "#FFD6F5",
+  "#FF9FE0",
+  "#E070C4",
+  "#B047A0",
+  "#7A2E78"
+ ],
+ "grass": [
+  "#CFF5A6",
+  "#9FE070",
+  "#6CBF45",
+  "#3F8F2C"
+ ],
+ "candy": [
+  "#FFB8D0",
+  "#FF7AA8",
+  "#FFD9A8",
+  "#B8E6FF",
+  "#7AC8FF"
+ ],
+ "night": [
+  "#2A2159",
+  "#3D2F7E",
+  "#FFF3A8"
+ ],
+ "gray": [
+  "#9C93AD",
+  "#6B5E80",
+  "#453A59"
+ ]
+}

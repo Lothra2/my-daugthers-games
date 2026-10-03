@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. Redraw the FLYING SNAKE from the world reference drawing: a long thin glossy lime-green snake seen from the side, head on the right with a rounded head, two small round eyes and a tiny dot mouth, pink forked tongue, tapered tail on the left, a pale highlight stripe along the body. Draw 8 poses arranged in a grid of 2 rows by 4 columns, equally spaced, plenty of empty space between them. Poses: (1)-(6) a slithering wave cycle, the S-shaped wave travelling from head to tail, six different poses, tongue hidden; (7) tongue flicking out; (8) head tilted down looking down with the tongue out. Each snake is about 40 percent of the image width. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/d5b9ff8d-ca4e-47e4-97ac-3d9baec3dbdd.png"
+  ]
+ },
+ "request_id": "9e110866-7197-4fc0-841f-ca52b9956d51",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet snake_fly",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/f9695b49-8e11-4ea3-8900-36fe3b8ae260.png"
+ ]
+}

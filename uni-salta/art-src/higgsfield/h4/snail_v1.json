@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. A cute RAINBOW SNAIL: a soft peach-colored body with two eye stalks with round eyes and a sleepy smile, carrying a round shell with a rainbow spiral (red, orange, yellow, green, blue, violet). Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Side view facing left. Frames: (1)-(4) crawling cycle, the body stretching and contracting and the eye stalks wiggling; (5)-(6) hiding, the body pulled completely inside the rainbow shell, only the shell visible with a tiny sleeping face on it; (7)-(8) peeking out, eye stalks just coming out of the shell. Each snail is about 16 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/d6a6edf7-43a1-4d30-820d-22979b461aeb.png"
+  ]
+ },
+ "request_id": "f4767aee-0b81-49a4-8bfe-2efdfc873936",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet snail",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/97e0c48d-2f2f-49a4-83cb-6c1776300aca.png"
+ ]
+}

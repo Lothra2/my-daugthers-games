@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. A cute GUMMY BEE: a plump translucent peach-orange gummy-bear-like bee with soft stripes, two tiny see-through wings, big shiny eyes and a happy little smile, no stinger visible. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Side view facing left. Frames: (1)-(4) flying cycle with the wings up, mid, down, mid and a small body bob; (5)-(6) squashing and stretching before switching direction (a buzz warning), cheeks puffed; (7)-(8) dizzy: spiral eyes with tiny stars circling the head and the wings drooping. Each bee is about 16 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "1619f708-5347-4647-b1aa-3644530c900b",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet bee",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/0ad11472-c3f6-4fb8-a7f2-86cb4c5ced29.png"
+ ]
+}

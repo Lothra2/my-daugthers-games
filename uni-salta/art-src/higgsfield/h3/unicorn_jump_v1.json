@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "Reuse EXACTLY the same character as in the reference images (a chibi cat-unicorn: big round white head, two pointy cat ears with pink inner ears, golden spiral horn centered on top, closed happy eyes as upside-down U arcs, pink blush stripes, tiny dark nose and cat 'w' smile, small white bean body, thin stick arms and thin stick legs, bright pink mane behind the head and a big fluffy bright pink tail). Same proportions, same colors, same pixel size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all frames standing on the same invisible ground line, side view facing right unless stated, plenty of empty space between frames so no frame touches another. The character is about 40 percent of the image height. JUMP animation, 8 frames in order: (1) takeoff squash, knees bent, body compressed and wide, arms swung down and back; (2) just left the ground, stretched tall, arms swinging up, legs trailing; (3) rising, legs tucked, arms up, mane and tail flowing downward; (4) apex, round ball pose, legs tucked, the right arm waving high, mane and tail floating up; (5) apex again slightly lower, arm waving; (6) falling, legs reaching down, arms up, mane and tail lifted upward; (7) falling faster, legs stretched down, body stretched tall; (8) landing squash, body wide and short, knees bent, mane and tail pushed forward. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png"
+  ]
+ },
+ "request_id": "961c4cb0-5e31-467e-9225-c767fba49a1d",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "H3 unicorn jump sheet",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/66ef095b-a061-43b7-9a7c-63de639e3ad9.png"
+ ]
+}

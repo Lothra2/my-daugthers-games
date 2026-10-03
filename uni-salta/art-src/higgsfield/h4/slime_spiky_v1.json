@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. Redraw the SPIKY SLIME from the world reference drawing (the tall green blob on the pink cloud at the bottom right): a darker green slime with a flame-like jagged spiky top made of several rounded spikes, spiral dizzy eyes and a tiny mouth. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: (1)-(4) idle wobble, spikes swaying; (5) squashed low getting ready to hop; (6) stretching tall jumping up; (7) apex high stretched; (8) landing squashed wide. Each slime is about 26 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6e81fcc2-d621-497d-8624-617107c622d2.webp",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "4d8dd320-d3d3-405b-9e33-26f0cdc2a25c",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet slime_spiky",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b13e65f6-f6cf-4502-a6b8-13bc3feb891d.png"
+ ]
+}

@@ -1,0 +1,262 @@
+{
+ "unicorn_idle": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 6,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_run": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 6,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_run_fast": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 4,
+  "fps": 14,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_jump_takeoff": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 1,
+  "fps": 10,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_jump_rise": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_jump_apex": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_fall": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_land": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 20,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_crouch_enter": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 30,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_crouch_run": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 4,
+  "fps": 10,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_crouch_exit": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 30,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_fast_fall": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 12,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_stomp": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 12,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_hit": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 3,
+  "fps": 12,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_tired_in": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 4,
+  "fps": 6,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_tired_loop": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 2,
+  "fps": 4,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_celebrate": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 4,
+  "fps": 10,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_title_fly": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 4,
+  "fps": 8,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_ready": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 3,
+  "fps": 6,
+  "loop": false,
+  "pivot": [
+   48,
+   92
+  ]
+ },
+ "unicorn_respawn": {
+  "cell": [
+   96,
+   96
+  ],
+  "frames": 1,
+  "fps": 6,
+  "loop": true,
+  "pivot": [
+   48,
+   92
+  ]
+ }
+}

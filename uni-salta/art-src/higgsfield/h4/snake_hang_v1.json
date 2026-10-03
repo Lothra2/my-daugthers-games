@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. Redraw the HANGING SNAKE from the first reference drawing: a lime-green snake with a glossy highlight stripe, hanging VERTICALLY head-down from a small puffy pink cloud at the top of each frame, head at the bottom with angry eyebrows, two round eyes with white shine and a pink forked tongue. NO side bump on the body. Draw exactly 8 frames in ONE horizontal row, equally spaced, plenty of empty space between frames. Frames: (1) just the pink cloud with a tiny bit of tail peeking out; (2) body halfway unrolled down; (3) fully dropped, head low; (4)-(6) fully hanging swaying left, center, right; (7) tongue flicking out; (8) eyebrows relaxed into a pout with a sad little mouth. Each frame is about 70 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/d5b9ff8d-ca4e-47e4-97ac-3d9baec3dbdd.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "9bcaa974-95c7-4bcf-83f4-dcdded51e02e",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet snake_hang",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/db276e41-c1ba-482e-bd77-77615976064d.png"
+ ]
+}

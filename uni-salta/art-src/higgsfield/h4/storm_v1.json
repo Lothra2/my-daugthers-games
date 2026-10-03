@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. A cute GRUMPY STORM CLOUD: a fluffy dark lilac-purple storm cloud with a pouty frown, tiny annoyed eyebrows and little crossed arms, with soft lighter edges. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: (1)-(3) floating calmly, gently puffing and bobbing; (4)-(5) charging up, darker, cheeks puffed, little yellow sparks around it; (6) ZAP: mouth open shouting with a yellow lightning bolt shooting straight down from the bottom of the cloud; (7)-(8) sighing, relaxed, a tiny sweat drop and a small puff of air. Each cloud is about 22 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "39d1ebcd-bcad-41c8-b657-27b62d0e7745",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet storm",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/4a35389d-08ef-4273-90d3-32c7264e483f.png"
+ ]
+}

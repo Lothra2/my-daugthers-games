@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. A cute pixel art BOXER DOG, a fawn-brown short-haired boxer with a darker brown-black muzzle, a WHITE CHEST PATCH (bib) on the chest, floppy folded ears, a short tail and a friendly big tongue, chunky and playful, side view facing right. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: (1)-(4) galloping run cycle; (5)-(6) barking, mouth open with a small sound mark; (7) sitting happily with the tongue out; (8) licking, head tilted down and tongue out. Each dog is about 22 percent of the image height. Solid flat cyan background, nothing else. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "a3de46da-9766-4cff-9989-22b90f213df8",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet thor",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/78114b1b-5966-459e-8c6b-5e9a6b1e8774.png"
+ ]
+}

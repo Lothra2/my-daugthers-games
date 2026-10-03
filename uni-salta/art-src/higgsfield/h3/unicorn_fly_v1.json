@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "Reuse EXACTLY the same character as in the reference images (a chibi cat-unicorn: big round white head, two pointy cat ears with pink inner ears, golden spiral horn centered on top, closed happy eyes as upside-down U arcs, pink blush stripes, tiny dark nose and cat 'w' smile, small white bean body, thin stick arms and thin stick legs, bright pink mane behind the head and a big fluffy bright pink tail). Same proportions, same colors, same pixel size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all frames standing on the same invisible ground line, side view facing right unless stated, plenty of empty space between frames so no frame touches another. The character is about 40 percent of the image height. TITLE FLY and READY animation, 8 frames: (1)-(4) FLYING diagonally upward to the upper right like in the first reference drawing: body tilted about 45 degrees, right arm waving, legs trailing behind, mane and tail streaming down and back, big happy closed eyes, four different poses of a gentle floating cycle; (5)-(6) READY: standing, EYES OPEN looking at the viewer, small excited smile, one fist raised; (7) happy face with closed eyes and right arm waving; (8) sitting on a small puffy pink cloud, legs dangling, waving. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png"
+  ]
+ },
+ "request_id": "ef726d38-7edd-4a5b-aa85-e77961381fc1",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "H3 unicorn fly sheet",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/e896e2b2-323e-492b-a850-42a5f935f2ce.png"
+ ]
+}

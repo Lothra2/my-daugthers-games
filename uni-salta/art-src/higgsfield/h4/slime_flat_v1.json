@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "The creature is cute, silly and friendly, never scary, in the same chunky pixel style and outline as the cat-unicorn reference sheet. Redraw the FLAT SLIME from the slime reference drawing: a wide, low, lumpy glossy lime-green blob with two big round eyes with green irises and a wide grin with four big white square teeth, same lime-green colors. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size and all on the same invisible ground line, plenty of empty space between frames so no frame touches another. Side-on view. Frames: (1)-(4) idle wobble cycle, the blob gently squashing and stretching and the highlights shifting; (5)-(6) looking UP, eyes rolled upward and the mouth a small round 'o'; (7)-(8) STOMPED, flattened into a thin pancake puddle with spiral dizzy eyes and a wobbly tongue. Each slime is about 18 percent of the image height and 12 percent of the width. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline, flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan background, nothing else. ",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/6ac565fb-8dd6-4871-9523-721ef6ab444f.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "02b44b68-44f2-4234-bcdd-c238bf6ff274",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "enemy/animal sheet slime_flat",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/e20ced98-d83b-43a2-b9ac-ef34da28fc7e.png"
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "endpoint": "alibaba/qwen-image-3/edit",
+ "args": {
+  "prompt": "Character model sheet, three views on one image arranged left to right: (1) SIDE VIEW facing right, standing neutral; (2) SIDE VIEW facing right in a mid-stride running pose with arms pumping; (3) FRONT VIEW standing. A small chibi CAT-UNICORN (this is a cat, not a horse): big round white head about half of her total height, two pointy cat ears with pink inner ears, a short golden-yellow spiral horn centered on top of the head, closed happy eyes drawn as upside-down U arcs, pink blush stripes on both cheeks, tiny dark nose and a cat 'w' smile, small white bean-shaped body, thin stick arms and thin stick legs, long flowing bright-pink mane behind the head and a big fluffy bright-pink tail. She stands on two legs like a cartoon character. Faithfully keep the exact character design of the reference drawings (same face, ears, horn, mane and tail shapes). 16-bit pixel art in the clean style of classic SNES platformers. Hard square pixels, visible pixel grid, no anti-aliasing on the outer edge, 1-pixel dark plum outline, flat cel shading with one highlight and one shadow step, light from the top left, limited palette, cute round shapes, cheerful. No blur, no gradients, no text, no watermark. Single flat solid cyan #00FFFF background, nothing else, generous space between the three views.",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/53ca379e-1a84-4c3c-8189-ccb104737bd4.webp"
+  ],
+  "resolution": "2k",
+  "aspect_ratio": "16:9"
+ },
+ "request_id": "376ded2a-bcff-4158-8a3e-6b92138437a2",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.200",
+  "usd": "0.075",
+  "discount": null
+ },
+ "purpose": "H1 unicorn model sheet (qwen)",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/a0a6655f-0d34-4530-86ed-1861bac51d17.png"
+ ]
+}

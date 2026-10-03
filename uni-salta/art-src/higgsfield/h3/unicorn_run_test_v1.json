@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "Using the reference character design exactly (same cat-unicorn: white round head with pointy cat ears with pink inner ears, golden spiral horn, closed happy eyes, pink blush stripes, tiny nose and cat smile, small white bean body, thin stick arms and legs, pink mane and fluffy pink tail), draw a RUN CYCLE sprite strip: 8 frames in one horizontal row, side view facing right, equal spacing, each frame the same size and same ground line, a smooth looping running animation (contact, down, passing, up, repeat on the other leg), arms pumping opposite to legs, mane and tail trailing behind and bouncing with a one frame lag. IMPORTANT SCALE: this is a LOW RESOLUTION retro sprite, each character is only about 48 pixels tall on a tiny 400x80 pixel canvas, so the pixels are VERY LARGE and CHUNKY, like a Super Nintendo sprite, no fine detail. 1-pixel dark plum outline, flat colors, no anti-aliasing, no gradients. Solid flat cyan background, nothing else, no text.",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png"
+  ],
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium"
+ },
+ "request_id": "b5b53d87-8eea-4532-9137-4b1c500e8228",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "H3 run cycle test sheet",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/c8b4183f-97b7-47e7-8a3b-ba52670bb4bc.png"
+ ]
+}
