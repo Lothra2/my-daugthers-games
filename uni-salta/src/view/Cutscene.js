@@ -22,6 +22,7 @@ export class PowerCut {
   }
 
   start(kind, title, sub, targetX, targetY) {
+    if (this.on) this.end();            // never leave a half drawn cutscene behind
     const sc = this.sc, W = sc.W, H = sc.H;
     this.kind = kind; this.t = 0; this.on = true; this.target = [targetX, targetY];
     this.col = COL[kind];
@@ -44,6 +45,10 @@ export class PowerCut {
   // returns true when finished
   update(dt) {
     if (!this.on) return true;
+    try { return this.step(dt); } catch (err) { console.error(err); this.end(); return true; }
+  }
+
+  step(dt) {
     const sc = this.sc, W = sc.W, H = sc.H, fx = sc.fx;
     this.t += dt;
     const t = this.t, c = this.col;
@@ -96,12 +101,12 @@ export class PowerCut {
     const fa = Math.max(f1 * 0.85, f2 * 0.7) * (sc.app.save.settings.reduceFlash ? 0.25 : 1);
     this.flashR.setAlpha(fa);
     if (t > 0.12 && !this.slammed) { this.slammed = true; sc.shakeNow && sc.shakeNow(5, 0.3); sc.app.bus.emit('sfx', { name: 'cut_slam' }); }
-    if (t >= DUR) { this.end(); return true; }
+    if (t >= DUR || t > DUR + 1) { this.end(); return true; }
     return false;
   }
 
   end() {
-    for (const o of this.objs) o.destroy();
+    for (const o of this.objs || []) { try { o.destroy(); } catch (e) { /* already gone */ } }
     this.objs = []; this.on = false; this.slammed = false;
     this.sc.anims.resumeAll();
   }

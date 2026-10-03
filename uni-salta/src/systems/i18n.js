@@ -50,7 +50,7 @@ export class I18n {
   setLang(l) { this.lang = l === 'en' ? 'en' : 'es'; }
   t(key, vars = {}) {
     let s = (STRINGS[this.lang] && STRINGS[this.lang][key]) ?? STRINGS.es[key] ?? key;
-    for (const k of Object.keys(vars)) s = s.replaceAll(`{${k}}`, String(vars[k]));
+    for (const k of Object.keys(vars)) s = s.split(`{${k}}`).join(String(vars[k]));
     return s;
   }
 }

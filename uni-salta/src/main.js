@@ -42,6 +42,18 @@ async function boot() {
     scene: [Preload, Title, Game],
   });
   app.game = game;
+  // last line of defence against a dead screen: reload if the GPU context is lost or the frame loop stops
+  game.events.once('ready', () => {
+    game.canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); setTimeout(() => location.reload(), 1000); });
+  });
+  let lastFrame = -1, frozen = 0;
+  setInterval(() => {
+    if (document.visibilityState !== 'visible') { frozen = 0; return; }
+    const f = game.loop ? game.loop.frame : 0;
+    frozen = f === lastFrame ? frozen + 1 : 0;
+    lastFrame = f;
+    if (frozen >= 4) location.reload();
+  }, 2000);
   game.registry.set('app', app);
   const relayout = () => {
     layout = computeLayout(window.innerWidth, window.innerHeight, Math.min(window.devicePixelRatio || 1, 4));

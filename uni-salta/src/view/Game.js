@@ -74,7 +74,7 @@ export class Game extends Phaser.Scene {
 
     this.cameras.main.setBackgroundColor(0x2A2159);
     this.scale.on('resize', this.onResize, this);
-    this.events.on('shutdown', () => { this.scale.off('resize', this.onResize, this); this.unsub && this.unsub.forEach((f) => f()); });
+    this.events.on('shutdown', () => { try { this.cut.end(); } catch (e) { /* ignore */ } this.scale.off('resize', this.onResize, this); this.unsub && this.unsub.forEach((f) => f()); });
 
     // bus wiring
     this.unsub = [
@@ -200,8 +200,18 @@ export class Game extends Phaser.Scene {
     try { this.updateInner(time, delta); this.errStreak = 0; } catch (err) {
       this.errStreak = (this.errStreak || 0) + 1;
       if (this.errStreak <= 3) console.error(err);
+      if (this.errStreak === 1) this.recoverView();
       if (this.errStreak === 45 && !this.ended) { try { this.finishRun(); } catch (e2) { /* ignore */ } }
     }
+  }
+
+  // put every overlay back to neutral so a failed frame can never leave the screen dark
+  recoverView() {
+    try {
+      if (this.cut && this.cut.on) this.cut.end();
+      this.flash.setAlpha(0); this.slowTint.setAlpha(this.sim.power && this.sim.power.kind === 'slow' ? 0.14 : 0);
+      this.anims.resumeAll(); this.cameras.main.setScroll(0, 0);
+    } catch (e) { /* ignore */ }
   }
 
   updateInner(time, delta) {
@@ -380,8 +390,11 @@ export class Game extends Phaser.Scene {
     if (seam) {
       const sx = Math.max(0, Math.min(W, seam.x));
       this.setSkyTex(this.skyB, 'sky_w', seam.right); this.setSkyTex(this.streaksB, 'streaks_w', seam.right);
-      this.skyB.setVisible(sx < W).setAlpha(1).setPosition(sx, 0).setSize(W - sx, H);
-      this.streaksB.setVisible(sx < W).setPosition(sx, 0).setSize(W - sx, H);
+      const wB = Math.floor(W - sx);
+      if (wB >= 2) {
+        this.skyB.setVisible(true).setAlpha(1).setPosition(sx, 0).setSize(wB, H);
+        this.streaksB.setVisible(true).setPosition(sx, 0).setSize(wB, H);
+      } else { this.skyB.setVisible(false); this.streaksB.setVisible(false); }
       this.streaksB.tilePositionX = Math.round(tp) - sx; this.streaksB.tilePositionY = Math.round(this.t * 3);
       this.setSkyTex(this.glow, 'glow_w', seam.x < W - 40 ? seam.right : seam.left);
     } else {
@@ -431,7 +444,11 @@ export class Game extends Phaser.Scene {
     for (const sp of s.floor) {
       const a = Math.max(sp.x0, camX - 16), b = Math.min(sp.x1, camX + W + 16);
       if (b <= a) continue;
-      if (a < gate && b > gate) { segs.push([a, gate, this.worldVis(a)]); segs.push([gate, b, s.nextWorldNum()]); } else segs.push([a, b, this.worldVis(a + 1)]);
+      if (s.gateIsPortal() && a < gate && b > gate) {
+        // a sliver under one pixel wide must never reach a TileSprite (a zero-size texture breaks WebGL)
+        if (gate - a >= 1) segs.push([a, gate, this.worldVis(a)]);
+        if (b - gate >= 1) segs.push([gate, b, s.nextWorldNum()]);
+      } else if (b - a >= 1) segs.push([a, b, this.worldVis(a + 1)]);
     }
     const wa = this.app.worldAssets.worlds;
     while (this.floorViews.length < segs.length) {
@@ -445,7 +462,7 @@ export class Game extends Phaser.Scene {
       const t = wa[w].tiles;
       const key = `floor_w${w}`;
       if (v.top.texture.key !== key) v.top.setTexture(key);
-      const x = Math.round(a - camX), width = Math.round(b - a);
+      const x = Math.round(a - camX), width = Math.max(1, Math.round(b - a));
       const y = groundY - t.surface;
       v.top.setVisible(true).setPosition(x, y).setSize(width, t.floor[1]);
       v.top.tilePositionX = Math.round(a) % t.floor[0];

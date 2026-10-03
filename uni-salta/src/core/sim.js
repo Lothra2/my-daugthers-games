@@ -7,6 +7,15 @@ import { CHUNKS } from '../data/patterns.js';
 const HAZARDS = new Set(['sf', 'ss', 'ssh', 'fly', 'hang', 'snail', 'beeH', 'beeL', 'owl', 'storm', 'jelly', 'crab', 'wheel', 'ghost', 'penguin', 'invader']);
 const KIND = { sf: 'slime_flat', ss: 'slime_spiky', ssh: 'slime_spiky', fly: 'snake_fly', hang: 'snake_hang', snail: 'snail', beeH: 'bee', beeL: 'bee', owl: 'owl', storm: 'storm', jelly: 'jelly', crab: 'crab', wheel: 'wheel', ghost: 'ghost', penguin: 'penguin', invader: 'invader' };
 
+// plain deep copy (structuredClone is missing on older tablets and phones)
+function deepClone(v) {
+  if (v === null || typeof v !== 'object') return v;
+  if (Array.isArray(v)) { const a = new Array(v.length); for (let i = 0; i < v.length; i++) a[i] = deepClone(v[i]); return a; }
+  const o = {};
+  for (const k in v) if (Object.prototype.hasOwnProperty.call(v, k)) o[k] = deepClone(v[k]);
+  return o;
+}
+
 export const TIER_CAP = [1, 2, 3, 4, 4, 5, 5, 5, 5]; // by world
 const ARENA = ['arena_coins_01', 'arena_coins_02', 'arena_coins_03'];
 export const BOSS_WORLDS = { 6: 'queen', 9: 'king' };   // the boss waits at the end of these worlds
@@ -41,7 +50,7 @@ export class Sim {
 
   clone() {
     const o = Object.create(Sim.prototype);
-    const data = structuredClone({ ...this, rng: undefined, events: [], snap: null });
+    const data = deepClone({ ...this, rng: undefined, events: [], snap: null });
     Object.assign(o, data);
     o.rng = makeRng(0);
     o.rng.state = this.rng.state;
@@ -725,8 +734,9 @@ export class Sim {
 
   saveCheckpoint(kind) {
     const keep = { snap: null, events: [], rng: undefined };
-    const data = structuredClone({ ...this, ...keep });
-    data.rngState = this.rng.state;
+    let data = null;
+    try { data = deepClone({ ...this, ...keep }); data.rngState = this.rng.state; } catch (err) { data = null; }
+    if (!data) return;      // never let a failed save disturb the run
     this.snap = data;
     this.emit('checkpoint', { kind, x: this.x });
   }

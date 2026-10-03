@@ -27,7 +27,7 @@ export function compose(spec) {
   const scale = (spec.mode === 'major' ? MAJOR : MINOR).map((s) => spec.root + s);
   const steps = spec.bars * 16;
   const ev = { bass: [], drums: [], arp: [], lead: [], speed: [], bell: [] };
-  const put = (layer, step, o) => { (ev[layer][step] ||= []).push(o); };
+  const put = (layer, step, o) => { (ev[layer][step] = ev[layer][step] || []).push(o); };
   const bars = spec.bars;
   const chordAt = (bar) => { const [r, q] = spec.prog[bar % spec.prog.length]; return CHORD[q].map((s) => spec.root + r + s); };
   const nearScale = (m) => scale.reduce((best, n) => { for (const o of [-12, 0, 12]) if (Math.abs(n + o - m) < Math.abs(best - m)) best = n + o; return best; }, scale[0]);
@@ -106,7 +106,7 @@ export class Music {
 
   setVolume(v) { this.bus.gain.setTargetAtTime(Math.max(0, v), this.ctx.currentTime, 0.05); }
 
-  songData(id) { return (this.songs[id] ||= compose(SONGS[id])); }
+  songData(id) { return (this.songs[id] = this.songs[id] || compose(SONGS[id])); }
 
   // instance: gain nodes per layer
   makeInstance(id) {
