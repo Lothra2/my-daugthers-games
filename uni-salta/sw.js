@@ -1,5 +1,5 @@
 // UNI-SALTA service worker: caches the whole game so it plays offline after the first visit.
-const VERSION = 'uni-salta-v1.0.0';
+const VERSION = 'uni-salta-403ff334e7';
 const RUNTIME = VERSION + '-runtime';
 
 self.addEventListener('install', (e) => {
@@ -27,10 +27,8 @@ self.addEventListener('fetch', (e) => {
     const isCode = /\.(html|js|css|json)$/.test(url.pathname) || url.pathname.endsWith('/');
     e.respondWith((async () => {
       const cache = await caches.open(VERSION);
-      if (isCode) {
-        try { const r = await fetch(req); if (r.ok) cache.put(req, r.clone()); return r; } catch (err) { return (await cache.match(req, { ignoreSearch: true })) || (await cache.match('index.html')) || Response.error(); }
-      }
-      return (await cache.match(req, { ignoreSearch: true })) || (await fetch(req).then((r) => { if (r.ok) cache.put(req, r.clone()); return r; }));
+      // network first for everything so a new release never mixes with stale sprites, cache when offline
+      try { const r = await fetch(req); if (r.ok) cache.put(req, r.clone()); return r; } catch (err) { return (await cache.match(req, { ignoreSearch: true })) || (isCode ? await cache.match('index.html') : null) || Response.error(); }
     })());
     return;
   }
