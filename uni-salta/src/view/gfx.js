@@ -128,3 +128,17 @@ export function makeBolt(scene, key) {
   });
   t.refresh();
 }
+
+// soft pixel ground shadow: dithered ellipse, dense in the core and thinning to the rim
+export function makeShadow(scene, key, w = 56, h = 14) {
+  const { t, ctx } = canvasTex(scene, key, w, h);
+  putImage(ctx, w, h, (x, y) => {
+    const dx = (x + 0.5 - w / 2) / (w / 2), dy = (y + 0.5 - h / 2) / (h / 2);
+    const d = Math.sqrt(dx * dx + dy * dy);
+    if (d > 1) return null;
+    const a = 1 - d * d * 0.85;
+    const th = (BAYER[y & 3][x & 3] + 0.5) / 16;
+    return a > th ? [30, 19, 48, 255] : null;
+  });
+  t.refresh();
+}

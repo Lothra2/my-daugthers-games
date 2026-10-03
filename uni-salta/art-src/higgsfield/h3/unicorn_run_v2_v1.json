@@ -1,0 +1,24 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "Using the reference character design exactly (same cat-unicorn: white round head with pointy cat ears with pink inner ears, golden spiral horn, closed happy eyes, pink blush stripes, tiny nose and cat smile, small white bean body, thin stick arms and legs, pink mane and fluffy pink tail), draw an ENERGETIC SPRINT CYCLE sprite strip: 8 frames in one horizontal row, side view facing right, equal spacing, same ground line. Body leaning forward, big long strides like a Mario run: frame 1 contact (front foot reaching, back leg extended), frame 2 down (body lowest, knee bent), frame 3 passing, frame 4 high point with BOTH FEET OFF THE GROUND (flight phase), then the same on the other leg. Arms pumping hard opposite to legs, mane and tail streaming straight back with one frame lag. IMPORTANT SCALE: this is a LOW RESOLUTION retro sprite, each character is only about 48 pixels tall on a tiny 400x80 pixel canvas, VERY LARGE CHUNKY pixels like a Super Nintendo sprite, no fine detail. 1-pixel dark plum outline, flat colors, no anti-aliasing, no gradients. Solid flat cyan background, nothing else, no text.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png",
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/758b5694-e6cc-49c2-b253-6e757a5d57da.png"
+  ]
+ },
+ "request_id": "38308e63-7b79-4b61-8bae-7b1ea7573f9e",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.600",
+  "usd": "0.100",
+  "discount": null
+ },
+ "purpose": "H8 energetic run cycle a",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/75158fad-0439-4b9b-94a6-a1fa1014045a.png"
+ ]
+}

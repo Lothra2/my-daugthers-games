@@ -205,8 +205,8 @@ export class Sim {
   }
 
   choosePower() {
-    if (this.lives < CFG.LIVES && this.mode === 'normal' && this.gen.heartCd <= 0 && this.rng.chance(0.45)) {
-      this.gen.heartCd = 3;
+    if (this.lives < CFG.LIVES && this.mode === 'normal' && this.gen.heartCd <= 0 && this.rng.chance(0.3)) {
+      this.gen.heartCd = 9;
       return 'heart';
     }
     this.gen.heartCd = Math.max(0, this.gen.heartCd - 1);

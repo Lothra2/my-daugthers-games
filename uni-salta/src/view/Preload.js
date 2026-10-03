@@ -1,4 +1,4 @@
-import { makeParticles, makeGate, makeBolt, makeSky, makeGlow, makeStreaks } from './gfx.js';
+import { makeShadow, makeParticles, makeGate, makeBolt, makeSky, makeGlow, makeStreaks } from './gfx.js';
 import { WORLDS } from '../data/worlds.js';
 
 export class Preload extends Phaser.Scene {
@@ -36,6 +36,7 @@ export class Preload extends Phaser.Scene {
       this.anims.create({ key, frames: this.anims.generateFrameNumbers(key, { start: 0, end: m.frames - 1 }), frameRate: m.fps, repeat: m.loop ? -1 : 0 });
     }
     makeParticles(this);
+    makeShadow(this, 'px_shadow');
     makeSky(this, 'sky_title', ['#7A3FE0', '#9358E8', '#A878F0', '#C79BF5']);
     makeStreaks(this, 'streaks_title', '#D8BDFB', 21);
     makeGate(this, 'gate');

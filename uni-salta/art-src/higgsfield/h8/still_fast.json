@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "args": {
+  "prompt": "Retro 16-bit pixel art cutscene portrait, chunky pixels, dark plum outline, the same cat-unicorn character from the reference (white round head, pointy ears, golden spiral horn, pink blush, pink mane) in a dramatic close-up transformation: eyes now OPEN and fierce and determined with white sparkles, glowing electric golden-yellow aura, lightning bolts crackling around, mane blazing like golden fire flying upward, tiny golden wings of light on the back, fist clenched. Strong radial speed lines. Super Nintendo / Ninja Gaiden style power-up cutscene art. Solid flat magenta background (#FF00FF), nothing else, no text.",
+  "resolution": "2k",
+  "aspect_ratio": "1:1",
+  "quality": "medium",
+  "image_urls": [
+   "https://d3snorpfx4xhv8.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/b615f40c-cc58-4471-853d-df093641d87a.png"
+  ]
+ },
+ "request_id": "43f261c6-0bdc-4f32-bf48-b4bd4da41acb",
+ "estimate": {
+  "type": "estimate",
+  "credits": "1.440",
+  "usd": "0.090",
+  "discount": null
+ },
+ "purpose": "H8 power cutscene fast",
+ "outputs": [
+  "https://d3u0tzju9qaucj.cloudfront.net/1a4df3b9-0281-443a-a35a-8d343feaf2f8/299f6dec-dac1-4fa6-955e-4b17ba69bdfd.png"
+ ]
+}

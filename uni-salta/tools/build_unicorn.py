@@ -10,12 +10,12 @@ CW = CH = 96
 GX, GROUND = 48, 92
 T = 7.50
 PAL = P.master_palette(['outline', 'white', 'mane', 'blush', 'nose', 'gold', 'gray', 'tongue', 'red', 'cloud'])
-SRC = {'run': 'unicorn_run_test', 'jump': 'unicorn_jump', 'crouch': 'unicorn_crouch', 'fast': 'unicorn_fast',
+SRC = {'run': 'unicorn_run_v2', 'jump': 'unicorn_jump', 'crouch': 'unicorn_crouch', 'fast': 'unicorn_fast',
        'hit': 'unicorn_hit', 'idle': 'unicorn_idle', 'fly': 'unicorn_fly'}
 # anim: (sheet, [frame idx], fps, loop, mode, optional dy list)
 ANIMS = {
     'idle':            ('idle',   [0, 1, 2, 3, 2, 1], 6, True, 'ground'),
-    'run':             ('run',    [2, 3, 4, 5, 6, 7], 12, True, 'ground'),
+    'run':             ('run',    [0, 1, 2, 3, 4, 5, 6, 7], 16, True, 'ground'),
     'run_fast':        ('fast',   [0, 1, 2, 3], 14, True, 'ground'),
     'jump_takeoff':    ('jump',   [0], 10, False, 'ground'),
     'jump_rise':       ('jump',   [1, 2], 10, True, 'center'),

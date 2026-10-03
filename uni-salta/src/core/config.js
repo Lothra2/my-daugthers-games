@@ -48,7 +48,7 @@ export const CFG = {
   // scoring
   PTS_COIN: 10, PTS_POWER: 50, PTS_HEART: 100, PTS_PERFECT: 100, PTS_STOMP: [100, 200, 400, 800, 1000],
   PTS_POP: 200, PTS_BLOCK: 50, PTS_WORLD: 1000, PTS_STREAK: 300,
-  HEART_EVERY_COINS: 100,
+  HEART_EVERY_COINS: 240,
 
   // sprites (logical px)
   SPRITE: { unicorn: [96, 96] },

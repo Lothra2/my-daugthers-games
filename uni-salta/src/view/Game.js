@@ -56,7 +56,8 @@ export class Game extends Phaser.Scene {
     this.player.play('unicorn_run');
     this.rescueCloud = this.add.sprite(0, 0, 'rescue_bob').setDepth(29).setVisible(false);
     this.rescueCloud.play('rescue_bob');
-    this.shadow = this.add.rectangle(0, 0, 36, 4, 0x1E1330, 0.25).setDepth(11);
+    this.shadow = this.add.image(0, 0, 'px_shadow').setDepth(11).setAlpha(0.4);
+    this.sq = { x: 1, y: 1, lean: 0, bob: 0, lastFoot: -1, airT: 0 };
 
     // overlays
     this.slowTint = this.add.rectangle(W / 2, H / 2, W, H, 0x6FE09A, 0).setDepth(70);
@@ -156,10 +157,8 @@ export class Game extends Phaser.Scene {
 
   afterStep() {
     const sim = this.sim;
-    if (this.tickCount % 2 === 0) {
-      this.trail.push({ x: sim.x, h: sim.p.y, c: sim.p.crouch });
-      if (this.trail.length > 34) this.trail.shift();
-    }
+    this.trail.push({ x: sim.x, h: sim.p.y, c: sim.p.crouch });
+    if (this.trail.length > 46) this.trail.shift();
     for (const e of sim.drainEvents()) this.onEvent(e);
     if (sim.hitstop > 0 && !this._hs) { this._hs = true; this.anims.pauseAll(); }
     if (sim.hitstop <= 0 && this._hs) { this._hs = false; if (!this.paused) this.anims.resumeAll(); }
@@ -501,7 +500,7 @@ export class Game extends Phaser.Scene {
     const s = this.sim, p = s.p, spr = this.player;
     const sy = this.groundY - lerp(p.prevY, p.y, alpha);
     spr.setPosition(CFG.PLAYER_X, Math.round(sy + (this.introDrop || 0)));
-    this.shadow.setPosition(CFG.PLAYER_X, this.groundY + 1).setVisible(p.onGround || p.y < 200);
+    this.updateShadow(p, s);
     if (this.hitT > 0) this.hitT -= dt;
     if (this.stompT > 0) this.stompT -= dt;
     if (this.landT > 0) this.landT -= dt;
@@ -525,6 +524,7 @@ export class Game extends Phaser.Scene {
       spr.setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]);
     }
     spr.anims.timeScale = key.includes('run') ? Math.max(0.75, s.speed / 250) * (s.power && s.power.kind === 'slow' ? 0.9 : 1) : 1;
+    this.squashStretch(spr, p, s, dt, key);
     // blink while invulnerable
     if (p.invul > 0 && !s.rescue && s.dying <= 0) spr.setAlpha(this.app.save.settings.reduceFlash ? 0.7 : (Math.floor(this.blinkT * 20) % 2 ? 0.35 : 1)); else spr.setAlpha(1);
     // power looks
@@ -561,25 +561,95 @@ export class Game extends Phaser.Scene {
     g.clear();
     if (this.introT < 0.9 || s.dying > 0 || s.over) return;
     const full = s.power && (s.power.kind === 'fast' || s.power.kind === 'inv');
-    const n = this.trail.length;
-    if (n < 2) return;
-    const bands = full ? 6 : 3;
-    const th = full ? 3 : 2;
-    const pts = this.trail;
-    for (let i = 0; i < n - 1; i++) {
-      const a = pts[i], b = pts[i + 1];
-      const ax = Math.round(a.x - camX), bx = Math.round(b.x - camX);
-      const ay = this.groundY - a.h - (a.c ? 22 : 36), by = this.groundY - b.h - (b.c ? 22 : 36);
-      const fade = (i + 1) / n;
-      if (fade < 0.12) continue;
-      const wob = Math.round(Math.sin(i * 0.5 + this.t * 9) * (full ? 2 : 1));
-      for (let k = 0; k < bands; k++) {
-        const col = full ? RAINBOW_HEX[k] : RAINBOW_HEX[[0, 2, 4][k]];
-        g.fillStyle(col, Math.min(1, fade * 1.3));
-        const y = Math.round(lerp(ay, by, 0.5)) + k * th - Math.floor(bands * th / 2) + wob;
-        g.fillRect(ax, y, Math.max(2, bx - ax + 2), th);
-      }
+    const tr = this.trail, n = tr.length;
+    if (n < 3) return;
+    // screen-space polyline of the path, then resampled by arc length with bands offset along the normal
+    // so a jump draws a smooth ribbon that follows the arc instead of flat horizontal bars
+    const useN = Math.min(n, full ? 46 : 36);
+    const pts = [];
+    for (let i = n - useN; i < n; i++) {
+      const q = tr[i];
+      pts.push([Math.round(q.x - camX), this.groundY - q.h - (q.c ? 22 : 36)]);
     }
+    const bands = full ? 6 : 4, th = 3;
+    const colors = full ? RAINBOW_HEX : [RAINBOW_HEX[0], RAINBOW_HEX[2], RAINBOW_HEX[4], RAINBOW_HEX[5]];
+    const total = pts.length;
+    let acc = 0, segLen = [];
+    for (let i = 1; i < total; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segLen.push(l); acc += l; }
+    if (acc < 2) return;
+    const step = 2;
+    let run = 0, sample = 0;
+    for (let i = 1; i < total; i++) {
+      const [x0, y0] = pts[i - 1], [x1, y1] = pts[i];
+      const l = segLen[i - 1];
+      if (l <= 0) continue;
+      // tangent smoothed over neighbours
+      const pa = pts[Math.max(0, i - 3)], pb = pts[Math.min(total - 1, i + 1)];
+      let tx = pb[0] - pa[0], ty = pb[1] - pa[1];
+      const tl = Math.hypot(tx, ty) || 1; tx /= tl; ty /= tl;
+      const nx = -ty, ny = tx;
+      while (sample < run + l) {
+        const u = (sample - run) / l;
+        const px = x0 + (x1 - x0) * u, py = y0 + (y1 - y0) * u;
+        const life = sample / acc;
+        if (life > 0.04) {
+          const taper = Math.min(1, 0.4 + life * 0.8);
+          const wob = Math.sin(sample * 0.07 + this.t * 10) * (full ? 2.4 : 1.4) * (1 - life * 0.3);
+          const tb = Math.max(2, Math.round(bands * taper));
+          g.fillStyle(0xFFFFFF, 0);
+          for (let k = 0; k < tb; k++) {
+            const col = colors[Math.min(colors.length - 1, Math.floor(k * colors.length / tb))];
+            const off = (k - (tb - 1) / 2) * th + wob;
+            g.fillStyle(col, Math.min(1, life * 1.7));
+            g.fillRect(Math.round(px + nx * off - 1), Math.round(py + ny * off - 1), th, th);
+          }
+          if (full && (Math.floor(sample / 2) % 11) === 0 && life > 0.3) { g.fillStyle(0xFFFFFF, life); g.fillRect(Math.round(px + nx * (bands * th * 0.7)), Math.round(py + ny * (bands * th * 0.7)), 2, 2); }
+        }
+        sample += step;
+      }
+      run += l;
+    }
+  }
+
+  updateShadow(p, s) {
+    // shadow stays on the floor under the player and shrinks and fades with height, hidden over gaps
+    let under = false;
+    for (const f of s.floor) if (s.x >= f.x0 && s.x <= f.x1) { under = true; break; }
+    const h = Math.max(0, p.y);
+    const k = Math.max(0.35, 1 - h / 330);
+    const w = p.crouch ? 0.85 : 1;
+    this.shadow.setVisible(under && !s.rescue && s.dying <= 0).setPosition(CFG.PLAYER_X - 2, this.groundY + 1).setScale(k * w * 0.95, k).setAlpha(0.3 + 0.3 * k);
+  }
+
+  // squash and stretch, forward lean and a run bob layered over the sprite frames
+  squashStretch(spr, p, s, dt, key) {
+    const q = this.sq;
+    let tx = 1, ty = 1, tl = 0;
+    if (!p.onGround) {
+      const v = Math.max(-1, Math.min(1, p.vy / 700));
+      ty = 1 + 0.12 * Math.abs(v); tx = 1 - 0.07 * Math.abs(v);
+      tl = -v * 0.12;
+      q.airT += dt;
+    } else if (this.landT > 0) { ty = 0.86; tx = 1.12; q.airT = 0; }
+    else if (p.crouch) { ty = 0.94; tx = 1.05; tl = 0.05; q.airT = 0; }
+    else if (key.includes('run')) {
+      const ph = ((spr.anims.currentFrame ? spr.anims.currentFrame.index : 0) % 2);
+      ty = 1 + (ph ? 0.025 : -0.02); tl = 0.05; q.airT = 0;
+    }
+    if (this.stompT > 0) { ty = 1.12; tx = 0.92; }
+    if (this.hitT > 0) { tx = 1.1; ty = 0.9; }
+    const kk = 1 - Math.pow(0.0005, dt);
+    q.x += (tx - q.x) * kk; q.y += (ty - q.y) * kk; q.lean += (tl - q.lean) * kk;
+    spr.setScale(q.x, q.y);
+    spr.setRotation(s.dying > 0 || s.over || s.rescue ? 0 : q.lean);
+    // footfall dust on the run cycle
+    if (p.onGround && key.includes('run') && s.dying <= 0) {
+      const fi = spr.anims.currentFrame ? spr.anims.currentFrame.index : 0;
+      if (fi !== q.lastFoot) {
+        q.lastFoot = fi;
+        if (fi === 1 || fi === 5) this.fx.dust(s.x - 12, 0, 1, -1);
+      }
+    } else q.lastFoot = -1;
   }
 
   ambient(dt, camX) {
