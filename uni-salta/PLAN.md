@@ -1,6 +1,6 @@
 # UNI-SALTA · Master Production Plan
 
-**Status:** v1.0 of the plan, written by the lead director (planning phase). Nothing in it has been built yet.
+**Status:** v2.0 of the plan (Revision 2 applies Rick's answers, see section 0.3, which overrides anything older below). Nothing has been built yet.
 **Concept author:** Sophie, age 7. **Producer:** Rick (dad).
 **Executor:** the coding agent that picks up this plan, called "Sonnet" below.
 **Repo:** `Lothra2/my-daugthers-games`, folder `uni-salta/`.
@@ -33,8 +33,8 @@
 | D9 | Title screen | Keep Sophie's text "al entrar... ya vas a jugar!" and her "Uni-salta" button, recomposed for **landscape**, with working buttons, motion, sound. "Make it magical." |
 | D10 | Languages | Spanish (default) and English. |
 | D11 | Devices | Tablet first, plus iPhone 15 Pro Max and Samsung Galaxy S23. Desktop browser is supported. |
-| D12 | Audio providers | Fish Audio has no connector in this environment. Use Higgsfield for anything generated. Music and SFX are made in code (see 27 to 29). |
-| D13 | Higgsfield budget | Rick loaded USD 10. **The account showed 0.76 credits when this plan was written.** See risk R1. |
+| D12 | Audio providers | **Revised, see 0.3 R2-3.** Higgsfield (via its API) for music and SFX when the API offers audio models. Code synthesis is the fallback. **No voice lines at all.** |
+| D13 | Higgsfield budget | **Revised, see 0.3 R2-1.** Credits live on Rick's **Higgsfield API account** (confirmed by Rick). Use the API with the `HF_KEY` environment variable, not the MCP/plan account (which has 0.76 credits). |
 | D14 | Hosting | GitHub (GitHub Pages from this repo). |
 | D15 | Plan location | This file, `uni-salta/PLAN.md`, with references in `uni-salta/reference/`. |
 | D16 | Ambition | Rick asked to take Mario as the reference for pixel craft and level feel, add more worlds than Sophie drew, and make it magical, charming, challenging and consistent. Max use of Motion and Higgsfield. |
@@ -44,11 +44,11 @@
 
 | # | Decision | Why |
 |---|---|---|
-| P1 | **Phaser 3.90.0** via CDN, no build step | Mature, pixel-art first, huge example base so the agent writes correct code fast. Phaser 4 is newer (4.0 shipped April 2026) and the agent has less reliable knowledge of it. |
+| P1 | **Revised: Phaser 4.2.1** via CDN, no build step (see 0.3 R2-6) | Rick asked for the most advanced stack. Phaser 4 is the current major version. The agent reads the v4 docs and migration notes before coding (Phase 1). |
 | P2 | Game logic is a **pure, deterministic JS core** (no Phaser inside), and Phaser only renders | So the level validator, tests and balancing bot run in Node on the exact same physics. |
-| P3 | **Music is composed as note data and synthesized live** with Web Audio (NES-style channels) | Adaptive layers stay perfectly in sync, cost zero credits, weigh zero MB, and sound authentically "pixel". Higgsfield's music model is not available for standalone use. |
-| P4 | **SFX made with ZzFX** (MIT, about 1 KB) | Instant, tunable, retro, no files. |
-| P5 | **Voice lines recorded by Sophie** (and Alana if she wants), with Higgsfield TTS as fallback | Nothing keeps "Sophie's soul" like her own voice saying "¡Uni-salta!". |
+| P3 | **Revised (0.3 R2-3):** music generated with the Higgsfield API if it has a music model, built as same-key, same-BPM loop variants for adaptive crossfades. Fallback: the code sequencer of section 28 | Rick asked for Higgsfield. The fallback keeps the game safe if the API has no music model. |
+| P4 | **Revised (0.3 R2-3):** SFX generated with the Higgsfield API if it has an SFX model, then trimmed and normalized. ZzFX for tiny UI ticks and as the fallback | Richer sounds, with zero risk. |
+| P5 | **Revised: no voice lines.** Rick decided: sound effects only, never his daughter's voice | Callouts ("¡Perfecto!", "¡Súper rápido!") are shown as animated pixel text with an SFX. |
 | P6 | **6 worlds** in a loop, Mario-style world cards | Sophie's world is World 1, five new worlds grow out of it. |
 | P7 | **Stomp mechanic**: landing on a flat slime bounces you (Mario goomba feel). Spiky slime cannot be stomped | Uses both of Sophie's slime drawings, adds skill depth without new buttons. |
 | P8 | **Gaps** (holes in the cloud floor) from World 2 | The classic Mario jump challenge. Off in easy mode. |
@@ -57,6 +57,27 @@
 | P11 | The yellow FAST power **clears obstacles from the generator** while active | Speed without safety would just kill kids. FAST becomes a joyful "candy sprint". |
 | P12 | During the red INVINCIBLE power, a **rainbow bridge** appears under the unicorn over gaps | Mario's star does not protect you from pits, but for kids that feels unfair. A rainbow road fits Sophie's rainbow. |
 | P13 | Greybox first, art second | The game must be fun with rectangles before any credit is spent. |
+
+
+### 0.3 Revision 2: Rick's answers (AUTHORITATIVE, overrides everything below)
+
+| # | Topic | Decision |
+|---|---|---|
+| R2-1 | **Higgsfield access** | Use the **Higgsfield Cloud API** with Rick's API credits. The key is in the environment variable **`HF_KEY`** (format `api_key:api_secret`), set by Rick in the cloud environment settings. **Never** print it, log it, write it to a file, commit it, or put it in client-side code. All calls go through `tools/hf.py` (section 30.6). Do not use the Higgsfield MCP tools for generation (that account has 0.76 credits). |
+| R2-2 | Credit budget | Rick confirmed the API account has credits. Keep the budget discipline of section 30.5 (log every call in `docs/CREDITS.md`). If the total passes 75 credits, tell Rick before continuing. |
+| R2-3 | **Audio** | Higgsfield first. Phase 12 starts by discovering which audio models the API offers. Music: per-world loops, plus an "energy" variant of each in the same key and BPM for adaptive crossfades, the invincible theme, and the jingles. SFX: the list of section 29.1. If the API has no music or SFX model, use the fallbacks (code sequencer, ZzFX) without asking. **No voice lines** (section 29.3 is cancelled, Phase 14 is replaced). |
+| R2-4 | **New obstacles** | Add one new animal per world from World 2, in the same silly, cute tone, fully animated (section 8.2). |
+| R2-5 | Mario elements, the 4 Sophie enemies, Modo Nubecita | Approved as planned. |
+| R2-6 | **Engine** | **Phaser 4.2.1** (pinned): `https://cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js` (verified to respond). Before writing engine code, read the Phaser 4 docs and the v3→v4 migration notes from the `phaserjs/phaser` GitHub repo (CHANGELOG and docs) and write a one-page `docs/PHASER4_NOTES.md` with the APIs this game uses (config, scenes, sprites, animations, cameras, tweens, input, render textures, pixel-art settings, shaders/filters for the palette cycle). Any API doubt is answered from those docs, not from memory. |
+| R2-7 | Motion | Approved. Every DOM animation must feel perfect (section 35). |
+| R2-8 | **No rectangles for Rick** | Rick wants to see only finished-looking work. Placeholders may exist inside the code while building, but **every preview shown to Rick uses real art**. The art pipeline (Phases 2, 7 to 10) moves **before** gameplay previews. The M1 greybox gate is removed. |
+| R2-9 | **Progress previews** | Show Rick progress as it happens: after every phase that changes something visible, publish a **private preview** of the game as a claude.ai Artifact (multi-file publish of `uni-salta/`, same URL updated each time) and send screenshots/GIFs. The plan itself is also published as a readable page. |
+| R2-10 | **Unicorn name** | The player names the unicorn. First launch: after mode select, a "¿Cómo se llama tu unicornio?" / "What's your unicorn's name?" screen (DOM input, max 12 characters, default "Uni", a big "¡Listo!" button). Editable in Settings. The name appears on the title ("¡Hola, {name}!"), the results screen ("¡Qué carrera, {name}!") and the high scores. |
+| R2-11 | Privacy | Rick approved: first names and Sophie's drawings may be in the public repo. No voice recordings exist anyway. |
+| R2-12 | **Thor** | Thor is a **brown boxer dog with a white chest patch** (fawn-brown coat, darker muzzle, white "bib" on the chest, floppy ears, short tail). He is a real pixel character, not a cloud (section 8.3). |
+| R2-13 | Caramelitos | Approved: the yellow swirl = coin, the yellow lollipop = FAST. |
+
+**New execution order** (replaces section 55, item 2): 0, 1, 2, 8, 9, 7, 7b, 10, 3, 4, 5, 6, (M1 "Primer salto", with real art), 11, 12, 13, (M2 "Es mi juego" + "Mágico" combined), 15a to 15e, 16, 17, 18, (M4). Phase 14 (voice) is removed. The new animals and Thor are produced in the new **Phase 7b**, see 56.
 
 ---
 
@@ -135,6 +156,11 @@ Run, read the next obstacle, jump/crouch/stomp, grab candy, trigger a power, sur
 | Hopping spiky slime | 5 | Timing jump |
 | Snake pairs (high + low combos) | 4 | Crouch then jump |
 | Moving cloud platforms | 5 | Optional path |
+| **Caracol Arcoíris** (rainbow snail) | 2 | Jump over, or stomp (it hides in its shell, you bounce) |
+| **Abejita Gomita** (gummy bee), high or low | 3 | High: crouch. Low: jump. Stompable |
+| **Búho Pijama** (pajama owl), swoops in | 4 | Crouch when it glides by |
+| **Nubarrón Gruñón** (grumpy storm cloud) | 5 | Its spark puddle on the floor: jump over |
+| **Medusa de Gelatina** (jelly jellyfish), bobs up and down | 6 | Run under it when it is up, jump when it is down |
 
 ---
 
@@ -290,6 +316,32 @@ All enemies are silly. They react to the unicorn. None of them chase, shoot or s
 - So standing always overlaps by 6 px (a hit), and crouching always clears with 6 px of margin.
 - A full jump also clears the flying snake (it passes over it). This is allowed and is a skill move, but the patterns are designed for crouching.
 
+### 8.2 New animals (one per world, Revision 2)
+
+Same rules as Sophie's enemies: silly, round, readable, outlined, never scary. They use **their own color ramps**, never the enemy lime (that stays Sophie's slimes and snakes) and never the candy colors. Each one is introduced alone in an easy chunk (tier 1 or 2) the first time it appears in a run, so kids learn it.
+
+| Animal | World | Cell | Hurtbox | Behavior | Answer | Personality and animation beats |
+|---|---|---|---|---|---|---|
+| **Caracol Arcoíris** ("Lento") | 2 | 32x24 | 22 w x 14 h, bottom aligned | Crawls toward the player at 20 px/s relative to the floor | Jump, or stomp: it pulls into its rainbow shell (no kill), you bounce +100, the shell is then harmless | Sleepy smile, eye stalks wiggle. Frames: crawl 6f, hide 4f, peek 3f (peeks out after you pass) |
+| **Abejita Gomita** ("Zumbi") | 3 | 24x24 | 14 w x 12 h | Flies at a fixed lane height (high = crouch lane, low = jump lane) with a ±3 px bob. Tier 4+ variant switches lane once, telegraphed by a 0.4 s "buzz" squash | High: crouch. Low: jump. Stompable from above (bounce, it spins away dizzy) | A translucent gummy-bear-colored bee (peach/orange) with tiny wings. Frames: fly 4f (wings 24 fps blur), switch 3f, dizzy 4f |
+| **Búho Pijama** ("Dormilón") | 4 | 40x32 | 24 w x 14 h | Sleeps on a high cloud. When the unicorn is 1.6 s away it wakes (0.5 s: eyes open, "!" pixel bubble), then glides down and across at **crouch height**, then flies off | Crouch | A round purple owl in a striped nightcap, half-closed eyes, a yawn. Frames: sleep 4f (Z pixels), wake 4f, glide 4f, yawn-away 4f |
+| **Nubarrón Gruñón** ("Gruñón") | 5 | 48x32 (sky, harmless) + spark puddle 32x8 | Puddle only: 26 w x 6 h | Floats in the sky lane ahead. 0.8 s telegraph (darkens, sparks, grumpy frown), then a 0.25 s lightning bolt hits the floor and leaves a **spark puddle** for 1.2 s | Jump over the puddle | A dark-lilac cloud with a pouty face and tiny arms crossed. Frames: float 4f, charge 4f, zap 3f, sigh 3f. Bolt 3f. Puddle 4f loop. "Reduce flashing" swaps the bolt flash for a soft glow |
+| **Medusa de Gelatina** ("Gelatina") | 6 | 32x40 | 18 w x 16 h (the bell), tentacles harmless | Bobs vertically between the jump lane and the ground lane with a fixed 1.4 s period. The generator places it with a phase that always leaves a valid answer | Run under it while it is up (crouch if needed), or jump over it while it is down | A cosmic jelly, translucent pink-violet with star sparkles inside, a happy little face. Frames: bob 8f (squash at the bottom, stretch at the top), giggle 3f |
+
+Rules for all new animals:
+- They obey INVINCIBLE (pop into caramelitos) and SLOW (time × 0.6) like Sophie's enemies.
+- Modo Nubecita uses only the Caracol and the high Abejita (crouch), never the lane-switching bee, the owl, the storm cloud or the jelly.
+- They join the pattern library (section 13.2) and the validator must support **time-dependent hazards** (owl glide, storm puddle window, jelly bob): hazards are deterministic functions of time from spawn, so the search simulates them exactly.
+
+### 8.3 Thor (family dog cameo)
+
+- **Look:** a brown boxer dog: fawn-brown coat, darker brown-black muzzle, a **white chest patch ("bib")**, floppy ears, a short tail, a big friendly tongue. 40x32 cell, same outline and lighting rules as the unicorn.
+- **Appearances:**
+  1. 1 run in 15: Thor runs along in the **near background layer** (L5) of World 1 for about 4 s, barks once ("woof" SFX), and runs off. Harmless, not interactive.
+  2. On the game-over screen, 1 time in 5: Thor trots in, licks the tired unicorn, and she giggles (her `tired` loop switches to `celebrate`).
+  3. In the gallery: "Thor" with his sprite.
+- **Animations:** run 6f, bark 3f, lick 4f, sit 2f (gallery idle).
+
 ---
 
 ## 9. Candy and power-up specification
@@ -322,7 +374,7 @@ Collecting **every** caramelito of one formation gives "¡Perfecto!" +100 and in
 - **3 hearts** in Modo Arcoíris. Top left of the HUD.
 - On a hit:
   1. Hitstop 80 ms (the whole game freezes, the unicorn shows the hit frame).
-  2. A "¡Ay!" voice line or SFX plus a 4-star burst around the head.
+  2. A "¡Ay!" pixel-text pop, the `hit` SFX, and a 4-star burst around the head.
   3. Screen shake 3 px for 150 ms (0 with "Reduce shake").
   4. The heart pops out of the HUD with a Motion spring and breaks into 2 halves.
   5. The unicorn keeps running. She is invulnerable for **1.6 s**, blinking at 10 Hz (or a soft pink tint pulse with "Reduce flashing").
@@ -431,6 +483,7 @@ Levels are built from **authored chunks**, never from random hazard placement.
 | Risk/reward | `risk_power_over_slime_01`, `risk_zigzag_01`, `risk_high_path_01` |
 | Storm (World 5+) | `hop_spiky_01..02`, `moving_platform_01` |
 | Master (World 6) | `master_gauntlet_01..03` |
+| New animals | `snail_intro_01`, `snail_stomp_01`, `bee_high_01`, `bee_low_01`, `bee_switch_01` (tier 4), `owl_intro_01`, `owl_combo_01`, `storm_intro_01`, `storm_double_01`, `jelly_intro_01`, `jelly_pair_01`, `jelly_gap_01` (tier 5) |
 | Power sprint | `sprint_candy_rain_01..03` (only during FAST) |
 | Nubecita | `soft_slime_01..03`, `soft_snake_01..03`, `soft_candy_01..03` |
 
@@ -470,12 +523,12 @@ All six share the same sky-and-clouds DNA from Sophie's drawing, so they read as
 
 | # | Name (ES / EN) | Sky | Clouds and props | Ambient FX | New mechanic | Music variation |
 |---|---|---|---|---|---|---|
-| 1 | **Nubes de Algodón** / Cotton Clouds | Sophie's lavender `#9C7FE0` with diagonal light streaks, yellow glow on the right | Big pink cotton clouds, pink cloudlets, pink cloud floor | Drifting cloud wisps | Flat slime, flying snake, stomp | Main theme in C major, 140 BPM, pulse lead |
-| 2 | **Valle Arcoíris** / Rainbow Valley | Lighter lilac to peach, rainbow arcs far away | Rainbow bridges, puffy white-pink clouds, small floating islands | Rainbow sparkles | Gaps, hanging snakes, cloud platforms | Same theme in D major, 146 BPM, adds an arpeggio |
-| 3 | **Bosque de Chupetas** / Lollipop Forest | Warm pink-orange | Giant swirl lollipop trees (yellow, from Sophie's lollipop), candy-cane posts, cookie hills | Floating sugar dust | Spiky slime, surprise blocks | F major, 150 BPM, marimba-like triangle lead |
-| 4 | **Cielo Estrellado** / Starry Sky | Deep indigo to purple night | Dark-lavender clouds with lit edges, moon, constellations shaped like candies | Twinkling stars, shooting stars that leave caramelito lines | Snake pairs, night readability (enemies get a 1 px light rim) | A minor, 152 BPM, music box bells |
-| 5 | **Tormenta Mágica** / Magic Storm | Purple-grey with pink lightning | Swirling storm clouds, candy raindrops | Rain particles, soft lightning flashes (off with "Reduce flashing"), gentle wind lines | Hopping spiky slime, moving platforms | E minor to G major, 156 BPM, driving drums |
-| 6 | **Castillo Cósmico de Caramelo** / Cosmic Candy Castle | Space purple with planets that look like candies | Crystal candy towers, the castle on the horizon, glowing yellow light (Sophie's light) getting closer | Floating crystals, stardust | Everything at master tiers | Grand version of the theme in C major, 160 BPM, all layers |
+| 1 | **Nubes de Algodón** / Cotton Clouds | Sophie's lavender `#9C7FE0` with diagonal light streaks, yellow glow on the right | Big pink cotton clouds, pink cloudlets, pink cloud floor | Drifting cloud wisps | Flat slime, flying snake, stomp (+ Thor cameo) | Main theme in C major, 140 BPM, pulse lead |
+| 2 | **Valle Arcoíris** / Rainbow Valley | Lighter lilac to peach, rainbow arcs far away | Rainbow bridges, puffy white-pink clouds, small floating islands | Rainbow sparkles | Gaps, hanging snakes, cloud platforms, **Caracol Arcoíris** | Same theme in D major, 146 BPM, adds an arpeggio |
+| 3 | **Bosque de Chupetas** / Lollipop Forest | Warm pink-orange | Giant swirl lollipop trees (yellow, from Sophie's lollipop), candy-cane posts, cookie hills | Floating sugar dust | Spiky slime, surprise blocks, **Abejita Gomita** | F major, 150 BPM, marimba-like triangle lead |
+| 4 | **Cielo Estrellado** / Starry Sky | Deep indigo to purple night | Dark-lavender clouds with lit edges, moon, constellations shaped like candies | Twinkling stars, shooting stars that leave caramelito lines | Snake pairs, **Búho Pijama**, night readability (enemies get a 1 px light rim) | A minor, 152 BPM, music box bells |
+| 5 | **Tormenta Mágica** / Magic Storm | Purple-grey with pink lightning | Swirling storm clouds, candy raindrops | Rain particles, soft lightning flashes (off with "Reduce flashing"), gentle wind lines | Hopping spiky slime, moving platforms, **Nubarrón Gruñón** | E minor to G major, 156 BPM, driving drums |
+| 6 | **Castillo Cósmico de Caramelo** / Cosmic Candy Castle | Space purple with planets that look like candies | Crystal candy towers, the castle on the horizon, glowing yellow light (Sophie's light) getting closer | Floating crystals, stardust | **Medusa de Gelatina**, everything at master tiers | Grand version of the theme in C major, 160 BPM, all layers |
 
 **World transitions:** at a world end, a world gate passes (a rainbow arch in the parallax), then a Mario-style card slides in: "MUNDO 2 · Valle Arcoíris" with the unicorn icon and the lap number. Sky colors crossfade over 2 s while a breather chunk plays.
 
@@ -602,6 +655,13 @@ All unicorn animations use **48x48 cells**, pivot (24, 46), facing right. FPS is
 | `snake_hang_pout` | 32x32 head | 2 | 8 | Hold | (16, 0) | Eyebrows relax into a pout after the unicorn passes |
 | `snake_hang_pop` | 32x32 head | 5 | 24 | No | (16, 0) | Bursts |
 | `cloud_anchor_wiggle` | 48x24 | 4 | 12 | No | (24, 12) | The warning wiggle before a snake drops |
+| `snail_crawl` / `snail_hide` / `snail_peek` / `snail_pop` | 32x24 | 6 / 4 / 3 / 5 | 8 / 16 / 10 / 24 | Yes / No / No / No | (16, 23) | Section 8.2 |
+| `bee_fly` / `bee_switch` / `bee_dizzy` / `bee_pop` | 24x24 | 4 / 3 / 4 / 5 | 24 / 12 / 12 / 24 | Yes / No / Yes / No | (12, 12) | Wings at 24 fps for a blur feel |
+| `owl_sleep` / `owl_wake` / `owl_glide` / `owl_yawn` / `owl_pop` | 40x32 | 4 / 4 / 4 / 4 / 5 | 4 / 12 / 10 / 8 / 24 | Yes / No / Yes / No / No | (20, 16) | |
+| `storm_float` / `storm_charge` / `storm_zap` / `storm_sigh` | 48x32 | 4 / 4 / 3 / 3 | 6 / 16 / 20 / 8 | Yes / Yes / No / No | (24, 16) | |
+| `storm_bolt` / `storm_puddle` | 16xH / 32x8 | 3 / 4 | 24 / 12 | No / Yes | bottom center | The bolt is drawn as a vertical strip that stretches to the floor |
+| `jelly_bob` / `jelly_giggle` / `jelly_pop` | 32x40 | 8 / 3 / 5 | 8 / 10 / 24 | Yes / No / No | (16, 20) | Squash at the bottom of the bob, stretch at the top |
+| `thor_run` / `thor_bark` / `thor_lick` / `thor_sit` | 40x32 | 6 / 3 / 4 / 2 | 12 / 10 / 10 / 3 | Yes / No / No / Yes | (20, 31) | Section 8.3 |
 
 ---
 
@@ -659,6 +719,11 @@ Hitboxes live in `src/data/hitboxes.json`, **not** in the art. They are per stat
 | `snake_fly_body` | (-24, -4, 40, 8) |
 | `snake_hang_head` | (-8, 10, 16, 12) |
 | `snake_hang_body` | (-4, 0, 8, length) |
+| `snail` | (-11, -14, 22, 14) |
+| `bee` | (-7, -6, 14, 12) |
+| `owl` | (-12, -7, 24, 14) |
+| `storm_puddle` | (-13, -6, 26, 6) |
+| `jelly_bell` | (-9, -12, 18, 16) |
 | Candy pickups | circles, radius from section 9 |
 
 ### 22.3 Sheet list
@@ -725,10 +790,11 @@ Seven layers per world. Speeds are a fraction of world speed.
 |---|---|---|
 | Rotate device | Unicorn icon turning, "Gira tu pantalla" / "Turn your screen" | Rotation loop, spring |
 | Title | Section 25 | Section 25 |
+| Name your unicorn (first launch, and from Settings) | "¿Cómo se llama tu unicornio?", the unicorn waving, a DOM text input (pixel styled, max 12 chars, default "Uni"), a big "¡Listo!" button | The unicorn hops when a letter is typed, the button pops in when the name is valid |
 | Mode select | Two big buttons: **Nubecita** (cloud icon, "fácil") and **Arcoíris** (rainbow icon, "normal"). Last choice is remembered | Buttons pop in with `stagger(0.08)`, spring bounce |
 | World card | "MUNDO 3" + world name + mini art + lap badge | Slide in from the right, overshoot spring, out to the left |
 | Pause | Continue (big), Restart, Settings, Menu, (Nubecita: Terminar) | Panel drops in with a spring, the background dims to 50% |
-| Settings | Music, SFX, Voice volume sliders (pixel), Language ES/EN, Reduce shake, Reduce flashing, Touch hints, Reset records (hold 2 s) | Toggle knobs spring |
+| Settings | Unicorn name, Music and SFX volume sliders (pixel), Language ES/EN, Reduce shake, Reduce flashing, Touch hints, Reset records (hold 2 s) | Toggle knobs spring |
 | Results / Game over | Section 26 | Section 26 |
 | High scores | Top 5 per mode with date, best world | Rows stagger in |
 | Gallery (unlock) | "Los dibujos de Sophie": the original references, with the game version next to each | Cards flip with Motion |
@@ -762,7 +828,7 @@ UX rules:
 ### 25.3 Title → gameplay transition (no hard cut)
 
 1. Tap "Uni-salta": the button squashes (spring), chime SFX, the mode buttons pop out of it (Motion stagger). If a mode was chosen before, a third tap target "¡Jugar!" is focused.
-2. Mode chosen: text and buttons fly out (Motion, 0.35 s). Voice: "¡Uni-salta!"
+2. Mode chosen: text and buttons fly out (Motion, 0.35 s). Pixel text "¡Uni-salta!" bursts with the `start_game` SFX.
 3. The unicorn flies off the top-right of the screen leaving the rainbow (Phaser tween 0.5 s).
 4. The camera tilts **down** from the title sky into World 1 (Phaser camera pan 0.8 s, sky crossfades from title purple to World 1 lavender). The title is literally the sky above World 1.
 5. The unicorn drops in from the top with a rainbow streak, lands with dust (`unicorn_land`), plays `unicorn_ready` and starts running.
@@ -777,7 +843,7 @@ Total: about 2.5 s, skippable by tapping (jumps to step 5).
 1. Last heart lost: hitstop 120 ms, music ducks with a low-pass, the world slows to a stop over 0.8 s (time-scale tween).
 2. `unicorn_tired`: she sits, tongue out, dizzy stars. After 1 s she smiles and waves at the player (Sophie's wave). Never hurt, never crying.
 3. Results panel slides up (Motion spring) with: title "¡Qué carrera!" / "What a run!", score count-up (Motion animates the number over 1.2 s with ticking SFX), meters, caramelitos, best world, best score.
-4. **New record:** the panel flashes gold, confetti (DOM particles via Motion), fanfare, voice "¡Nuevo récord!", and the unicorn plays `unicorn_celebrate`.
+4. **New record:** the panel flashes gold, confetti (DOM particles via Motion), fanfare, pixel text "¡Nuevo récord!", and the unicorn plays `unicorn_celebrate`.
 5. Buttons: **"¡Otra vez!"** (huge, focused, Space/Enter/tap) and "Menú" (small). Replay restarts in under 1 s, directly into a running start (no title).
 6. Encouragement line, random, localized: "¡Casi llegas al Mundo 3!" (if close), "¡Comiste 87 caramelitos!", and so on.
 
@@ -789,13 +855,15 @@ Modo Nubecita results are always a celebration: "¡Lo lograste!" with confetti e
 
 **Sound identity:** "a music box that learned to run." Modern magical chiptune: NES-style pulse and triangle channels, plus soft bells, sparkly arpeggios, light percussion. Bright, major key, bouncy. Inspired by the joy of Mario soundtracks, but **all melodies are original**.
 
-- Mix target: music −16 LUFS-ish feel, SFX on top, the voice always clearest (music ducks 4 dB under voice lines).
+- Mix target: music −16 LUFS-ish feel, SFX on top and always clear.
 - Every sound is short and pleasant. No harsh noise, no scary sounds. Hits are "boing" and "oops", not pain.
-- Voice: Sophie's recorded voice for key lines (section 29.3).
+- No voice (Revision 2). Callouts are pixel text + SFX.
 
 ---
 
 ## 28. Music system
+
+> **Revision 2:** first try the Higgsfield API music model (30.6). Generated music plan: for each song in 28.3 generate a **base loop** and an **energy loop** in the same key and BPM (prompt both with the key, BPM, bar count, instruments: "magical chiptune, 8-bit pulse lead, triangle bass, light drums, music box bells, cheerful, for a kids' platformer, seamless loop, 16 bars at 140 BPM in C major, no vocals"). Trim to exact bar lengths with ffmpeg (loop points at bar boundaries), then the engine crossfades between base and energy on the bar (replaces layers L1 to L3), plays the invincible track as a swap, and does SLOW with playback rate 0.8 + low-pass (the pitch drop is intended, the brief asks for a "lower-pitched audio transition"). The danger layer becomes a soft heartbeat SFX loop. If the music model is missing or the loops do not sound good, use the sequencer below, which remains fully specified.
 
 ### 28.1 Engine
 
@@ -811,7 +879,7 @@ A small tracker-style sequencer in Web Audio (`src/audio/music/`):
 |---|---|---|
 | L0 Base | Bass + drums | Always in play |
 | L1 Harmony | pulse2 chords/arps | Always in play |
-| L2 Melody | pulse1 lead | Always in play (ducked under voice) |
+| L2 Melody | pulse1 lead | Always in play |
 | L3 Speed | 16th hi-hats + octave arp on bell | FAST active, and permanently from World 5 |
 | L4 Danger | Soft heartbeat kick on beats 1 and 3 + a tension note in the pad | 1 heart left (Arcoíris only). Gentle, never scary |
 | INV | A separate short **"Arcoíris" theme** (180 BPM, 8 bars, looping) | INVINCIBLE, replaces L1/L2, back on the bar after |
@@ -888,27 +956,14 @@ Every world song and the title song quote this motif in its first 4 bars, so the
 - Max 12 simultaneous SFX voices. Repeated SFX within 40 ms are merged.
 - Pitch variance ±3% on frequent sounds (`jump`, `land`, `coin`) to avoid repetition fatigue.
 
-### 29.3 Voice lines (recorded by Sophie, ES and EN)
+### 29.3 Voice lines: CANCELLED (Revision 2)
 
-| Key | Spanish | English |
-|---|---|---|
-| `vo_title` | "¡Uni-salta!" | "Uni-salta!" |
-| `vo_ready` | "¿Lista? ¡Vamos!" | "Ready? Let's go!" |
-| `vo_world_1..6` | "¡Mundo uno!" … "¡Mundo seis!" | "World one!" … "World six!" |
-| `vo_fast` | "¡Súper rápido!" | "Super fast!" |
-| `vo_slow` | "Despaaacio…" | "Sloooow…" |
-| `vo_inv` | "¡Arcoíris!" | "Rainbow!" |
-| `vo_perfect` | "¡Perfecto!" | "Perfect!" |
-| `vo_ouch` | "¡Ay!" | "Oops!" |
-| `vo_heart` | "¡Una vida más!" | "Extra life!" |
-| `vo_record` | "¡Nuevo récord!" | "New record!" |
-| `vo_again` | "¡Otra vez!" | "Again!" |
-| `vo_lap` | "¡Otra vuelta!" | "Another lap!" |
-| `vo_bye` | "¡Chao!" | "Bye-bye!" |
+Rick decided: sound effects only, no voice. Every former voice moment ("¡Uni-salta!", "¡Perfecto!", "¡Súper rápido!", "¡Arcoíris!", "¡Nuevo récord!", "¡Mundo 2!") is shown as **animated pixel text** (bitmap font, localized ES/EN) with a matching SFX: a pop-in with a squash, a short wobble, and a fade. The `voiceBus` and the voice settings slider are not built.
 
-Recording guide for Rick (Phase 13): phone voice memo, quiet room, 20 cm from the phone, each line 3 times, a 1 s pause between takes. Rick can also record lines in Alana's voice for Modo Nubecita (optional). Fallback: Higgsfield TTS (`seed_audio`, a cheerful young female preset voice), about 30 short lines.
+### 29.4 SFX source (Revision 2)
 
-Voice line rules: a voice line plays at most every 4 s, power lines have priority, and a "Voice" volume slider plus an off switch exist in settings.
+1. Higgsfield API SFX model (if the catalog has one): generate each SFX from section 29.1 with a short, precise prompt ("cute cartoon 8-bit game sound, short 0.2 seconds, a bright rising 'bwip' for a jump, no music, no voice"), several variants per call if supported, pick the best, then `tools/process_audio.sh` (ffmpeg): trim silence, fade 5 ms, normalize peak to -1 dBFS, mono, 44.1 kHz, OGG + MP3.
+2. ZzFX for UI ticks (`ui_hover`, `count_tick`, `typewriter`) and as the fallback for any SFX that does not sound right.
 
 ---
 
@@ -925,16 +980,15 @@ Voice line rules: a voice line plays at most every 4 s, power lines have priorit
 | World tilesets (first draft) | UI panels and buttons (simple, hand-pixel or code) |
 | Title key art reference and the logo lettering | The rainbow trail and particles (procedural) |
 | PWA icon and share image | |
-| Voice TTS only as fallback | |
+| | |
 
-### 30.2 Models (checked in the planning phase)
+### 30.2 Models (checked in the planning phase through the MCP; **the API catalog may differ**, see 30.6)
 
 | Model id | Use | Cost seen at planning time |
 |---|---|---|
 | `gpt_image_2_5` | Default image generation and edits from references, good at following layout | **0.25 credits** per 16:9 image |
 | `nano_banana_pro` | Final hero model sheet if gpt_image_2_5 drifts. Strong with reference images | **2 credits** per 2K image |
 | `autosprite` | Animate one character image into a sprite sheet. Params: `kind` (idle, walk, run, jump, custom + name and prompt), `frame_count` 2 to 64, `frame_size` 32 to 512, `video_tier` turbo/pro/max, `remove_bg`, `is_humanoid` | **Unknown**: the cost preflight failed without a media input. Preflight with `get_cost: true` after uploading the master image, before the first real run |
-| `seed_audio` | TTS voice fallback | Preflight before use |
 
 **Rules for every generation (MUST):**
 1. Preflight every call with `get_cost: true` and log it to `uni-salta/docs/CREDITS.md` (date, model, purpose, cost, running total).
@@ -1030,7 +1084,9 @@ Cyan is the chroma key because no game sprite uses cyan.
 **H9. Icons and share image**
 - PWA icons 192/512 (the unicorn head on lavender), an Open Graph image 1200x630. `gpt_image_2_5`, or composed by code from the final sprites (preferred, free).
 
-**H10. Voice fallback** (only if Sophie's recordings are not available): `seed_audio` with a cheerful preset voice, batch the lines with `generate_audio_batch`.
+**H10. Voice:** cancelled (Revision 2).
+
+**H11. Music and SFX:** via the API per sections 28, 29.4 and 30.6.
 
 ### 30.5 Credit budget
 
@@ -1047,6 +1103,30 @@ Cyan is the chroma key because no game sprite uses cyan.
 | **Total** | | **≈ 35 to 75 credits** |
 
 Rule: if AutoSprite preflight shows more than 6 credits per run, stop and ask Rick, and propose the hand-made fallback for the less important animations.
+
+### 30.6 Higgsfield Cloud API usage (Revision 2, authoritative)
+
+- **Credentials:** environment variable `HF_KEY` = `api_key:api_secret` (alternatively `HF_API_KEY` + `HF_API_SECRET`). Set by Rick in the cloud environment settings. If it is missing, stop the Higgsfield task and tell Rick where to add it. Never ask for the key in chat.
+- **Client:** the official Python SDK `higgsfield-client` (PyPI, v0.2.0 at planning time, reads `HF_KEY` itself). Install in `tools/requirements.txt`.
+- **Wrapper `tools/hf.py`** (the only code that talks to Higgsfield):
+  - `hf.py models` → prints the available model ids and their arguments, from the API docs at https://cloud.higgsfield.ai (save the result to `docs/HF_CATALOG.md`).
+  - `hf.py image --model <id> --prompt-file <p.txt> --ref <img> ... --out art-src/higgsfield/<cat>/<name>.png`
+  - `hf.py video ...`, `hf.py audio ...` likewise.
+  - Uploads references when the model needs an image input (per the API docs).
+  - Writes a sidecar JSON next to every output: model, arguments, prompt, request id, timestamp, cost if returned.
+  - Appends a row to `docs/CREDITS.md`.
+  - Retries only on network errors, never re-submits a request whose outcome is unknown.
+  - Never prints the key, and redacts any header in errors.
+- **Phase 0 discovery (mandatory):** build `docs/HF_CATALOG.md` mapping each need to a real API model:
+
+| Need | Preferred | Fallback |
+|---|---|---|
+| Image from references (model sheet, poses, props, tiles, logo) | Best reference-following image model on the API (for example a Nano Banana Pro, GPT Image or Seedream image-to-image endpoint) | Any image-to-image model |
+| Sprite animation | AutoSprite if exposed on the API | **Image-to-video** (Kling, Seedance or similar): a 2 to 3 s side-view loop of the character on a flat cyan background, then `ffmpeg` frame extraction → pixelize. And the hand-made fallback of H3 |
+| Music | A music model on the API | The code sequencer (section 28) |
+| SFX | A sound-effect model on the API | ZzFX |
+
+- **Cost discipline:** if the API exposes a cost estimate, use it before each call. Otherwise run one call, read the cost from the account or response, and extrapolate before running batches.
 
 ---
 
@@ -1098,7 +1178,8 @@ Rules:
 | Sky | generated at runtime, no file | |
 | UI | `ui_<name>.png` | `ui_button_9slice.png` |
 | FX | `fx_<name>.png` | `fx_dust_land.png` |
-| Voice | `vo_<key>_<lang>.mp3` (and `.ogg`) | `vo_perfect_es.mp3` |
+| Music | `mus_<song>_<variant>.ogg` (+ `.mp3`) | `mus_world1_energy.ogg` |
+| SFX file | `sfx_<key>.ogg` (+ `.mp3`) | `sfx_jump.ogg` |
 | Pattern | `<group>_<name>_<NN>` inside `patterns/<group>.json` | `stomp_chain_02` |
 | Phaser anim key | `<entity>-<anim>` | `unicorn-run` |
 | i18n key | `<screen>.<item>` | `title.typewriter1` |
@@ -1132,7 +1213,7 @@ uni-salta/
 │   ├── props/w1..w6/
 │   ├── ui/
 │   ├── fonts/                 # Pixelify Sans woff2 + bitmap font
-│   ├── audio/voice/
+│   ├── audio/music/, audio/sfx/
 │   └── icons/
 ├── src/
 │   ├── main.js                # boots Phaser + the UI layer
@@ -1160,7 +1241,6 @@ uni-salta/
 │   ├── audio/
 │   │   ├── engine.js          # context, buses, unlock, iOS session
 │   │   ├── sfx.js             # ZzFX definitions
-│   │   ├── voice.js
 │   │   └── music/             # sequencer.js, instruments.js, songs/*.js
 │   ├── systems/
 │   │   ├── input.js
@@ -1203,10 +1283,10 @@ uni-salta/
 | Asset pipeline fit | Spritesheets as-is | Same | Same | Import step | Same | Same |
 | Productivity of the coding agent | **Highest**: years of docs and examples in its knowledge | Lower: released April 2026, less reliable knowledge | Medium | Medium (GDScript, editor files) | Medium | Low |
 
-**Recommendation: Phaser 3.90.0** (the final, stable v3), loaded from jsDelivr, pinned:
-`https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js` (verified to respond at planning time).
+**Recommendation (Revision 2): Phaser 4.2.1**, loaded from jsDelivr, pinned:
+`https://cdn.jsdelivr.net/npm/phaser@4.2.1/dist/phaser.min.js` (verified to respond at planning time). Rick asked for the most advanced option. The agent-knowledge risk of v4 is handled by R2-6 (read the v4 docs first, write `docs/PHASER4_NOTES.md`). Phaser 3.90.0 remains the emergency fallback, and the engine-free core makes a swap cheap.
 
-Why not Godot: the web export is heavy for phones and iOS, and the editor-centric workflow is harder for an agent to drive. Why not Pixi: we would rebuild input, animation and scenes that Phaser already has. Why not Phaser 4 yet: the agent's knowledge of v4 is thinner, and nothing in this game needs v4 features. A move to v4 later is possible because the core logic is engine-free (P2).
+Why not Godot: the web export is heavy for phones and iOS, and the editor-centric workflow is harder for an agent to drive. Why not Pixi: we would rebuild input, animation and scenes that Phaser already has. Why Phaser 4 over 3.90: it is the current major version with the newer renderer, it is maintained, and Rick wants the most advanced stack.
 
 **Motion:** `motion@14.0.0` from jsDelivr ESM (`https://cdn.jsdelivr.net/npm/motion@14.0.0/+esm`) for the DOM UI layer.
 **ZzFX:** vendored copy (MIT) in `src/vendor/zzfx.js`, to avoid one more network dependency for a 1 KB file.
@@ -1224,7 +1304,7 @@ No bundler, no npm in the shipped game. Native ES modules. A local dev server is
            ▲ draws                               ▲ updates
            │                                      │
    view/ (Phaser scenes,         events.js        ui/ (screens, HUD)
-   renderers, juice)  ◄────── event bus ──────►  audio/ (sfx, music, voice)
+   renderers, juice)  ◄────── event bus ──────►  audio/ (sfx, music)
            ▲                     ▲
            │ reads state         │ emits events
            └──────── core/ (pure deterministic simulation) ◄── systems/input.js
@@ -1320,7 +1400,7 @@ AudioContext
 
 - **Unlock:** create/resume the AudioContext on the first `pointerdown`/`keydown`. The title shows "Toca para empezar" until then.
 - **iPhone silent switch:** set `navigator.audioSession.type = 'playback'` when available (Safari 17+), so the game is audible with the ring switch on silent. Document the behavior if unsupported.
-- **Voice files:** short MP3 (and OGG for completeness), decoded to AudioBuffers at preload, at most about 400 KB total.
+- **Generated audio files** (if the Higgsfield path is used): OGG + MP3, decoded at preload. World music is lazy-loaded one world ahead. Budget: SFX < 400 KB total, each music loop < 500 KB.
 - **SFX:** ZzFX generates buffers at boot (cached), played through `sfxBus`.
 - **Music:** generated live by the sequencer. Zero files.
 - Volumes from settings map to the bus gains with a perceptual curve (`gain = v²`).
@@ -1334,7 +1414,7 @@ AudioContext
 ```json
 {
   "version": 1,
-  "settings": { "music": 0.8, "sfx": 0.9, "voice": 1.0, "lang": "es",
+  "settings": { "music": 0.8, "sfx": 0.9, "lang": "es", "unicornName": "Uni",
                 "reduceShake": false, "reduceFlash": false, "touchHints": true,
                 "lastMode": "normal" },
   "highScores": { "normal": [ { "score": 0, "meters": 0, "world": 1, "lap": 1, "date": "2026-10-03" } ],
@@ -1493,11 +1573,11 @@ Scene readability:
 ## 49. Audio QA checklist
 
 - A1 Every event in section 29.1 has a sound and it fires once (no doubles).
-- A2 No clipping on the master at maximum volume with music + 8 SFX + voice.
+- A2 No clipping on the master at maximum volume with music + 8 SFX.
 - A3 Music layers enter and leave on the bar, no clicks (gain ramps ≥ 10 ms).
 - A4 SLOW tempo glide sounds smooth, and returns to tempo cleanly.
 - A5 The INVINCIBLE theme starts and ends on the bar, and the world song resumes in the right place.
-- A6 Voice ducking works, and voice lines never stack.
+- A6 Generated music loops are seamless (no click or gap at the loop point) and the base/energy crossfade lands on the bar.
 - A7 Audio unlock works on iOS Safari, Android Chrome and desktop.
 - A8 iPhone with the silent switch on: behavior matches the README.
 - A9 Pausing silences everything instantly, and resuming restores it.
@@ -1527,7 +1607,7 @@ Scene readability:
 | 11 | Juice and FX | Particles, shake, hitstop, rainbow trail |
 | 12 | Audio engine, SFX, World 1 music | Sound everywhere |
 | 13 | Title, menus, transitions, i18n | The full front end with Motion |
-| 14 | Voice lines | Sophie's voice in the game |
+| 7b | New animals and Thor | 5 animals + Thor, animated |
 | **M3** | **Milestone "Mágico"** | World 1 at release quality |
 | 15a to 15e | Worlds 2 to 6 (one sub-phase each) | The full journey |
 | 16 | Secrets, gallery, PWA, offline | Delights and installability |
@@ -1545,7 +1625,7 @@ P0 ─► P1 ─┬─► P2 ───────────────► P7
           └─► P3 ─► P4 ─► P5 ─► P6 ─┴──────────────┴─► P10 ─► P11 ─► P13 ─► P15a..e ─► P16 ─► P17 ─► P18
                                     │                          ▲      ▲
                                     └─► P12 (audio) ───────────┘      │
-                                                         P14 (voice, needs Rick's recordings)
+                                                         P7b (new animals + Thor) after P7 and P8
 ```
 
 - P2 (tooling) and P3 to P6 (greybox) can be done in either order after P1. Do P3 to P6 first: they need no credits.
@@ -1562,7 +1642,7 @@ P0 ─► P1 ─┬─► P2 ───────────────► P7
 |---|---|---|
 | **M1 Primer salto** | Greybox game with every mechanic of World 1 to 3, powers, scoring, hearts, game over, Nubecita, validator and bot green, 60 fps on the S23 in Chrome | Link + a 30 s screen recording via Playwright |
 | **M2 Es mi juego** | The real unicorn, enemies, candies and World 1 art in the game. **Sophie approves.** | Rick plays it with Sophie |
-| **M3 Mágico** | World 1 at release quality: juice, music, SFX, title, menus, transitions, voice (or placeholders), ES/EN | Full World 1 experience on the iPad |
+| **M3 Mágico** | World 1 at release quality: juice, music, SFX, title, menus, transitions, ES/EN | Full World 1 experience on the iPad |
 | **M4 Lanzamiento** | 6 worlds, secrets, PWA, all QA checklists passed, GitHub Pages live | Public link on all 3 devices |
 
 Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and can change the next phases.
@@ -1573,7 +1653,7 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 
 | # | Risk | Likelihood | Impact |
 |---|---|---|---|
-| R1 | **Higgsfield balance is 0.76 credits.** The USD 10 Rick mentioned is not visible yet. Art phases are blocked until credits arrive | High (now) | High |
+| R1 | Higgsfield API: `HF_KEY` missing, wrong format, or the API catalog lacks a model we planned on (AutoSprite, music, SFX) | Medium | High |
 | R2 | AutoSprite output drifts from the character or cannot be cleaned to 48 px | Medium | High |
 | R3 | AI pixel art is not on a true grid and looks "fake pixel" | High | Medium |
 | R4 | Code-composed music sounds amateur | Medium | Medium |
@@ -1583,10 +1663,10 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 | R8 | The game is too hard for Sophie or too frustrating for Alana | Medium | High |
 | R9 | Pixelify Sans lacks a glyph (ñ, ¿, ¡, accents) | Low | Low |
 | R10 | GitHub Pages not enabled, or the repo layout breaks paths | Low | Low |
-| R11 | Privacy: the repo is public and will contain the girls' names, Sophie's drawings and her voice | Medium | Medium |
+| R11 | Privacy: the repo is public and contains the girls' first names and Sophie's drawings (approved by Rick) | Low | Low |
 | R12 | CDN outage or offline play (car trips) | Low | Medium |
 | R13 | Performance on an older family tablet | Low | Medium |
-| R14 | Phaser 3.90 is end-of-line | Low | Low |
+| R14 | Phaser 4 API details the agent gets wrong | Medium | Medium |
 
 ---
 
@@ -1594,7 +1674,7 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 
 | # | Mitigation |
 |---|---|
-| R1 | Do every credit-free phase first (P0 to P7, P11 to P13 partly). Before P8, check `balance`. If low, tell Rick exactly how many credits are needed (section 30.5) and continue with free phases. Log all spend in `docs/CREDITS.md` |
+| R1 | Phase 0 checks `HF_KEY` and builds `docs/HF_CATALOG.md`. Every missing model has a fallback in 30.6. Log all spend in `docs/CREDITS.md` |
 | R2 | Pre-check one AutoSprite turbo run on `run` only. If it fails the consistency check twice, switch to the hand-made fallback (move limbs on the grid with patches). The cat-unicorn's simple stick limbs make hand animation realistic |
 | R3 | The pixelize pipeline (block-center sampling, palette snap, outline pass) plus mandatory patch review on contact sheets |
 | R4 | Keep songs short (32 bars) and motif-based. Rick and Sophie listen at M3. Fallback: CC0 chiptune tracks from OpenGameArt (license checked and credited) for any song that does not land |
@@ -1604,18 +1684,19 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 | R8 | Validator, bot targets, Nubecita, and kid playtests at every milestone |
 | R9 | Check glyphs in Phase 1. Fallback: the bitmap font |
 | R10 | Relative paths only. Phase 18 checks Pages. Rick enables Pages in the repo settings (one click; instructions in the README) |
-| R11 | **Rick decides before M4**: keep first names, or use "Una idea de S." and keep the voice files out of the public repo. Default until he decides: first names only, no last names, no photos |
+| R11 | Rick approved first names and drawings. Never add last names, photos or recordings |
 | R12 | The service worker caches the CDN libraries and all assets after the first load |
 | R13 | A "low effects" auto-mode: if the average frame time > 20 ms for 3 s, reduce particles and parallax layers |
-| R14 | The engine-free core keeps a later move to Phaser 4 cheap |
+| R14 | R2-6: read the v4 docs first and keep `docs/PHASER4_NOTES.md`. The engine-free core keeps a fallback to 3.90 cheap |
 
 ---
 
 ## 55. Exact execution order for Sonnet 5.5
 
 1. Read this whole plan once. Then read `reference/` images (open each one).
-2. Execute section 56 phases strictly in order: 0, 1, 3, 4, 5, 6, (M1), 2, 7, 8, 9, 10, (M2), 11, 12, 13, 14, (M3), 15a to 15e, 16, 17, 18, (M4).
-   - Note: Phase 2 (tooling) runs after M1 on purpose, so the girls get a playable greybox as early as possible.
+2. Execute section 56 phases strictly in the **Revision 2 order**: 0, 1, 2, 8, 9, 7, 7b, 10, 3, 4, 5, 6, (M1 with real art), 11, 12, 13, (M2 + M3 combined), 15a to 15e, 16, 17, 18, (M4).
+   - Rick never sees rectangles. Placeholders exist only inside the build until the art lands.
+   - After every visible change, update the private preview Artifact and send Rick screenshots (R2-9).
 3. One phase per branch-and-PR cycle (see 56.0). Never start a phase whose dependencies are not done.
 4. At every phase end: run all validations listed for that phase, commit, push, and post a short summary to Rick in Spanish (what was done, a screenshot or GIF, what is next, any decision needed).
 5. Stop and ask Rick when: credits are needed or would exceed a budget, Sophie's approval is needed, a decision in 0.2 must change, or a validation fails twice after fixing.
@@ -1643,9 +1724,9 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 - **INPUT FILES:** the repo, `uni-salta/PLAN.md`, `uni-salta/reference/*`.
 - **FILES TO CREATE:** `uni-salta/README.md` (skeleton), `uni-salta/docs/DECISIONS.md`, `docs/CREDITS.md` (with the planning-time balance: 0.76), `docs/PLAYTEST.md` (template), `reference/CHECKSUMS.txt`, `reference/README.md` (the inventory table from section 2.1), `.gitignore` entries for `node_modules/`, `test-results/`, `.DS_Store`, `__pycache__/`.
 - **ASSETS REQUIRED:** none.
-- **HIGGSFIELD TASKS:** none. (Optional: `balance` to update CREDITS.md. Free.)
-- **CODE TASKS:** none.
-- **VALIDATION:** `sha256sum reference/*` matches CHECKSUMS.txt. The existing root `index.html` (the older game) is untouched.
+- **HIGGSFIELD TASKS:** check that `HF_KEY` is set (print only "set" or "missing", never the value). Write `tools/hf.py` and `tools/requirements.txt` (section 30.6). Run `hf.py models` and build `docs/HF_CATALOG.md` (the need → model table of 30.6). No paid generation in this phase.
+- **CODE TASKS:** `tools/hf.py` only.
+- **VALIDATION:** `sha256sum reference/*` matches CHECKSUMS.txt. `docs/HF_CATALOG.md` names a real model (or the fallback) for every need. `git grep` finds no key material. The existing root `index.html` (the older game) is untouched.
 - **DONE CRITERIA:** branch pushed, folders exist, Rick informed.
 - **DEPENDENCIES:** none.
 
@@ -1654,12 +1735,12 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 ### PHASE 1 · Technical foundation
 
 - **OBJECTIVE:** an empty game that boots on every target device at the right pixel-perfect resolution, with input, debug flags and tests working.
-- **INPUT FILES:** sections 33 to 35, 39, 42, 43, 46.
+- **INPUT FILES:** sections 33 to 35, 39, 42, 43, 46, and R2-6 (read the Phaser 4 docs first and write `docs/PHASER4_NOTES.md`).
 - **FILES TO CREATE:** `index.html`, `src/main.js`, `src/config.js`, `src/systems/layout.js`, `src/systems/input.js`, `src/systems/debug.js`, `src/systems/i18n.js`, `src/systems/save.js`, `src/core/rng.js`, `src/core/events.js`, `src/view/scenes/Boot.js`, `Preload.js`, `Title.js` (placeholder), `Game.js` (placeholder), `src/ui/ui.css`, `src/ui/motionPresets.js`, `src/ui/screens/rotate.js`, `src/data/strings.es.json`, `strings.en.json`, `assets/fonts/PixelifySans.woff2` (downloaded from Google Fonts, with its OFL license file), `tests/unit/layout.test.mjs`, `tests/unit/save.test.mjs`, `tests/unit/i18n.test.mjs`, `tests/unit/reference.test.mjs`, `tests/e2e/smoke.spec.mjs`, `tests/e2e/playwright.config.mjs`, a root `package.json` **inside `uni-salta/` used only for dev tooling** (Playwright), never loaded by the game.
 - **ASSETS REQUIRED:** the font.
 - **HIGGSFIELD TASKS:** none.
 - **CODE TASKS:**
-  1. `index.html`: viewport meta with `viewport-fit=cover`, `user-scalable=no`. Phaser 3.90.0 from jsDelivr (classic script). `src/main.js` as `type="module"`. `#game` and `#ui` containers. `touch-action: none` on body.
+  1. `index.html`: viewport meta with `viewport-fit=cover`, `user-scalable=no`. Phaser 4.2.1 from jsDelivr (classic script, pinned). `src/main.js` as `type="module"`. `#game` and `#ui` containers. `touch-action: none` on body.
   2. Motion import in `src/ui/motionPresets.js`: `import { animate, spring, stagger } from "https://cdn.jsdelivr.net/npm/motion@14.0.0/+esm"`. Re-export with the house presets.
   3. `layout.js`: the formula from section 43, applies canvas size, CSS size, `--px` CSS variable, safe-area variables, and calls `game.scale.resize(W, H)` on resize and orientation change. Shows the rotate overlay in portrait.
   4. Phaser config: `type: Phaser.AUTO`, `pixelArt: true`, `roundPixels: true`, `antialias: false`, `scale.mode: Phaser.Scale.NONE`, `backgroundColor` = the World 1 sky.
@@ -1754,12 +1835,12 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 
 ---
 
-### ★ MILESTONE M1 · "Primer salto"
+### ★ MILESTONE M1 · "Primer salto" (Revision 2: with real art)
 
-- Record a 30 s Playwright video of a bot run (`docs/qa/m1.webm`) and a screenshot per world.
-- Rick plays the greybox on his phone and the tablet (instructions in the README).
-- Collect feedback in `docs/PLAYTEST.md`. Apply feel fixes before moving on.
-- **Gate:** Rick says the greybox is fun.
+- Comes after Phase 6 in the new order, so the game already has the real unicorn, enemies, candies and World 1.
+- Record a 30 s Playwright video of a bot run (`docs/qa/m1.webm`) and a screenshot per world. Update the preview Artifact.
+- Rick plays it on his phone and the tablet. Feedback into `docs/PLAYTEST.md`. Apply feel fixes before moving on.
+- **Gate:** Rick says it is fun.
 
 ---
 
@@ -1867,7 +1948,7 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 
 ### PHASE 12 · Audio: engine, SFX, World 1 music
 
-- **OBJECTIVE:** a full audio system with the World 1 song, the title song and every SFX.
+- **OBJECTIVE:** a full audio system with the World 1 song, the title song and every SFX. **Revision 2:** Higgsfield API first for music and SFX (sections 28, 29.4, 30.6), code fallbacks otherwise, no voice.
 - **INPUT FILES:** sections 27 to 29, 40.
 - **FILES TO CREATE:** `src/audio/engine.js`, `src/audio/sfx.js`, `src/vendor/zzfx.js` (with its MIT license header), `src/audio/music/sequencer.js`, `instruments.js`, `songs/title.js`, `songs/world1.js`, `songs/invincible.js`, `songs/jingles.js`, `tests/unit/sequencer.test.mjs`.
 - **ASSETS REQUIRED:** none.
@@ -1903,23 +1984,27 @@ Rick and Sophie's feedback after each milestone goes into `docs/PLAYTEST.md` and
 
 ---
 
-### PHASE 14 · Voice lines
+### PHASE 14 · (removed in Revision 2: no voice lines)
 
-- **OBJECTIVE:** Sophie's voice in the game.
-- **INPUT FILES:** section 29.3, the recordings from Rick.
-- **FILES TO CREATE:** `assets/audio/voice/vo_*_{es,en}.mp3`, `src/audio/voice.js`, a `tools/process_voice.sh` (ffmpeg: trim silence, normalize to -16 LUFS, high-pass 80 Hz, export MP3 96 kbps mono).
-- **ASSETS REQUIRED:** Rick's recordings. Ask Rick for them at the start of Phase 12 so they arrive in time.
-- **HIGGSFIELD TASKS:** only if there are no recordings: H10 (preflight, batch).
-- **CODE TASKS:** voice playback with priority, cooldown and ducking, hooked to events.
-- **VALIDATION:** A6, every line plays in both languages.
-- **DONE CRITERIA:** voice lines in, Rick approves.
-- **DEPENDENCIES:** Phase 12.
+---
+
+### PHASE 7b · New animals and Thor
+
+- **OBJECTIVE:** the 5 new animals (section 8.2) and Thor (section 8.3), fully animated, in the same style as the approved unicorn and Sophie's enemies.
+- **INPUT FILES:** the approved unicorn master (style anchor), the cleaned slime/snake sprites (enemy style anchor), sections 8.2, 8.3, 20.
+- **FILES TO CREATE:** `art-src/higgsfield/h12/*`, `art-src/pixel/{snail,bee,owl,storm,jelly,thor}_*`, patches, `assets/sprites/{snail,bee,owl,storm,jelly,thor}_*.png`, `anims.json` entries, `docs/qa/animals_sheet.png` (all of them next to the unicorn at game scale).
+- **ASSETS REQUIRED:** credits (≈ 6 images + animation runs, preflight).
+- **HIGGSFIELD TASKS (H12):** one master image per animal (STYLE + BACKGROUND blocks + the description from 8.2/8.3 + "same pixel density and outline as the reference sprite", with the unicorn master and the slime sprite as references), then animation via AutoSprite or the image-to-video fallback (30.6) for the loops (`snail_crawl`, `bee_fly`, `owl_glide`, `jelly_bob`, `thor_run`). Short reactions are hand-made with patches.
+- **CODE TASKS:** none beyond the pipeline. Behaviors come in Phases 4 and 5.
+- **VALIDATION:** V9 to V16. The animals sheet shows one consistent family (same outline, lighting, pixel density). Contrast check against every world background.
+- **DONE CRITERIA:** every strip of section 20 for the new animals and Thor exists and passes QA.
+- **DEPENDENCIES:** Phases 7 and 8.
 
 ---
 
 ### ★ MILESTONE M3 · "Mágico"
 
-- A full World 1 experience at release quality on the iPad: title → World 1 → game over → replay, in ES and EN, with sound and voice.
+- A full World 1 experience at release quality on the iPad: title → World 1 → game over → replay, in ES and EN, with music and SFX.
 - **Gate:** Rick and Sophie say it feels magical. Feedback into `docs/PLAYTEST.md`.
 
 ---
@@ -1991,23 +2076,23 @@ Small surprises. None of them changes the rules.
 1. **Smiling clouds:** 1 in 40 background clouds has a face, and it winks when the unicorn passes.
 2. **Curious slimes:** slimes look up when she jumps over them. Snakes look down when she ducks under them.
 3. **Sky rainbow:** a perfect streak of 3 paints a rainbow arc across the sky for 8 s.
-4. **The wave:** every 1000 m she waves at the player while running (one `celebrate` beat) with a "¡Bien!" voice.
+4. **The wave:** every 1000 m she waves at the player while running (one `celebrate` beat) with a "¡Bien!" pixel-text pop and a chime.
 5. **Five taps:** tapping the title unicorn 5 times makes her flip and squeak.
 6. **Los dibujos de Sophie:** the gallery unlocks at World 3 and shows Sophie's original drawings next to their game versions, signed "Sophie, 7 años".
-7. **Thor:** very rarely (1 run in 15), a cloud shaped like a dog trots by in World 1's far layer. Name it "Thor" in the gallery. (Rick can send a photo of Thor so the cloud matches his ears and tail.)
+7. **Thor:** the family's brown boxer with a white chest patch, as a real pixel dog (section 8.3): runs along in the background, barks, sometimes licks the tired unicorn on the game-over screen, and has his own gallery card.
 8. **December party:** in December (both girls' birthday month) the unicorn wears a tiny party hat and the title has confetti.
 9. **Sleepy title:** if nobody touches the title for 60 s, the unicorn falls asleep on a cloud with "Z" pixels, and wakes with a stretch when touched.
 10. **Slime dance:** in the rare event that 3 flat slimes are stomped in one chain, the next slime does a little dance before you reach it.
 
 ---
 
-## 58. Open points for Rick (answer anytime, defaults apply until then)
+## 58. Open points for Rick (all answered in Revision 2)
 
-| # | Question | Default |
+| # | Question | Answer |
 |---|---|---|
-| Q1 | Higgsfield credits: the account shows 0.76. Can you check the USD 10 top-up? Needed: about 35 to 75 credits in total | Free phases first |
-| Q2 | Caramelitos (coins) = the yellow swirl, and the yellow lollipop = FAST power-up. OK? | Yes |
-| Q3 | Does Sophie want to name the unicorn? | "Uni" |
-| Q4 | Privacy: first names, drawings and voice in a public repo? | First names only, decide before M4 |
-| Q5 | A photo of Thor for the secret cloud? | A generic cloud dog |
-| Q6 | Open PRs at milestones automatically? | Ask each time |
+| Q1 | Higgsfield credits | On the API account. Use `HF_KEY` (R2-1) |
+| Q2 | Caramelitos = yellow swirl, lollipop = FAST | Yes |
+| Q3 | Unicorn name | The player names her (R2-10) |
+| Q4 | Privacy | First names and drawings OK. No voice |
+| Q5 | Thor | Brown boxer with a white chest patch (R2-12) |
+| Q6 | PRs at milestones | Ask each time |
