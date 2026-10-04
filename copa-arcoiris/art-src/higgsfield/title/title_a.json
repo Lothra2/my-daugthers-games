@@ -1,0 +1,23 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "title_art_a",
+ "purpose": "title key art a",
+ "request_id": "6435234c-e118-419d-a1b5-417f4f4f7e57",
+ "credits": 2.08,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Wide title screen key art for a family sports game called The Rainbow Forest Cup. The same five characters as in the reference images, keep their faces, hair and clothes exactly: the dad in red, the mom in purple, the 7-year-old girl in green with the green headband, the 4-year-old girl in pink with two butterfly clips, and the boxer dog Thor in the middle wearing a sky-blue cap and a silver whistle. They stand in one row on a grassy hill in the lower third of the picture, all cheering with big happy smiles and arms raised, cute chibi proportions with big heads, the dog sitting happily in front between the girls. A shiny golden trophy cup glows in the center of the row. Behind them a huge rainbow arcs across a bright blue sky with fluffy white clouds, rolling green hills, round leafy trees and fir trees, a red spotted mushroom cottage, a small windmill with colorful blades, festival bunting flags and colorful balloons, confetti falling. Leave the upper middle of the sky calm and mostly empty for a logo. Cheerful candy colors, teal-green foliage, warm sand path. All faces smiling. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark.",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>",
+   "<private-reference-photo>",
+   "<private-reference-photo>",
+   "<private-reference-photo>",
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/title/title_a.png"
+ ]
+}

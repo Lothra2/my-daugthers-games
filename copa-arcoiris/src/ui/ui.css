@@ -176,6 +176,7 @@ body.touch-active #hud .hud-chips { top: 70px; }
   .pause .col .btn { min-width: 0; width: 100%; min-height: 46px; font-size: 17px; margin: 0; padding: 4px 8px; }
   .pause .col #resume { grid-column: 1 / -1; }
   .panel li { font-size: 18px; line-height: 1.25; }
+  .splash.art .btn { min-height: 44px; font-size: 17px; padding: 2px 14px; } .splash.art .btn.big { min-width: 0; }
   .splash { gap: 6px; } .splash .logo span { font-size: 22px; } .splash .logo b { font-size: 44px; } .splash .sub { margin: 0; font-size: 16px; }
 }
 
@@ -190,3 +191,12 @@ body.is-full .fs-btn { display: none !important; }
 .fs-card .fs-note { text-align: center; font-size: 15px; } .fs-card .btn { display: block; margin: 8px auto 0; }
 
 .pause h2 { color: var(--ink); }
+
+/* ---------- title illustration ---------- */
+#title-art { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 80%; z-index: 1; background: #3a9de6; pointer-events: none; user-select: none; }
+#title-art.hidden { display: none; }
+.splash.art { align-self: stretch; justify-content: space-between; padding: 1vh 0 2vh; gap: 0; }
+.splash.art .logo { margin: 0; }
+.splash.art .sub { margin: 4px 0 0; color: #fff; text-shadow: 0 2px 0 var(--ink), 2px 0 0 var(--ink), -2px 0 0 var(--ink), 0 -2px 0 var(--ink); }
+.splash.art .splash-btns { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.splash.art .fs-btn { margin: 0; }
