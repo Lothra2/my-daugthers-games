@@ -138,6 +138,11 @@ export class EventScene extends Phaser.Scene {
         this.boxViews.push({ id: b.id, top: img, front: null, box: b, dx, dy });
         continue;
       }
+      if (b.kind === 'tronco') {   // a fallen log lying along the depth axis, same drawing as the rolling ones
+        const img = this.add.image(Math.round(b.x), Math.round(b.y - b.alto), moverTexture(this, 'tronco', b.w, b.h, b.alto, 0)).setOrigin(0, 0).setDepth(b.y + b.h);
+        this.boxViews.push({ id: b.id, top: img, front: null, box: b });
+        continue;
+      }
       const k = blockTextures(this, b.kind, b.w, b.h, b.alto);
       const top = this.add.image(b.x, b.y - b.alto, k.top).setOrigin(0, 0).setDepth(b.y - 0.1);
       const front = this.add.image(b.x, b.y + b.h - b.alto, k.front).setOrigin(0, 0).setDepth(b.y + b.h);
@@ -215,6 +220,12 @@ export class EventScene extends Phaser.Scene {
     if (e.k === 'count') { this.lastCount = e.v ?? 0; services.hud?.count(e.v ?? 0); }
     else if (e.k === 'go') services.hud?.count(0);
     else if (e.k === 'pinata') this.hitSwing = 1;
+    else if (e.k === 'room') services.hud?.banner(`¡Sala ${(e.v ?? 0) + 1} de ${this.world.map.rooms.length || 4}!`);
+    else if (e.k === 'roomdone') services.hud?.banner('¡Sala completa! Vamos a la siguiente', 1600);
+    else if (e.k === 'round') services.hud?.banner(`Ronda ${(e.v ?? 0) + 1} de 3`, 1800);
+    else if (e.k === 'roundend') services.hud?.banner('¡Fin de la ronda!', 1600);
+    else if (e.k === 'crack') services.hud?.banner('¡La piñata se está rompiendo!', 1400);
+    else if (e.k === 'shrink') { this.shrinkVisual(); services.hud?.banner('¡La isla se achica!', 2000); }
     else if (e.k === 'cp') services.hud?.banner(`¡Arco ${e.v} de ${this.world.map.checkpoints.length}!`);
     else if (e.k === 'finish') services.hud?.banner(e.who !== undefined ? `${this.world.actors.find((a) => a.id === e.who)?.name ?? ''}: ¡puesto ${e.v}!` : '');
     else if (e.k === 'bounce') { const z = this.hongos.find((h) => e.x >= h.z.x - 4 && e.x <= h.z.x + h.z.w + 4 && Math.abs(e.y - (h.z.y + h.z.h / 2)) < 16); if (z) z.t = 0.18; }
@@ -260,6 +271,26 @@ export class EventScene extends Phaser.Scene {
     if (this.debugG) this.drawDebug();
     this.hudT += dt;
     if (this.hudT > 0.08) { this.hudT = 0; services.hud?.update(w, this); }
+  }
+
+  /** Last arena round: the water takes the ring between the old and the new island. */
+  private shrinkVisual(): void {
+    const w = this.world, r = w.data.island as { x: number; y: number; w: number; h: number }, r0 = w.data.island0 as typeof r;
+    const raw = this.cache.tilemap.get(`map_${this.cfg.eventId}`).data as TiledMap;
+    const suelo = raw.layers.find((l) => l.name === 'suelo')?.data ?? [];
+    const tid = (suelo[12 * raw.width + 0] ?? 1) - 1;
+    const strips = [
+      [r0.x, r0.y, r0.w, r.y - r0.y], [r0.x, r.y + r.h, r0.w, r0.y + r0.h - (r.y + r.h)],
+      [r0.x, r.y, r.x - r0.x, r.h], [r.x + r.w, r.y, r0.x + r0.w - (r.x + r.w), r.h],
+    ];
+    for (const [x, y, ww, hh] of strips) {
+      if (ww <= 0 || hh <= 0) continue;
+      const ts = this.add.tileSprite(x, y, ww, hh, 'tiles16', tid).setOrigin(0, 0).setDepth(-8750).setAlpha(0);
+      this.tweens.add({ targets: ts, alpha: 1, duration: 900 });
+    }
+    const g = this.add.graphics().setDepth(-8745).setAlpha(0);
+    g.lineStyle(2, 0xe8fbff, 0.9).strokeRect(r.x, r.y, r.w, r.h);
+    this.tweens.add({ targets: g, alpha: 1, duration: 900 });
   }
 
   private syncPinata(): void {

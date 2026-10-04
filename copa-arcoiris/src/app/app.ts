@@ -343,6 +343,7 @@ export class App {
       <div class="rlist">${rows}</div><div class="xps">${humanLines.join('')}</div>
       <div class="row"><button class="btn big primary" id="next">${s.single ? 'Menú' : s.cup.order.length >= 4 ? 'Ver la copa' : 'Siguiente prueba'}</button></div></div>`, 'screen center');
     services.audio?.ui('fanfare');
+    window.setTimeout(() => { if (this.session === s) services.audio?.music('podium'); }, 1900);
     this.on('#next', () => { if (s.single) { this.session = null; this.menu(); } else if (s.cup.order.length >= 4) this.cupFinal(); else this.runEvent(EVENT_ORDER[s.cup.order.length]); });
   }
 
@@ -387,6 +388,7 @@ export class App {
       <div class="xps">${xpLines}</div>${unlockLines.join('')}<p class="foot">${recLine}</p>
       <div class="row"><button class="btn big primary" id="again">Otra copa</button><button class="btn big" id="menu">Menú</button></div></div>`, 'screen center');
     services.audio?.ui('cup');
+    window.setTimeout(() => { if (this.session === s) services.audio?.music('cup'); }, 2800);
     this.fireworks();
     this.on('#again', () => { this.picks = [...s.picks]; this.players = s.players; this.pickMode = 'cup'; this.beginSession('cup'); });
     this.on('#menu', () => { this.session = null; this.menu(); });

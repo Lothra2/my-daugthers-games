@@ -53,7 +53,7 @@ export class Fx {
       case 'star': for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2; this.spawn('spark', x, y, z + 6, Math.cos(a) * 30, Math.sin(a) * 8, 25, 0.4, { tint: e.v ? 0xffb23f : 0xffe45c }); } break;
       case 'bounce': for (let i = 0; i < 6; i++) this.spawn('dust', x, y, 2, (i - 2.5) * 20, 0, 10, 0.3, { grow: 1, scale: 0.8 }); break;
       case 'power': { const c = colorOf(e.who); for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2; this.spawn('spark', x, y, z + 12, Math.cos(a) * 55, Math.sin(a) * 18, 22 + Math.sin(a) * 40, 0.5, { tint: c }); } break; }
-      case 'pop': case 'bubble': for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2; this.spawn('drop', x, y, z + 10, Math.cos(a) * 36, Math.sin(a) * 10, 30, 0.45, { g: 120, tint: 0xe8fbff }); } break;
+      case 'pop': case 'bubble': case 'burst': for (let i = 0; i < 6; i++) { const a = (i / 6) * Math.PI * 2; this.spawn('drop', x, y, z + 10, Math.cos(a) * 36, Math.sin(a) * 10, 30, 0.45, { g: 120, tint: 0xe8fbff }); } break;
       case 'cp': for (let i = 0; i < 20; i++) this.spawn('confetti', x, y, 20, (i - 10) * 7, ((i * 37) % 13) - 6, 90 + (i % 5) * 20, 1.1, { g: 220, tint: CONF[i % CONF.length] }); break;
       case 'finish': for (let i = 0; i < 24; i++) this.spawn('confetti', x, y, 20, (i - 12) * 8, ((i * 53) % 15) - 7, 100 + (i % 6) * 22, 1.3, { g: 230, tint: CONF[i % CONF.length] }); break;
       case 'crate': case 'smash': for (let i = 0; i < 10; i++) this.spawn(e.k === 'crate' ? 'confetti' : 'dust', x, y, z + 6, (i - 5) * 14, ((i * 31) % 9) - 4, 60 + (i % 4) * 15, 0.6, { g: 260, tint: e.k === 'crate' ? CONF[i % CONF.length] : undefined }); break;

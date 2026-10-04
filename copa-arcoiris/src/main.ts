@@ -11,6 +11,8 @@ import { Hud } from './ui/hud';
 import { App } from './app/app';
 import { services } from './app/services';
 import { SaveStore } from './save/save';
+import { AudioEngine } from './audio/engine';
+import { showSoundBoard } from './audio/board';
 
 declare global {
   interface Window { __copa?: Record<string, any>; __mockPads?: any }
@@ -48,6 +50,10 @@ game.canvas?.addEventListener('webglcontextlost', (e) => { e.preventDefault(); l
 const router = new InputRouter();
 services.router = router;
 services.hud = new Hud();
+const audio = new AudioEngine();
+services.audio = audio;
+// browsers only allow sound after a user gesture: the first tap, click or key unlocks it
+for (const ev of ['pointerdown', 'keydown', 'touchend'] as const) window.addEventListener(ev, () => audio.unlock(), { capture: true });
 const kb = new KeyboardInput(router);
 const touch = new TouchUI(router);
 const store = new SaveStore();
@@ -57,6 +63,7 @@ const pad = new GamepadInput(router, () => app?.padLost());
 game.events.once('assets-ready', () => {
   document.getElementById('loading')?.remove();
   app = new App({ game, router, kb, touch, store, hud: services.hud!, params });
-  window.__copa = { ready: true, game, services, app, store, router, touch, pad };
+  window.__copa = { ready: true, game, services, app, store, router, touch, pad, audio };
+  if (params.has('sounds')) showSoundBoard(audio);
   app.start();
 });

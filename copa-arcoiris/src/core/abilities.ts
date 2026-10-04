@@ -6,7 +6,7 @@ import { actorById } from './world';
 export function activatePower(w: World, a: Actor): void {
   a.power = 0;
   const boost = a.powerLevelBoost;
-  fx(w, 'power', a.x, a.y, a.z, a.id);
+  fx(w, 'power', a.x, a.y, a.z, a.id, ['rainbow', 'bubble', 'charge', 'stars', 'zoom'].indexOf(a.powerKind));
   switch (a.stats.power) {
     case 'rainbow': {
       const d = POWER.rainbow.dur * boost;
