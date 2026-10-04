@@ -2,15 +2,18 @@ import Phaser from 'phaser';
 import { computeLayout } from './core/layout';
 import { BootScene } from './view/scenes/Boot';
 import { EventScene } from './view/scenes/EventScene';
+import { TitleScene } from './view/scenes/Title';
 import { InputRouter } from './input/router';
 import { KeyboardInput } from './input/keyboard';
+import { TouchUI } from './input/touch';
+import { GamepadInput } from './input/gamepad';
 import { Hud } from './ui/hud';
+import { App } from './app/app';
 import { services } from './app/services';
-import type { EventConfig, EventResult } from './app/types';
-import type { CharId, EventId } from './core/types';
+import { SaveStore } from './save/save';
 
 declare global {
-  interface Window { __copa?: Record<string, any>; }
+  interface Window { __copa?: Record<string, any>; __mockPads?: any }
 }
 
 const params = new URLSearchParams(location.search);
@@ -28,7 +31,7 @@ const game = new Phaser.Game({
   scale: { mode: Phaser.Scale.NONE },
   input: { keyboard: false, mouse: false, touch: false, gamepad: false },
   audio: { noAudio: true },
-  scene: [BootScene, EventScene],
+  scene: [BootScene, TitleScene, EventScene],
 });
 
 function applyLayout() {
@@ -42,23 +45,18 @@ window.addEventListener('orientationchange', applyLayout);
 applyLayout();
 game.canvas?.addEventListener('webglcontextlost', (e) => { e.preventDefault(); location.reload(); });
 
-services.router = new InputRouter();
+const router = new InputRouter();
+services.router = router;
 services.hud = new Hud();
-const kb = new KeyboardInput(services.router);
+const kb = new KeyboardInput(router);
+const touch = new TouchUI(router);
+const store = new SaveStore();
+let app: App;
+const pad = new GamepadInput(router, () => app?.padLost());
 
 game.events.once('assets-ready', () => {
-  window.__copa = { ready: true, game, services };
-  const ev = params.get('event') as EventId | null;
-  if (ev) {
-    const chars = (params.get('chars') ?? 'sophie,papa,mama,thor').split(',') as CharId[];
-    const players = Number(params.get('players') ?? 1);
-    const cfg: EventConfig = {
-      eventId: ev, seed: Number(params.get('seed') ?? 1), difficulty: (params.get('difficulty') as any) ?? 'tranquilo',
-      roster: chars.map((c, i) => ({ charId: c, control: i < players ? 'human' : 'ai', slot: i })),
-      debug: { hitboxes: params.has('hitboxes'), ff: Number(params.get('ff') ?? 1), autoplay: params.has('autoplay') },
-    };
-    kb.mode = players > 1 ? '2p' : '1p'; kb.active = true;
-    game.scene.start('Event', cfg);
-  }
+  document.getElementById('loading')?.remove();
+  app = new App({ game, router, kb, touch, store, hud: services.hud!, params });
+  window.__copa = { ready: true, game, services, app, store, router, touch, pad };
+  app.start();
 });
-game.events.on('event-done', (r: EventResult) => { window.__copa = { ...window.__copa, lastResult: r }; });

@@ -287,7 +287,7 @@ export class EventScene extends Phaser.Scene {
   setPaused(p: boolean): void { this.paused = p; }
   result(): EventResult {
     const w = this.world;
-    const actors: ActorResult[] = w.actors.map((a) => ({ id: a.id, charId: a.charId, slot: a.slot, control: a.control, stars: a.stats2.stars, gold: a.stats2.gold, points: a.stats2.points, falls: a.stats2.falls, bursts: a.stats2.bursts, hits: a.stats2.hits, finishT: a.finishT }));
+    const actors: ActorResult[] = w.actors.map((a) => ({ id: a.id, charId: a.charId, slot: a.slot, control: this.cfg.roster.find((r) => r.slot === a.slot)?.control ?? a.control, stars: a.stats2.stars, gold: a.stats2.gold, points: a.stats2.points, falls: a.stats2.falls, bursts: a.stats2.bursts, hits: a.stats2.hits, finishT: a.finishT }));
     return { eventId: this.cfg.eventId, seconds: w.eventT, standings: w.rules.standings(w), actors };
   }
 }

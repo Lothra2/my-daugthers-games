@@ -40,7 +40,7 @@ export class CharacterView {
     this.names = actor.stats.isDog ? DOG : HUMAN;
     this.shadow = scene.add.image(0, 0, 'shadow').setOrigin(0.5, 0.5);
     this.ring = scene.add.image(0, 0, 'ring').setOrigin(0.5, 0.5).setTint(color).setAlpha(0.95);
-    this.sprite = scene.add.sprite(0, 0, `char_${actor.charId}`, 0).setOrigin(meta.pivot[0] / meta.cell[0], meta.pivot[1] / meta.cell[1]);
+    this.sprite = scene.add.sprite(0, 0, actor.outfit === 'base' ? `char_${actor.charId}` : `char_${actor.charId}_${actor.outfit}`, 0).setOrigin(meta.pivot[0] / meta.cell[0], meta.pivot[1] / meta.cell[1]);
     this.bubble = scene.add.image(0, 0, 'bubble').setOrigin(0.5, 0.62).setVisible(false);
     this.marker = humanSlot !== null ? scene.add.image(0, 0, 'arrow').setTint(color).setOrigin(0.5, 1) : null;
     if (this.marker) this.marker.setVisible(true);
