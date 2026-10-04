@@ -193,7 +193,9 @@ def char_palette(c, k=26):
     for sub, sm in frames:
         s = ((DOG_STAND_H if c == 'thor' else TARGET_H.get(c, 30)) - 2) / sm.shape[0]
         arrs.append(downscale(sub, sm, s))
-    pal = pl.make_palette(arrs, k=k, force=(OUT, (255, 255, 255)))
+    FORCE = {"alana": [(155, 93, 229), (255, 111, 181), (210, 68, 143)], "thor": [(63, 182, 242), (34, 131, 196)], "papa": [(154, 140, 146)],
+             "sophie": [(93, 219, 67), (51, 163, 58)], "mama": [(155, 93, 229), (110, 61, 184)]}
+    pal = pl.make_palette(arrs, k=k, force=(OUT, (255, 255, 255), *[tuple(x) for x in FORCE.get(c, [])]))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     json.dump([list(p) for p in pal], open(path, "w"))
     return pal

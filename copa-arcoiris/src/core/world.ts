@@ -40,7 +40,7 @@ export interface Item {
 export interface Shot { id: number; x: number; y: number; z: number; owner: number; targetId: number; targetKind: 'actor' | 'pinata' | 'none'; t: number; ttl: number; vx: number }
 
 export interface Standing { actorId: number; rank: number; value: number; detail: string }
-export interface HudModel { title: string; timer: string; lines: string[]; goalText?: string; progress?: Record<number, number> }
+export interface HudModel { title: string; timer: string; lines: string[]; goalText?: string; progress?: Record<number, number>; scores?: Record<number, string> }
 
 export interface EventRules {
   id: string;

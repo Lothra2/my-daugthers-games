@@ -557,9 +557,9 @@
   </object>
  </objectgroup>
  <objectgroup id="13" name="moviles">
-  <object id="185" name="tronco1" type="tronco" x="1500" y="178" width="20" height="28">
+  <object id="185" name="tronco1" type="tronco" x="1500" y="180" width="16" height="24">
    <properties>
-    <property name="alto" type="int" value="12"/>
+    <property name="alto" type="int" value="14"/>
     <property name="x0" type="int" value="1488"/>
     <property name="x1" type="int" value="1952"/>
     <property name="speed" type="float" value="55.0"/>
@@ -568,9 +568,9 @@
     <property name="warn" type="float" value="0.8"/>
    </properties>
   </object>
-  <object id="186" name="tronco2" type="tronco" x="1500" y="178" width="20" height="28">
+  <object id="186" name="tronco2" type="tronco" x="1500" y="180" width="16" height="24">
    <properties>
-    <property name="alto" type="int" value="12"/>
+    <property name="alto" type="int" value="14"/>
     <property name="x0" type="int" value="1488"/>
     <property name="x1" type="int" value="1952"/>
     <property name="speed" type="float" value="55.0"/>

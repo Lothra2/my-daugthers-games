@@ -192,8 +192,8 @@ def build_race():
     m.add("agua", rx0, 208, rx1 - rx0, 64, name="rio", type="agua", corriente=10.0)
     for x in range(rx0, rx1, 32):
         m.add("props_suelo", x, 176, tile=gid("fence"), name="baranda")
-    m.add("moviles", 1500, 178, 20, 28, name="tronco1", type="tronco", alto=12, x0=1488, x1=1952, speed=55.0, period=0.0, phase=0.0, warn=0.8)
-    m.add("moviles", 1500, 178, 20, 28, name="tronco2", type="tronco", alto=12, x0=1488, x1=1952, speed=55.0, period=0.0, phase=0.5, warn=0.8)
+    m.add("moviles", 1500, 180, 16, 24, name="tronco1", type="tronco", alto=14, x0=1488, x1=1952, speed=55.0, period=0.0, phase=0.0, warn=0.8)
+    m.add("moviles", 1500, 180, 16, 24, name="tronco2", type="tronco", alto=14, x0=1488, x1=1952, speed=55.0, period=0.0, phase=0.5, warn=0.8)
     # Z4 hill: cliffs steps, mushrooms, shortcut pit on the top half
     m.fill("suelo", 2180, GT, 2880, GB, pick_grass(4, 0.15))
     m.fill("suelo", 2180, 208, 2880, 240, lambda tx, ty: "path0" if ty * T in (208, 224) else None)
@@ -248,8 +248,10 @@ def build_race():
 
 
 # ===================================================================== CIRCUIT
+RW = 416   # one screen = 26 tiles. The minimum logical view is 426 wide (ART_BIBLE section 2)
+
+
 def build_circuit():
-    RW = 480
     W = RW * 4 // T
     m = Map("circuit", W, camera="room", ground_top=GT, ground_bottom=GB)
     pw = W * T
@@ -258,9 +260,8 @@ def build_circuit():
     names = ["Troncos rodantes", "Arroyo de hongos", "Plataformas columpio", "Molino de burbujas"]
     for i in range(4):
         x0, x1 = i * RW, (i + 1) * RW
-        door = dict(x=x1 - 24, y=GT, w=24, h=GB - GT)
         m.add("salas", x0, GT, RW, GB - GT, name=names[i], type="sala", orden=i, x0=x0, x1=x1,
-              puerta_x=door["x"], puerta_y=door["y"], puerta_w=door["w"], puerta_h=door["h"], inicio_x=x0 + 40, inicio_y=224)
+              puerta_x=x1 - 24, puerta_y=GT, puerta_w=24, puerta_h=GB - GT, inicio_x=x0 + 40, inicio_y=224)
         m.fill("suelo", x0 + 16, 200, x0 + 90, 248, lambda tx, ty: "path0")
         m.fill("suelo", x1 - 56, 192, x1, 256, lambda tx, ty: "stone0" if (tx + ty) % 2 else "stone1")
         m.add("props_suelo", x1 - 16, 200, tile=gid("fence_post"), name="puerta")
@@ -268,100 +269,99 @@ def build_circuit():
         for k, y in enumerate((194, 214, 234, 254)):
             if i == 0:
                 m.add("salidas", x0 + 40, y, point=True, name=f"salida{k}", type="salida", slot=k)
-        for k, y in enumerate((194, 214, 234, 254)):
             m.add("salidas", x0 + 40, y, point=True, name=f"sala{i}_salida{k}", type="salida_sala", slot=k, sala=i)
         m.add("activadores", x1 - 24, GT, 24, GB - GT, name=f"puerta{i}", type="activador", evento=f"sala_fin:{i}")
         m.add("zonas", x0, GT, RW, GB - GT, name=names[i], type="zona", orden=i + 1)
-    # ---- room 1: logs
+    # ---- room 1: rolling logs, raised walkway on the hard route
     x0 = 0
     for lane, (ya, yb) in enumerate(((176, 224), (224, 272))):
         for k in range(2):
-            m.add("moviles", x0 + 100, ya + 4, 36, yb - ya - 8, name=f"tronco{lane}{k}", type="tronco", alto=14, x0=x0 + 90, x1=x0 + 400, speed=80.0, period=0.0, phase=0.5 * k + 0.25 * lane, warn=0.8)
-    m.fill("suelo", x0 + 90, 176, x0 + 400, 272, lambda tx, ty: "sand0" if (tx + ty) % 3 else "sand1")
-    m.box(x0 + 100, 176, 270, 24, 20, "pasarela", id="pasarela1", group="plataformas")
-    m.add("objetos", x0 + 395, 188, point=True, name="dorada", type="dorada", z=28)
+            m.add("moviles", x0 + 100, ya + 6, 16, yb - ya - 12, name=f"tronco{lane}{k}", type="tronco", alto=14, x0=x0 + 90, x1=x0 + 350, speed=75.0, period=0.0, phase=0.5 * k + 0.25 * lane, warn=0.8)
+    m.fill("suelo", x0 + 90, 176, x0 + 350, 272, lambda tx, ty: "sand0" if (tx + ty) % 3 else "sand1")
+    m.box(x0 + 100, 176, 236, 24, 20, "pasarela", id="pasarela1", group="plataformas")
+    m.add("objetos", x0 + 342, 188, point=True, name="dorada", type="dorada", z=28)
     m.add("objetos", x0 + 60, 230, point=True, name="pelota", type="pelota")
     # ---- room 2: stream with mushroom islets
-    x0 = 480
-    sx0, sx1 = x0 + 180, x0 + 300
+    x0 = RW
+    sx0, sx1 = x0 + 160, x0 + 270
     m.fill("suelo", sx0, GT, sx1, GB, lambda tx, ty: "shore0" if ty * T == GT else ("water0" if ty * T < 224 else "deep0"))
     m.add("agua", sx0, GT, sx1 - sx0, GB - GT, name="arroyo", type="agua", corriente=0.0)
-    for k, (cx, cy) in enumerate(((x0 + 205, 200), (x0 + 240, 232), (x0 + 275, 204))):
+    for k, (cx, cy) in enumerate(((x0 + 182, 200), (x0 + 215, 232), (x0 + 248, 204))):
         m.box(cx - 10, cy - 6, 20, 12, 6, "piedra", id=f"piedra{k}", group="plataformas")
         m.add("rebote", cx - 10, cy - 6, 20, 12, name=f"hongo{k}", type="rebote", fuerza=380.0)
-    m.add("objetos", x0 + 275, 204, point=True, name="dorada", type="dorada", z=62)
+    m.add("objetos", x0 + 248, 204, point=True, name="dorada", type="dorada", z=62)
     m.add("objetos", x0 + 70, 214, point=True, name="pelota", type="pelota")
-    m.add("objetos", x0 + 120, 248, point=True, name="estrella", type="estrella", z=6)
-    # ---- room 3: gap with swing platforms
-    x0 = 960
-    gx0, gx1 = x0 + 170, x0 + 310
+    m.add("objetos", x0 + 110, 248, point=True, name="estrella", type="estrella", z=6)
+    # ---- room 3: gap with swing platforms and a low bridge
+    x0 = 2 * RW
+    gx0, gx1 = x0 + 150, x0 + 270
     m.add("huecos", gx0, GT, gx1 - gx0, GB - GT - 24, name="hueco", type="hueco")
     m.fill("suelo", gx0, GT, gx1, 248, lambda tx, ty: "deep0")
     m.fill("suelo", gx0, 248, gx1, 272, lambda tx, ty: "wood0" if (tx + ty) % 2 else "wood1")
     m.box(gx0, 248, gx1 - gx0, 24, 2, "puente", id="puente3")
-    m.box(gx0 + 6, 196, 40, 28, 8, "plataforma", id="columpio1", group="plataformas", mueve="x", rango=60.0, periodo=3.0, fase=0.0)
-    m.box(gx0 + 94, 212, 40, 28, 8, "plataforma", id="columpio2", group="plataformas", mueve="x", rango=-60.0, periodo=3.0, fase=0.0)
-    m.add("objetos", gx0 + 70, 218, point=True, name="dorada", type="dorada", z=26)
+    m.box(gx0 + 6, 196, 40, 28, 8, "plataforma", id="columpio1", group="plataformas", mueve="x", rango=48.0, periodo=3.0, fase=0.0)
+    m.box(gx0 + 74, 212, 40, 28, 8, "plataforma", id="columpio2", group="plataformas", mueve="x", rango=-48.0, periodo=3.0, fase=0.0)
+    m.add("objetos", gx0 + 60, 218, point=True, name="dorada", type="dorada", z=26)
     m.add("objetos", x0 + 70, 226, point=True, name="pelota", type="pelota")
-    m.add("objetos", x0 + 380, 230, point=True, name="caja", type="caja")
+    m.add("objetos", x0 + 340, 230, point=True, name="caja", type="caja")
     # ---- room 4: foam sweepers and hay bales
-    x0 = 1440
+    x0 = 3 * RW
     for k in range(2):
-        m.add("moviles", x0 + 150, GT, 14, GB - GT, name=f"barrido{k}", type="barrido", alto=16, x0=x0 + 130, x1=x0 + 370, speed=0.0, period=4.0, phase=0.5 * k, warn=0.8)
-    m.box(x0 + 110, 176, 40, 26, 20, "heno", id="heno1", group="plataformas")
-    m.box(x0 + 150, 176, 60, 26, 32, "heno", id="heno2", group="plataformas")
-    m.box(x0 + 210, 176, 90, 26, 32, "heno", id="heno3", group="plataformas")
-    m.box(x0 + 300, 176, 40, 26, 20, "heno", id="heno4", group="plataformas")
-    m.add("objetos", x0 + 255, 190, point=True, name="dorada", type="dorada", z=44)
+        m.add("moviles", x0 + 130, GT, 14, GB - GT, name=f"barrido{k}", type="barrido", alto=16, x0=x0 + 110, x1=x0 + 330, speed=0.0, period=4.0, phase=0.5 * k, warn=0.8)
+    m.box(x0 + 100, 176, 36, 26, 20, "heno", id="heno1", group="plataformas")
+    m.box(x0 + 136, 176, 56, 26, 32, "heno", id="heno2", group="plataformas")
+    m.box(x0 + 192, 176, 70, 26, 32, "heno", id="heno3", group="plataformas")
+    m.box(x0 + 262, 176, 36, 26, 20, "heno", id="heno4", group="plataformas")
+    m.add("objetos", x0 + 227, 190, point=True, name="dorada", type="dorada", z=44)
     m.add("objetos", x0 + 70, 240, point=True, name="pelota", type="pelota")
-    # ---- AI routes per room (easy waits and crosses, hard takes the optional route)
+    # ---- AI routes per room
     n = m.node
     for i in range(4):
         x0, x1 = i * RW, (i + 1) * RW
         n(f"r{i}a", x0 + 60, 226, next=[(f"r{i}e", 1), (f"r{i}h", 1)])
-        door_id = f"r{i}d"
+        d = f"r{i}d"
         if i == 0:
-            n("r0e", x0 + 240, 226, tipo="facil", next=[(door_id, 1)])
+            n("r0e", x0 + 220, 226, tipo="facil", next=[(d, 1)])
             n("r0h", x0 + 96, 208, tipo="dificil", next=[("r0h2", 1)]); n("r0h2", x0 + 200, 188, tipo="dificil", next=[("r0h3", 1)])
-            n("r0h3", x0 + 392, 188, tipo="dificil", next=[(door_id, 1)])
+            n("r0h3", x0 + 338, 188, tipo="dificil", next=[(d, 1)])
         elif i == 1:
-            n("r1e", x0 + 240, 232, tipo="facil", next=[(door_id, 1)])
-            n("r1h", x0 + 205, 200, tipo="dificil", next=[("r1h2", 1)]); n("r1h2", x0 + 240, 232, tipo="dificil", next=[("r1h3", 1)])
-            n("r1h3", x0 + 275, 204, tipo="dificil", next=[(door_id, 1)])
+            n("r1e", x0 + 215, 232, tipo="facil", next=[(d, 1)])
+            n("r1h", x0 + 182, 200, tipo="dificil", next=[("r1h2", 1)]); n("r1h2", x0 + 215, 232, tipo="dificil", next=[("r1h3", 1)])
+            n("r1h3", x0 + 248, 204, tipo="dificil", next=[(d, 1)])
         elif i == 2:
-            n("r2e", x0 + 240, 260, tipo="facil", next=[(door_id, 1)])
-            n("r2h", x0 + 160, 204, tipo="dificil", next=[("r2h2", 1)]); n("r2h2", x0 + 240, 218, tipo="dificil", next=[("r2h3", 1)])
-            n("r2h3", x0 + 320, 218, tipo="dificil", next=[(door_id, 1)])
+            n("r2e", x0 + 210, 260, tipo="facil", next=[(d, 1)])
+            n("r2h", x0 + 140, 204, tipo="dificil", next=[("r2h2", 1)]); n("r2h2", x0 + 210, 218, tipo="dificil", next=[("r2h3", 1)])
+            n("r2h3", x0 + 290, 218, tipo="dificil", next=[(d, 1)])
         else:
-            n("r3e", x0 + 240, 232, tipo="facil", next=[(door_id, 1)])
-            n("r3h", x0 + 120, 190, tipo="dificil", next=[("r3h2", 1)]); n("r3h2", x0 + 255, 190, tipo="dificil", next=[("r3h3", 1)])
-            n("r3h3", x0 + 335, 190, tipo="dificil", next=[(door_id, 1)])
-        n(door_id, x1 - 14, 226)
+            n("r3e", x0 + 215, 232, tipo="facil", next=[(d, 1)])
+            n("r3h", x0 + 104, 190, tipo="dificil", next=[("r3h2", 1)]); n("r3h2", x0 + 227, 190, tipo="dificil", next=[("r3h3", 1)])
+            n("r3h3", x0 + 300, 190, tipo="dificil", next=[(d, 1)])
+        n(d, x1 - 14, 226)
     m.save(os.path.join(ROOT, "maps-src/circuit.tmx"))
     return m
 
 
 # ===================================================================== PINATA
 def build_pinata():
-    W = 30
+    W = RW // T
+    c = RW // 2   # screen centre
     m = Map("pinata", W, camera="fixed", ground_top=GT, ground_bottom=GB)
     pw = W * T
     m.fill("suelo", 0, GT, pw, GB, lambda tx, ty: "stone0" if (tx + ty) % 2 else "stone1")
     m.fill("suelo", 0, GT, pw, 192, lambda tx, ty: "grass_dark")
     back_hedge(m, 0, pw)
-    m.add("props_suelo", 232, 222, tile=gid("hedge0"), name="tronco")  # real trunk comes from the props kit
-    m.box(228, 206, 24, 16, 999, "tronco", id="tronco")
-    m.add("objetos", 240, 214, point=True, name="pinata", type="pinata", z=70.0)
-    m.add("objetos", 240, 252, point=True, name="canasta", type="canasta")
-    for x, id in ((112, "hongo1"), (356, "hongo2")):
+    m.box(c - 12, 206, 24, 16, 999, "tronco", id="tronco")
+    m.add("objetos", c, 214, point=True, name="pinata", type="pinata", z=70.0)
+    m.add("objetos", c, 252, point=True, name="canasta", type="canasta")
+    for x, id in ((c - 108, "hongo1"), (c + 84, "hongo2")):
         m.add("rebote", x, 226, 24, 12, name=id, type="rebote", fuerza=380.0)
-    m.box(28, 208, 28, 32, 20, "caja", id="cajaL1", group="plataformas"); m.box(56, 208, 28, 32, 40, "caja", id="cajaL2", group="plataformas")
-    m.box(424, 208, 28, 32, 20, "caja", id="cajaR1", group="plataformas"); m.box(396, 208, 28, 32, 40, "caja", id="cajaR2", group="plataformas")
-    m.box(176, 184, 44, 22, 50, "nube", id="nube", group="plataformas", mueve="x", rango=88.0, periodo=8.0, fase=0.0)
-    for i, (x, y) in enumerate(((150, 196), (330, 196), (150, 250), (330, 250))):
+    m.box(40, 208, 28, 32, 20, "caja", id="cajaL1", group="plataformas"); m.box(68, 208, 28, 32, 40, "caja", id="cajaL2", group="plataformas")
+    m.box(RW - 68, 208, 28, 32, 20, "caja", id="cajaR1", group="plataformas"); m.box(RW - 96, 208, 28, 32, 40, "caja", id="cajaR2", group="plataformas")
+    m.box(c - 66, 184, 44, 22, 50, "nube", id="nube", group="plataformas", mueve="x", rango=88.0, periodo=8.0, fase=0.0)
+    for i, (x, y) in enumerate(((c - 80, 196), (c + 80, 196), (c - 80, 250), (c + 80, 250))):
         m.add("salidas", x, y, point=True, name=f"salida{i}", type="salida", slot=i)
     m.add("zonas", 0, GT, pw, GB - GT, name="Plaza de la Piñata", type="zona", orden=1)
-    for x, y in ((200, 240), (280, 240)):
+    for x, y in ((c - 48, 240), (c + 48, 240)):
         m.add("objetos", x, y, point=True, name="pelota", type="pelota")
     m.save(os.path.join(ROOT, "maps-src/pinata.tmx"))
     return m
@@ -369,21 +369,23 @@ def build_pinata():
 
 # ===================================================================== ARENA
 def build_arena():
-    W = 30
-    m = Map("arena", W, camera="fixed", ground_top=GT, ground_bottom=GB, freeY=True, ix=80, iy=184, iw=320, ih=80)
+    W = RW // T
+    c = RW // 2
+    ix, iw = c - 160, 320
+    m = Map("arena", W, camera="fixed", ground_top=GT, ground_bottom=GB, freeY=True, ix=ix, iy=184, iw=iw, ih=80)
     pw = W * T
     m.fill("suelo", 0, 144, pw, 288, lambda tx, ty: "deep0" if (tx + ty) % 5 == 0 else "water0")
     m.fill("suelo", 0, 144, pw, 160, lambda tx, ty: "deep0")
-    m.fill("suelo", 80, 184, 400, 264, lambda tx, ty: "sand0" if (tx * 3 + ty) % 4 else "sand1")
+    m.fill("suelo", ix, 184, ix + iw, 264, lambda tx, ty: "sand0" if (tx * 3 + ty) % 4 else "sand1")
     m.add("huecos", 0, 136, pw, 48, name="agua_norte", type="hueco")
     m.add("huecos", 0, 264, pw, 48, name="agua_sur", type="hueco")
-    m.add("huecos", 0, 184, 80, 80, name="agua_oeste", type="hueco")
-    m.add("huecos", 400, 184, 80, 80, name="agua_este", type="hueco")
-    m.box(232, 214, 16, 12, 16, "parachoques", id="parachoques", group="colision")
-    for i, (x, y) in enumerate(((130, 208), (350, 208), (130, 244), (350, 244))):
+    m.add("huecos", 0, 184, ix, 80, name="agua_oeste", type="hueco")
+    m.add("huecos", ix + iw, 184, pw - ix - iw, 80, name="agua_este", type="hueco")
+    m.box(c - 8, 214, 16, 12, 16, "parachoques", id="parachoques", group="colision")
+    for i, (x, y) in enumerate(((c - 110, 208), (c + 110, 208), (c - 110, 244), (c + 110, 244))):
         m.add("salidas", x, y, point=True, name=f"salida{i}", type="salida", slot=i)
-    m.add("objetos", 240, 232, point=True, name="centro", type="centro")
-    m.add("zonas", 80, 184, 320, 80, name="Arena de Burbujas", type="zona", orden=1)
+    m.add("objetos", c, 232, point=True, name="centro", type="centro")
+    m.add("zonas", ix, 184, iw, 80, name="Arena de Burbujas", type="zona", orden=1)
     m.save(os.path.join(ROOT, "maps-src/arena.tmx"))
     return m
 

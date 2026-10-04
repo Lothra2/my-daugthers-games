@@ -6,7 +6,7 @@ export interface Camera { x: number; y: number; tx: number; ty: number; lock: bo
 export function updateCamera(w: World, dt: number): void {
   const m = w.map, v = w.view, c = w.camera;
   const mode = String(m.props.camera ?? 'fixed');
-  c.ty = Math.round((m.height - v.h) / 2);
+  c.ty = m.height - v.h;
   if (mode === 'follow') {
     const hs = w.actors.filter((a) => a.control === 'human');
     const pool = hs.length ? hs : w.actors;

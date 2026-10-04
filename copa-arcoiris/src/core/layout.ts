@@ -1,6 +1,6 @@
 /** Integer-scale layout. Pure, so it can be unit tested. See ART_BIBLE section 2. */
-export const MIN_W = 480;
-export const MIN_H = 270;
+export const MIN_W = 426;
+export const MIN_H = 240;
 export const MAX_W = 640;
 export const MAX_H = 384;
 
