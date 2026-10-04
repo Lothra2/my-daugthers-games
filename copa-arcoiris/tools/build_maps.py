@@ -430,28 +430,28 @@ def build_pinata():
 def build_arena():
     W = RW // T
     c = RW // 2
-    ix, iw = c - 160, 320
-    m = Map("arena", W, camera="fixed", ground_top=GT, ground_bottom=GB, freeY=True, ix=ix, iy=184, iw=iw, ih=80)
+    ix, iw = c - 144, 288   # island aligned to the 16 px tile grid, so the sand edge is exactly where players fall (x 64..352, y 176..256)
+    m = Map("arena", W, camera="fixed", ground_top=GT, ground_bottom=GB, freeY=True, ix=ix, iy=176, iw=iw, ih=80, tile_water=IDS["water0"], tile_deep=IDS["deep0"])
     pw = W * T
     m.fill("suelo", 0, 144, pw, 288, lambda tx, ty: "deep0" if (tx + ty) % 5 == 0 else "water0")
     m.fill("suelo", 0, 144, pw, 160, lambda tx, ty: "deep0")
-    m.fill("suelo", ix, 184, ix + iw, 264, lambda tx, ty: "sand0" if (tx * 3 + ty) % 4 else "sand1")
-    m.add("huecos", 0, 136, pw, 48, name="agua_norte", type="hueco")
-    m.add("huecos", 0, 264, pw, 48, name="agua_sur", type="hueco")
-    m.add("huecos", 0, 184, ix, 80, name="agua_oeste", type="hueco")
-    m.add("huecos", ix + iw, 184, pw - ix - iw, 80, name="agua_este", type="hueco")
-    m.box(c - 12, 212, 24, 14, 20, "parachoques", id="parachoques", group="colision")
-    for i, (x, y) in enumerate(((c - 110, 208), (c + 110, 208), (c - 110, 244), (c + 110, 244))):
+    m.fill("suelo", ix, 176, ix + iw, 256, lambda tx, ty: "sand0" if (tx * 3 + ty) % 4 else "sand1")
+    m.add("huecos", 0, 136, pw, 40, name="agua_norte", type="hueco")
+    m.add("huecos", 0, 256, pw, 56, name="agua_sur", type="hueco")
+    m.add("huecos", 0, 176, ix, 80, name="agua_oeste", type="hueco")
+    m.add("huecos", ix + iw, 176, pw - ix - iw, 80, name="agua_este", type="hueco")
+    m.box(c - 12, 209, 24, 14, 20, "parachoques", id="parachoques", group="colision")
+    for i, (x, y) in enumerate(((c - 110, 196), (c + 110, 196), (c - 110, 236), (c + 110, 236))):
         m.add("salidas", x, y, point=True, name=f"salida{i}", type="salida", slot=i)
-    m.add("objetos", c, 232, point=True, name="centro", type="centro")
+    m.add("objetos", c, 216, point=True, name="centro", type="centro")
     for x, y in ((24, 176), (46, 262), (366, 270), (392, 178), (14, 226), (404, 232)):
         deco(m, "lily", x, y)
     for x, y in ((120, 168), (300, 166), (60, 282), (350, 284)):
         deco(m, "reeds", x, y)
     deco(m, "duck", 24, 214); deco(m, "ring", 392, 214); deco(m, "bubbles", 200, 162); deco(m, "bubbles", 86, 276)
     deco(m, "dock", ix + 6, 188); deco(m, "dock", ix + iw - 6, 188)
-    deco(m, "rock", ix + 30, 262); deco(m, "rock", ix + iw - 34, 262)
-    m.add("zonas", ix, 184, iw, 80, name="Arena de Burbujas", type="zona", orden=1)
+    deco(m, "rock", ix + 30, 254); deco(m, "rock", ix + iw - 34, 254)
+    m.add("zonas", ix, 176, iw, 80, name="Arena de Burbujas", type="zona", orden=1)
     m.save(os.path.join(ROOT, "maps-src/arena.tmx"))
     return m
 

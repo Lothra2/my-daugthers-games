@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="34">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="50" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="33">
  <properties>
   <property name="camera"  value="follow"/>
   <property name="ground_top" type="int" value="176"/>
@@ -93,63 +93,62 @@
  <objectgroup id="5" name="props_fondo">
  </objectgroup>
  <objectgroup id="6" name="props_suelo">
-  <object id="2" name="tronco" type="" gid="35" x="280" y="272" width="16" height="16"/>
-  <object id="10" name="tree_round" type="deco" x="37" y="171">
+  <object id="9" name="tree_round" type="deco" x="37" y="171">
    <point/>
   </object>
-  <object id="11" name="bush_flower" type="deco" x="110" y="172">
+  <object id="10" name="bush_flower" type="deco" x="110" y="172">
    <point/>
   </object>
-  <object id="12" name="fir" type="deco" x="170" y="171">
+  <object id="11" name="fir" type="deco" x="170" y="171">
    <point/>
   </object>
-  <object id="13" name="hedge_berry" type="deco" x="233" y="170">
+  <object id="12" name="hedge_berry" type="deco" x="233" y="170">
    <point/>
   </object>
-  <object id="14" name="oak" type="deco" x="341" y="170">
+  <object id="13" name="oak" type="deco" x="341" y="170">
    <point/>
   </object>
-  <object id="15" name="blossom" type="deco" x="464" y="175">
+  <object id="14" name="blossom" type="deco" x="464" y="175">
    <point/>
   </object>
-  <object id="16" name="tree_round" type="deco" x="560" y="170">
+  <object id="15" name="tree_round" type="deco" x="560" y="170">
    <point/>
   </object>
-  <object id="17" name="bush_flower" type="deco" x="631" y="174">
+  <object id="16" name="bush_flower" type="deco" x="631" y="174">
    <point/>
   </object>
-  <object id="18" name="fir" type="deco" x="689" y="173">
+  <object id="17" name="fir" type="deco" x="689" y="173">
    <point/>
   </object>
-  <object id="19" name="hedge_berry" type="deco" x="759" y="175">
+  <object id="18" name="hedge_berry" type="deco" x="759" y="175">
    <point/>
   </object>
-  <object id="20" name="signpost" type="deco" x="160" y="182">
+  <object id="19" name="signpost" type="deco" x="160" y="182">
    <point/>
   </object>
-  <object id="21" name="bench" type="deco" x="340" y="180">
+  <object id="20" name="bench" type="deco" x="340" y="180">
    <point/>
   </object>
-  <object id="22" name="balloons" type="deco" x="30" y="176">
+  <object id="21" name="balloons" type="deco" x="30" y="176">
    <point/>
   </object>
-  <object id="23" name="flowers" type="deco" x="230" y="268">
+  <object id="22" name="flowers" type="deco" x="230" y="268">
    <point/>
   </object>
-  <object id="24" name="flowers" type="deco" x="420" y="268">
+  <object id="23" name="flowers" type="deco" x="420" y="268">
    <point/>
   </object>
-  <object id="25" name="flowers" type="deco" x="520" y="268">
+  <object id="24" name="flowers" type="deco" x="520" y="268">
    <point/>
   </object>
-  <object id="26" name="flowers" type="deco" x="680" y="268">
+  <object id="25" name="flowers" type="deco" x="680" y="268">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="7" name="props_frente">
  </objectgroup>
  <objectgroup id="8" name="colision">
-  <object id="1" name="tronco_tutorial" type="tronco" x="280" y="176" width="12" height="96">
+  <object id="1" name="tronco_tutorial" type="tronco" x="280" y="176" width="16" height="96">
    <properties>
     <property name="alto" type="int" value="16"/>
    </properties>
@@ -168,25 +167,25 @@
  <objectgroup id="14" name="checkpoints">
  </objectgroup>
  <objectgroup id="15" name="salidas">
-  <object id="27" name="salida0" type="salida" x="40" y="214">
+  <object id="26" name="salida0" type="salida" x="40" y="214">
    <properties>
     <property name="slot" type="int" value="0"/>
    </properties>
    <point/>
   </object>
-  <object id="28" name="salida1" type="salida" x="40" y="238">
+  <object id="27" name="salida1" type="salida" x="40" y="238">
    <properties>
     <property name="slot" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="29" name="salida2" type="salida" x="40" y="194">
+  <object id="28" name="salida2" type="salida" x="40" y="194">
    <properties>
     <property name="slot" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="30" name="salida3" type="salida" x="40" y="254">
+  <object id="29" name="salida3" type="salida" x="40" y="254">
    <properties>
     <property name="slot" type="int" value="3"/>
    </properties>
@@ -194,41 +193,41 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="meta">
-  <object id="31" name="meta" type="meta" x="740" y="176" width="16" height="96"/>
+  <object id="30" name="meta" type="meta" x="740" y="176" width="16" height="96"/>
  </objectgroup>
  <objectgroup id="17" name="rutas_ia">
  </objectgroup>
  <objectgroup id="18" name="activadores">
  </objectgroup>
  <objectgroup id="19" name="objetos">
-  <object id="3" name="bandera" type="bandera" x="190" y="224">
+  <object id="2" name="bandera" type="bandera" x="190" y="224">
    <point/>
   </object>
-  <object id="4" name="pelota" type="pelota" x="380" y="226">
+  <object id="3" name="pelota" type="pelota" x="380" y="226">
    <point/>
   </object>
-  <object id="5" name="blanco" type="blanco" x="470" y="224">
+  <object id="4" name="blanco" type="blanco" x="470" y="224">
    <point/>
   </object>
-  <object id="6" name="estrella" type="estrella" x="540" y="224">
+  <object id="5" name="estrella" type="estrella" x="540" y="224">
    <properties>
     <property name="z" type="int" value="6"/>
    </properties>
    <point/>
   </object>
-  <object id="7" name="estrella" type="estrella" x="560" y="224">
+  <object id="6" name="estrella" type="estrella" x="560" y="224">
    <properties>
     <property name="z" type="int" value="6"/>
    </properties>
    <point/>
   </object>
-  <object id="8" name="estrella" type="estrella" x="580" y="224">
+  <object id="7" name="estrella" type="estrella" x="580" y="224">
    <properties>
     <property name="z" type="int" value="6"/>
    </properties>
    <point/>
   </object>
-  <object id="9" name="estrella" type="estrella" x="600" y="224">
+  <object id="8" name="estrella" type="estrella" x="600" y="224">
    <properties>
     <property name="z" type="int" value="6"/>
    </properties>
@@ -238,7 +237,7 @@
  <objectgroup id="20" name="salas">
  </objectgroup>
  <objectgroup id="21" name="zonas">
-  <object id="32" name="Calentamiento" type="zona" x="0" y="176" width="800" height="96">
+  <object id="31" name="Calentamiento" type="zona" x="0" y="176" width="800" height="96">
    <properties>
     <property name="orden" type="int" value="1"/>
    </properties>

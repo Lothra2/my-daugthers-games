@@ -79,4 +79,5 @@ Lo que **no** se pudo probar o se recortó, y por qué:
 7. **Prueba táctil de cruzar la línea central en 2P y prueba de rotación vertical:** implementadas, sin test propio.
 8. **Rendimiento en un equipo real** no medido: las pruebas usan render por software (SwiftShader), más lento que una tablet normal.
 9. **Cambios de la IA hechos en esta última pasada** (re-planeo de rutas y detección de atascos nadando) se validaron con las 50 copas simuladas, las suites e2e y 3 copas en navegador. No hubo tiempo de mirar a ojo cómo se siente una carrera completa con ellos.
+11. **Safari de iPhone real no probado.** Las pruebas de teléfono usan Chromium con el tamaño y el agente de un iPhone (`ui.mjs`). Rick abrió el juego en un iPhone y vio problemas que no se pudieron ver desde aquí. Se arreglaron los que se pudieron reproducir (menú cortado, pausa que no respondía al dedo) y se agregó pantalla completa. Falta confirmar en el aparato.
 10. Quedan 124,48 créditos de Higgsfield de los 200. Ideas para gastarlos: ilustración de título, fondos pintados, más trajes.

@@ -62,6 +62,30 @@ const shot = (page, n) => page.screenshot({ path: `docs/qa/shots/ui_${n}.png` })
   ok(errors.length === 0, 'no console errors in pause menu ' + errors.slice(0, 3));
   await ctx.close();
 }
+
+// ---- phone held sideways (iPhone-like): pause with a finger, full screen help, every screen fits
+{
+  const ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1';
+  const init = (s) => { delete Element.prototype.requestFullscreen; delete Element.prototype.webkitRequestFullscreen; try { localStorage.setItem('copa-arcoiris/save', JSON.stringify(s)); } catch {} };
+  const { ctx, page, errors } = await openGame(b, srv.url, '', { viewport: { width: 667, height: 375 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true, userAgent: ua }, init, { version: 1, stats: { warmupDone: true } });
+  await page.waitForFunction(() => window.__copa?.ready);
+  await page.tap('[data-fs]'); await page.waitForSelector('#fs-help');
+  ok((await page.textContent('#fs-help')).includes('Añadir a pantalla de inicio'), 'iPhone: the full screen button explains how to install the game');
+  await page.tap('#fs-close'); await page.tap('#go', { force: true }); await page.waitForSelector('[data-a=cup]');
+  const fits = async (sel) => page.evaluate((q) => { const r = document.querySelector(q).getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight + 1 && r.left >= 0 && r.right <= innerWidth + 1; }, sel);
+  ok(await fits('.menu-btns') && await fits('.menu .logo'), 'iPhone 667x375: logo and the five menu buttons fit');
+  await page.tap('[data-a=cup]'); await page.tap('[data-n="1"]'); await page.waitForSelector('[data-c=sophie]');
+  ok(await page.$$eval('.card', (cs) => cs.every((c) => { const r = c.getBoundingClientRect(); return r.bottom <= innerHeight && r.right <= innerWidth; })), 'iPhone 667x375: the five character cards fit');
+  await page.tap('[data-c=sophie]'); await page.tap('#ok'); await page.tap('#go', { force: true });
+  await page.waitForFunction(() => window.__copa.game.scene.getScene('Event')?.world?.phase === 'play', null, { timeout: 30000 });
+  await page.tap('.hud-pause'); await page.waitForSelector('#resume');
+  ok(await fits('.pause'), 'iPhone: the pause button works with a finger and the pause menu fits');
+  const t1 = await page.evaluate(() => window.__copa.game.scene.getScene('Event').world.eventT); await page.waitForTimeout(500);
+  ok(Math.abs((await page.evaluate(() => window.__copa.game.scene.getScene('Event').world.eventT)) - t1) < 0.05, 'the game is frozen while paused');
+  await page.tap('#resume');
+  ok(errors.length === 0, 'no console errors on the phone ' + errors.slice(0, 3));
+  await ctx.close();
+}
 console.log(fails ? `${fails} FAILED` : 'ALL OK');
 await b.close(); srv.stop();
 process.exit(fails ? 1 : 0);

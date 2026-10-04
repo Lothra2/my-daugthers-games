@@ -13,6 +13,7 @@ import { services } from './app/services';
 import { SaveStore } from './save/save';
 import { AudioEngine } from './audio/engine';
 import { showSoundBoard } from './audio/board';
+import { blockZoomGestures, watchFullscreen } from './app/fullscreen';
 
 declare global {
   interface Window { __copa?: Record<string, any>; __mockPads?: any }
@@ -47,6 +48,7 @@ window.addEventListener('orientationchange', applyLayout);
 applyLayout();
 game.canvas?.addEventListener('webglcontextlost', (e) => { e.preventDefault(); location.reload(); });
 
+watchFullscreen(); blockZoomGestures();
 const router = new InputRouter();
 services.router = router;
 services.hud = new Hud();
