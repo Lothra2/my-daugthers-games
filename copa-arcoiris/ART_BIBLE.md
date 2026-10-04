@@ -189,4 +189,7 @@ Identidad: Sonnet **mira** la hoja de contacto y marca la lista de §4 (pelo, ga
 
 ### Verificación de resolución (M2)
 `docs/art/res_compare.png`: los 5 personajes de la alineación a 32 y a 48, ampliados ×4 lado a lado.
-**Resultado:** _(lo completa Sonnet en M2: elegida 48 / cambiada a 56 y por qué)_
+**Resultado (2026-10-04, M2): se queda 48 × 48.** A 32 la cabeza mide ~11 px y las caras no se leen. Sophie y Mamá se confunden por el pelo negro largo.
+A 48 se leen el cintillo verde y el pelo liso de Sophie, el pelo ondulado y la chaqueta morada de Mamá, el pelo corto y la polo roja de Papá y la silueta de Alana.
+**Riesgos a vigilar en el post-proceso:** los ganchos de Alana (rosado y morado) y la barba canosa de Papá se ensucian con el promedio de píxeles.
+El remuestreo final usa la **mediana por bloque** y fuerza esos colores. Si fallan en la revisión de identidad, se pasa a celdas de 56.

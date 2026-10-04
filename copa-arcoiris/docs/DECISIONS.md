@@ -12,3 +12,8 @@ Se anota aquí todo cambio respecto a los documentos de diseño, con su motivo. 
 - Propuestas de Opus aceptadas por defecto: Thor azul cielo, sin trepar en la Piñata, celdas de 48 px y audio por código.
 
 ## Fase 2 (Sonnet)
+- **Krita headless (verificado M0):** `QT_QPA_PLATFORM=offscreen` no funciona (Krita fuerza xcb). `xvfb-run -a krita --export --export-filename out.kra in.png` SÍ funciona y escribe un `.kra` real (zip con `maindoc.xml` y capas). Importa `.ora` con capas, así que `tools/make_kra.py` arma un `.ora` multicapa con Pillow y Krita lo convierte a `.kra`. Lo que se diga "hecho con Krita" pasó por ese comando.
+- **Vite 8 usa Rolldown:** `manualChunks` debe ser una función (el objeto del plan falla). Corregido en `vite.config.ts`.
+- **Costo real de Higgsfield:** la alineación con 5 referencias costó 2,08 créditos. Las maestras con 2 referencias, 1,6. Con 1 referencia, menos. Los créditos se llevan en `art-src/generations.jsonl`.
+- **Referencias limpias:** la alineación contaminó las maestras de Alana y Papá (cintillo verde, niña dentro de la hoja de Papá). Las hojas de animación usan solo un recorte limpio de los 4 primeros frames de la maestra (`art-src/higgsfield/identity/ref_<personaje>.png`).
+- **Resolución:** se queda 48 × 48 (ver ART_BIBLE §9).

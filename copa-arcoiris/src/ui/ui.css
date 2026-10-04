@@ -1,0 +1,14 @@
+@font-face { font-family: 'Pixelify'; src: url('/assets/fonts/PixelifySans-latin.woff2') format('woff2'); font-display: block; }
+:root {
+  --ink: #2A1B3D; --panel: #FFF4DE; --btn: #FFD447; --btn-dark: #E0A82E; --ok: #5DDB43;
+  --sophie: #4FD65C; --alana: #FF6FB5; --papa: #E8423A; --mama: #9B5DE5; --thor: #3FB6F2;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; height: 100%; background: #1c1230; overflow: hidden; overscroll-behavior: none;
+  font-family: 'Pixelify', 'Trebuchet MS', sans-serif; color: var(--ink); user-select: none; -webkit-user-select: none; touch-action: none; }
+#stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+#game { position: relative; line-height: 0; }
+#game canvas { image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+#ui, #touch { position: fixed; inset: 0; pointer-events: none; }
+#ui > *, #touch > * { pointer-events: auto; }
+.hidden { display: none !important; }
