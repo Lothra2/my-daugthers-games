@@ -1,0 +1,10 @@
+import { startPreview, launch, openGame } from './lib.mjs';
+const srv = await startPreview();
+const b = await launch();
+const { page, errors } = await openGame(b, srv.url);
+await page.waitForFunction(() => window.__copa && window.__copa.ready, null, { timeout: 15000 });
+const info = await page.evaluate(() => ({ ready: window.__copa.ready, keys: Object.keys(window.__copa), canvases: document.querySelectorAll('canvas').length, save: window.__copa.store.status }));
+await page.screenshot({ path: 'docs/qa/shots/m0_smoke.png' });
+console.log(JSON.stringify(info), 'errors:', errors.length, errors.slice(0, 5));
+await b.close(); srv.stop();
+if (errors.length) process.exit(1);

@@ -1,0 +1,16 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "props_houses",
+ "purpose": "props houses",
+ "request_id": "5675a2ae-748c-44f4-85ab-19f7037fd4e8",
+ "credits": 1.28,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark, bright cheerful candy colors, teal-green foliage, warm sand and wood, fairytale forest sports festival for children. A prop kit sheet with: (1) a fairytale mushroom cottage with a big red spotted cap roof and a round door, (2) a cozy cottage with a thatched roof and flower boxes at the windows, (3) a small white windmill with colorful blades, (4) a round stone fountain with sparkling water, (5) a wooden market stall with a pastel striped awning, (6) a small pastel striped festival tent, (7) a wooden signpost with two arrows, (8) a string of colorful lanterns on two poles. Draw exactly 8 separate objects in a grid of 2 rows and 4 columns, side view, each object fully isolated with a wide empty gap around it so none touches another, all sitting on their own invisible ground line. Solid flat cyan (#00C8FF) background, nothing else. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark, bright cheerful candy colors, teal-green foliage, warm sand and wood, fairytale forest sports festival for children.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium"
+ },
+ "outputs": [
+  "art-src/higgsfield/props/houses.png"
+ ]
+}

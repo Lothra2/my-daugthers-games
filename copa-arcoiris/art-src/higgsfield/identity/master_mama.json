@@ -1,0 +1,20 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "master_mama",
+ "purpose": "M2 hoja maestra mama",
+ "request_id": "cda87f2c-a8f0-470d-a670-f3dbc85156ce",
+ "credits": 1.6,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi sports-festival character with a BIG head (about 40 percent of the body height) and a compact body, happy smiling face, rosy cheeks. an elegant determined mom in her late 30s, long wavy jet-black hair with a center part falling past her shoulders, thin arched eyebrows, light brown eyes, light tan skin, small silver earrings, warm confident smile, purple sports jacket with white trim and a white star on the chest, dark purple shorts, white sneakers, tall slim graceful posture. Character model sheet, same character in every frame, consistent face, hair and outfit. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: (1) front view standing, (2) three-quarter view, (3) side view facing right, (4) back view, (5) cheering with both arms up, (6) laughing with eyes closed, (7) ready-to-race crouch, (8) waving hello. Each figure is about 21 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>",
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/identity/master_mama.png"
+ ]
+}
