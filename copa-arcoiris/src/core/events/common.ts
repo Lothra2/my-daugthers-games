@@ -1,4 +1,4 @@
-import { aiAggression, aiRisk, type AIGoal } from '../ai';
+import { aiAggression, aiRisk, pathBlocked, type AIGoal } from '../ai';
 import type { RouteNode } from '../mapdata';
 import type { Actor, Standing, World } from '../world';
 
@@ -41,10 +41,14 @@ export function followRoute(w: World, a: Actor, nodes: RouteNode[], fallback: { 
       if (!ahead.length) return null;
       const x0 = ahead[0].x;
       const cands = ahead.filter((n) => n.x <= x0 + 60);
-      return cands.find((n) => n.tipo === 'principal') ?? cands[0];
+      const ok = cands.filter((n) => !pathBlocked(w, a, n.x, n.y));
+      const pool2 = ok.length ? ok : cands;
+      return pool2.find((n) => n.tipo === 'principal') ?? pool2[0];
     }
-    const opts = from.next.map((o) => ({ n: pool.find((p) => p.id === o.id), w: o.w })).filter((o): o is { n: RouteNode; w: number } => !!o.n);
+    let opts = from.next.map((o) => ({ n: pool.find((p) => p.id === o.id), w: o.w })).filter((o): o is { n: RouteNode; w: number } => !!o.n);
     if (!opts.length) return null;
+    const clear = opts.filter((o) => !pathBlocked(w, a, o.n.x, o.n.y));
+    if (clear.length) opts = clear;
     const ws = opts.map((o) => o.w * weightFor(o.n.tipo, risk));
     let r = w.rng.next() * ws.reduce((s, v) => s + v, 0), i = 0;
     for (; i < ws.length - 1; i++) { r -= ws[i]; if (r <= 0) break; }
@@ -58,6 +62,12 @@ export function followRoute(w: World, a: Actor, nodes: RouteNode[], fallback: { 
     if (!nx) { node = null; break; }
     node = nx;
   }
+  if (node && pathBlocked(w, a, node.x, node.y)) {
+    // a wall stands between the actor and its node (it took the other lane): re-plan on the nearest node it can actually reach
+    const alt = pool.filter((n) => n.x >= a.x - 8 && !pathBlocked(w, a, n.x, n.y)).sort((p, q) => p.x - q.x);
+    const best = alt.find((n) => n.tipo === 'principal' || n.tipo === 'facil') ?? alt[0];
+    if (best) node = best;
+  }
   cur[a.id] = node ? node.id : null;
   if (!node) return { goal: { x: fallback.x, y: fallback.y }, node: null };
   return { goal: { x: node.x, y: node.y, stopDist: 4 }, node };
@@ -67,7 +77,7 @@ export function followRoute(w: World, a: Actor, nodes: RouteNode[], fallback: { 
 export function addSocialGoals(w: World, a: Actor, goal: AIGoal, opts: { items?: boolean; attack?: boolean; throwRange?: number } = {}): AIGoal {
   const aggr = aiAggression(a.profile);
   if (opts.items !== false && a.carrying === null && (a.profile === 'jugueton' || a.profile === 'explorador' || a.charId === 'thor')) {
-    const ball = w.items.filter((i) => i.kind === 'ball' && i.state === 'ground' && i.owner === null && Math.abs(i.x - a.x) < 46 && i.x > a.x - 10 && Math.abs(i.y - a.y) < 40)
+    const ball = w.items.filter((i) => i.kind === 'ball' && i.state === 'ground' && i.owner === null && Math.abs(i.x - a.x) < 46 && i.x > a.x - 10 && Math.abs(i.y - a.y) < 40 && i.y >= w.map.groundTop && i.y <= w.map.groundBottom && !pathBlocked(w, a, i.x, i.y))
       .sort((p, q) => Math.abs(p.x - a.x) - Math.abs(q.x - a.x))[0];
     if (ball) { goal = { ...goal, x: ball.x, y: ball.y, pickup: true, stopDist: 3 }; }
   }
@@ -76,7 +86,7 @@ export function addSocialGoals(w: World, a: Actor, goal: AIGoal, opts: { items?:
     if (tgt) goal = { ...goal, throwAt: tgt.id };
   }
   if (opts.attack !== false) {
-    const near = w.actors.filter((t) => t !== a && !t.finished && Math.abs(t.x - a.x) < 24 && Math.abs(t.y - a.y) < 10)[0];
+    const near = w.actors.filter((t) => t !== a && !t.finished && Math.abs(t.x - a.x) < 24 && Math.abs(t.y - a.y) < 10 && !pathBlocked(w, a, t.x, t.y))[0];
     if (near && aggr > 0.2) goal = { ...goal, attack: near.id };
   }
   return goal;

@@ -150,7 +150,8 @@ export function updateItems(w: World, dt: number): void {
         it.vx *= 0.6;
       }
     } else { it.z = s; it.vx *= 0.9; it.vy *= 0.9; }
-    it.y = Math.max(w.map.groundTop - 20, Math.min(w.map.groundBottom + 10, it.y));
+    if (w.map.props.freeY) it.y = Math.max(w.map.groundTop - 40, Math.min(w.map.groundBottom + 40, it.y));
+    else it.y = Math.max(w.map.groundTop + 4, Math.min(w.map.groundBottom - 4, it.y));
     it.x = Math.max(6, Math.min(w.map.width - 6, it.x));
     if (it.z <= 0.01) {
       const wz = w.map.water.find((r) => inRect(r, it.x, it.y));

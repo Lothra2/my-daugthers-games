@@ -36,6 +36,7 @@ export interface MapData {
   objects: MapObject[];
   rooms: Room[];
   zones: Zone[];
+  roomSpawns?: Record<number, { slot: number; x: number; y: number }[]>;
   props: Record<string, string | number | boolean>;
 }
 

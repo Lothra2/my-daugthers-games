@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="20">
+ <properties>
+  <property name="camera"  value="fixed"/>
+  <property name="ground_top" type="int" value="176"/>
+  <property name="ground_bottom" type="int" value="272"/>
+ </properties>
+ <tileset firstgid="1" source="tiles.tsx"/>
+ <layer id="1" name="suelo" width="30" height="17">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,
+11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,
+12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,
+11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,
+12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11,12,11
+  </data>
+ </layer>
+ <layer id="2" name="fachada" width="30" height="17">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,
+32,32,31,31,31,31,32,31,31,31,32,31,31,32,32,31,32,32,32,32,31,32,32,32,31,31,31,32,32,32,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  </data>
+ </layer>
+ <layer id="3" name="deco_suelo" width="30" height="17">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  </data>
+ </layer>
+ <layer id="4" name="frente" width="30" height="17">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  </data>
+ </layer>
+ <objectgroup id="5" name="props_fondo">
+ </objectgroup>
+ <objectgroup id="6" name="props_suelo">
+  <object id="1" name="tronco" type="" gid="31" x="232" y="222" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup id="7" name="props_frente">
+ </objectgroup>
+ <objectgroup id="8" name="colision">
+  <object id="2" name="tronco" type="tronco" x="228" y="206" width="24" height="16">
+   <properties>
+    <property name="alto" type="int" value="999"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="plataformas">
+  <object id="7" name="cajaL1" type="caja" x="28" y="208" width="28" height="32">
+   <properties>
+    <property name="alto" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="8" name="cajaL2" type="caja" x="56" y="208" width="28" height="32">
+   <properties>
+    <property name="alto" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="9" name="cajaR1" type="caja" x="424" y="208" width="28" height="32">
+   <properties>
+    <property name="alto" type="int" value="20"/>
+   </properties>
+  </object>
+  <object id="10" name="cajaR2" type="caja" x="396" y="208" width="28" height="32">
+   <properties>
+    <property name="alto" type="int" value="40"/>
+   </properties>
+  </object>
+  <object id="11" name="nube" type="nube" x="176" y="184" width="44" height="22">
+   <properties>
+    <property name="alto" type="int" value="50"/>
+    <property name="mueve"  value="x"/>
+    <property name="rango" type="float" value="88.0"/>
+    <property name="periodo" type="float" value="8.0"/>
+    <property name="fase" type="float" value="0.0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="agua">
+ </objectgroup>
+ <objectgroup id="11" name="huecos">
+ </objectgroup>
+ <objectgroup id="12" name="rebote">
+  <object id="5" name="hongo1" type="rebote" x="112" y="226" width="24" height="12">
+   <properties>
+    <property name="fuerza" type="float" value="380.0"/>
+   </properties>
+  </object>
+  <object id="6" name="hongo2" type="rebote" x="356" y="226" width="24" height="12">
+   <properties>
+    <property name="fuerza" type="float" value="380.0"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="moviles">
+ </objectgroup>
+ <objectgroup id="14" name="checkpoints">
+ </objectgroup>
+ <objectgroup id="15" name="salidas">
+  <object id="12" name="salida0" type="salida" x="150" y="196">
+   <properties>
+    <property name="slot" type="int" value="0"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="13" name="salida1" type="salida" x="330" y="196">
+   <properties>
+    <property name="slot" type="int" value="1"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="14" name="salida2" type="salida" x="150" y="250">
+   <properties>
+    <property name="slot" type="int" value="2"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="15" name="salida3" type="salida" x="330" y="250">
+   <properties>
+    <property name="slot" type="int" value="3"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="16" name="meta">
+ </objectgroup>
+ <objectgroup id="17" name="rutas_ia">
+ </objectgroup>
+ <objectgroup id="18" name="activadores">
+ </objectgroup>
+ <objectgroup id="19" name="objetos">
+  <object id="3" name="pinata" type="pinata" x="240" y="214">
+   <properties>
+    <property name="z" type="float" value="70.0"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="4" name="canasta" type="canasta" x="240" y="252">
+   <point/>
+  </object>
+  <object id="17" name="pelota" type="pelota" x="200" y="240">
+   <point/>
+  </object>
+  <object id="18" name="pelota" type="pelota" x="280" y="240">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="20" name="salas">
+ </objectgroup>
+ <objectgroup id="21" name="zonas">
+  <object id="16" name="Plaza de la Piñata" type="zona" x="0" y="176" width="480" height="96">
+   <properties>
+    <property name="orden" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

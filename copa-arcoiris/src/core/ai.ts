@@ -23,6 +23,7 @@ export interface AIState {
   jumpAt: number; jumpFire: boolean; actionFire: boolean; powerFire: boolean;
   lane: number; laneT: number; powerDelay: number; powerArmed: boolean;
   lastX: number; lastY: number; stuckClock: number; stuckStage: number; backT: number; pausedUntil: number;
+  goalX: number; goalY: number; bestDist: number; bestT: number; bestProg: number; bestProgT: number;
 }
 
 const PROFILE = {
@@ -38,6 +39,7 @@ function newState(): AIState {
   return {
     speedMult: 1, nextThink: 0, held: emptyInput(), jumpAt: -1, jumpFire: false, actionFire: false, powerFire: false,
     lane: 0, laneT: 0, powerDelay: 0, powerArmed: false, lastX: 0, lastY: 0, stuckClock: 0, stuckStage: 0, backT: 0, pausedUntil: 0,
+    goalX: -1, goalY: -1, bestDist: Infinity, bestT: 0, bestProg: -1, bestProgT: 0,
   };
 }
 
@@ -70,6 +72,36 @@ export function scanAhead(w: World, a: Actor, dir: number, look: number, dy = 0)
   return { kind: 'none', d: Infinity, h: 0, width: 0 };
 }
 
+/** True when a straight line from the actor to (tx, ty) crosses a wall too tall to jump (walls, hedges). */
+export function pathBlocked(w: World, a: Actor, tx: number, ty: number): boolean {
+  const dx = tx - a.x, dy = ty - a.y, n = Math.max(2, Math.ceil(Math.hypot(dx, dy) / 6));
+  const lim = maxJumpH(a);
+  for (let i = 1; i <= n; i++) {
+    const px = a.x + (dx * i) / n, py = a.y + (dy * i) / n;
+    for (const b of w.map.boxes) {
+      if (b.alto <= lim) continue;
+      const r = boxAt(b, w.t);
+      if (px > r.x - 5 && px < r.x + r.w + 5 && py > r.y - 2 && py < r.y + r.h + 2) return true;
+    }
+  }
+  return false;
+}
+
+/** Direction (-1 up, 1 down) of the nearest lane without the obstacle, inside the walkable band, preferring the side of the goal. 0 when none. */
+export function freeLane(w: World, a: Actor, dir: number, look: number, blockedAt: number, goalY: number): number {
+  const pref = goalY >= a.y ? 1 : -1;
+  for (const d of [pref, -pref]) {
+    for (let off = 10; off <= 70; off += 10) {
+      const y = a.y + d * off;
+      if (y < w.map.groundTop + 3 || y > w.map.groundBottom - 3) break;
+      if (pathBlocked(w, a, a.x, y)) break;            // a wall between here and that lane (a hedge divider)
+      const sc = scanAhead(w, a, dir, look, d * off);
+      if (sc.kind === 'none' || sc.d > blockedAt + 12) return d;
+    }
+  }
+  return 0;
+}
+
 export function thinkAI(w: World, a: Actor, dt: number): void {
   const s = a.ai ?? (a.ai = newState());
   const diff = DIFFICULTY[w.difficulty];
@@ -98,18 +130,28 @@ export function thinkAI(w: World, a: Actor, dt: number): void {
     decide(w, a, s, diff.err);
   }
 
-  // stuck detection every 0.25 s
+  // stuck detection: no progress toward the goal for 7 s. Pushes between rivals move bodies without progress, so distance is not enough.
   s.stuckClock += dt;
   if (s.stuckClock >= 0.25) {
-    const moved = Math.hypot(a.x - s.lastX, a.y - s.lastY);
     s.stuckClock = 0;
-    const want = Math.abs(s.held.mx) + Math.abs(s.held.my) > 0.3 && !locked && w.phase === 'play' && !a.inWater;
-    if (want && moved < 2) s.stuckStage += 0.25; else if (moved > 3) s.stuckStage = 0;
+    const want = !locked && w.phase === 'play' && !a.inWater && (Math.abs(s.held.mx) + Math.abs(s.held.my) > 0.3);
+    const moved = Math.hypot(a.x - s.lastX, a.y - s.lastY);
     s.lastX = a.x; s.lastY = a.y;
+    if (want && moved < 2) s.stuckStage += 0.25; else if (moved > 3) s.stuckStage = Math.max(0, s.stuckStage - 0.5);
     if (s.stuckStage >= 2 && s.stuckStage < 2.25) { s.jumpFire = true; s.lane = w.rng.chance(0.5) ? 1 : -1; s.laneT = 0.9; }
     if (s.stuckStage >= 4 && s.stuckStage < 4.25) { s.backT = 0.5; }
-    if (s.stuckStage >= 6) {
-      s.stuckStage = 0;
+    let rescue = s.stuckStage >= 6;
+    if (!locked && w.phase === 'play' && s.goalX >= 0) {
+      const dist = Math.hypot(s.goalX - a.x, (s.goalY - a.y) * 1.5);
+      if (dist < s.bestDist - 10) { s.bestDist = dist; s.bestT = w.t; }
+      if (w.t - s.bestT > 7 && s.bestDist > 24) rescue = true;
+    }
+    if (!locked && w.phase === 'play' && a.progress > 0) {
+      if (a.progress > s.bestProg + 12) { s.bestProg = a.progress; s.bestProgT = w.t; }
+      if (w.t - s.bestProgT > 12) { rescue = true; s.bestProg = a.progress; s.bestProgT = w.t; }
+    }
+    if (rescue) {
+      s.stuckStage = 0; s.bestDist = Infinity; s.bestT = w.t;
       const p = w.rules.respawnPoint(w, a);
       startRescueTo(w, a, p.x, p.y);
     }
@@ -128,6 +170,8 @@ export function thinkAI(w: World, a: Actor, dt: number): void {
 
 function decide(w: World, a: Actor, s: AIState, err: number): void {
   const goal = w.rules.aiGoal(w, a);
+  if (Math.abs(goal.x - s.goalX) > 30 || Math.abs(goal.y - s.goalY) > 30) { s.bestDist = Infinity; s.bestT = w.t; }
+  s.goalX = goal.x; s.goalY = goal.y;
   const prof = PROFILE[a.profile];
   const dx = goal.x - a.x, dy = goal.y - a.y;
   const stop = goal.stopDist ?? 5;
@@ -147,18 +191,16 @@ function decide(w: World, a: Actor, s: AIState, err: number): void {
         const tte = Math.max(0, (sc.d - 13) / Math.max(speed, 30));
         s.jumpAt = tte + (w.rng.chance(err) ? w.rng.range(0.1, 0.2) : 0);
       } else {
-        const up = scanAhead(w, a, mx, look, -14), dn = scanAhead(w, a, mx, look, 14);
-        if (up.kind === 'none' || up.d > sc.d + 10) { s.lane = -1; s.laneT = 0.7; my = -1; }
-        else if (dn.kind === 'none' || dn.d > sc.d + 10) { s.lane = 1; s.laneT = 0.7; my = 1; }
+        const ln = freeLane(w, a, mx, look, sc.d, goal.y);
+        if (ln) { s.lane = ln; s.laneT = 0.7; my = ln; }
       }
     } else if (sc.kind === 'pit') {
-      if (sc.width <= Math.min(46, maxJumpDist(a))) {
-        const tte = Math.max(0, (sc.d - 10) / Math.max(speed, 30));
-        s.jumpAt = tte + (w.rng.chance(err) ? w.rng.range(0.12, 0.22) : 0);
+      if (sc.width <= Math.min(48, maxJumpDist(a) + 4)) {
+        const tte = Math.max(0, (sc.d - 3) / Math.max(speed, 30));
+        s.jumpAt = tte + (w.rng.chance(err) ? w.rng.range(0.04, 0.1) : 0);
       } else {
-        const up = scanAhead(w, a, mx, look, -16), dn = scanAhead(w, a, mx, look, 16);
-        if (up.kind === 'none') { s.lane = -1; s.laneT = 0.8; my = -1; }
-        else if (dn.kind === 'none') { s.lane = 1; s.laneT = 0.8; my = 1; }
+        const ln = freeLane(w, a, mx, look, sc.d, goal.y);
+        if (ln) { s.lane = ln; s.laneT = 0.8; my = ln; }
         else if (w.rng.chance(0.5)) mx = 0;
       }
     }
