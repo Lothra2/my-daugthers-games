@@ -41,10 +41,31 @@ export function makeBackdropTextures(scene: Phaser.Scene): void {
       c.fillStyle = shade; c.fillRect(x, top + 5 + ((x * 3) % 3), 1, 1);
       if ((x + top) % 7 === 0) { c.fillStyle = shade; c.fillRect(x, top + 10, 2, 1); }
     }
-    if (trees) for (let x = 6; x < 640; x += 17 + ((x * 7) % 9)) {
-      const top = Math.round(prof(x)), r = 5 + ((x * 3) % 4);
-      c.fillStyle = PAL.g4; c.fillRect(x, top - r, r * 2, r * 2 + 2);
-      c.fillStyle = PAL.g3; for (let k = 0; k < r; k++) c.fillRect(x + k, top - r - 1 - Math.round(Math.sin(k / r * Math.PI) * 3), 2, 3);
+    if (trees) for (let x = 8, n = 0; x < 632; x += 15 + ((x * 7) % 11), n++) {
+      const top = Math.round(prof(x));
+      const dot = (px: number, py: number, col: string) => { c.fillStyle = col; c.fillRect(Math.round(px), Math.round(py), 1, 1); };
+      if (n % 3 === 1) {
+        // fir: stacked triangles, narrow trunk
+        const tiers = 3, hgt = 9 + ((x * 5) % 5);
+        for (let t = 0; t < tiers; t++) {
+          const y0 = top - hgt + Math.round((t * hgt) / tiers) * 0.8, half = 2 + t * 2;
+          for (let yy = 0; yy < Math.ceil(hgt / tiers) + 2; yy++) {
+            const hw = Math.round(1 + (half * (yy + 1)) / (Math.ceil(hgt / tiers) + 2));
+            for (let xx = -hw; xx <= hw; xx++) dot(x + xx, y0 + yy, xx < -hw * 0.3 ? PAL.g3 : PAL.g4);
+          }
+        }
+        c.fillStyle = PAL.d4; c.fillRect(x - 1, top - 1, 2, 3);
+      } else {
+        // round tree: a few overlapping discs with a light side, short trunk
+        const r = 5 + ((x * 3) % 4);
+        const discs: [number, number, number][] = [[0, -r - 1, r], [-r * 0.7, -r * 0.5 - 1, r * 0.7], [r * 0.7, -r * 0.5 - 1, r * 0.75]];
+        for (const [dx, dy, rr] of discs) for (let yy = -rr; yy <= rr; yy++) for (let xx = -rr; xx <= rr; xx++) {
+          if (xx * xx + yy * yy > rr * rr + 0.5) continue;
+          const light = xx + yy * 0.8 < -rr * 0.35;
+          dot(x + dx + xx, top + dy + yy, light ? PAL.g3 : PAL.g4);
+        }
+        c.fillStyle = PAL.d4; c.fillRect(x - 1, top - 3, 2, 4);
+      }
     }
   });
   hills('hills_far', 90, 40, 12, '#8AD8B4', '#7BC9A8', false, 0.6);

@@ -15,6 +15,7 @@ import { icon } from '../ui/icons';
 import type { EventScene } from '../view/scenes/EventScene';
 import type { EventConfig, EventResult } from './types';
 import { services } from './services';
+import { enterFullscreen, isFull, isPhoneLike, onFullscreenButton } from './fullscreen';
 
 const A = (p: string): string => `${import.meta.env.BASE_URL}assets/${p}`;
 const hex = (n: number): string => `#${n.toString(16).padStart(6, '0')}`;
@@ -75,6 +76,7 @@ export class App {
   // ------------------------------------------------------------------ helpers
   private show(html: string, cls = ''): HTMLElement {
     this.box.className = cls; this.box.innerHTML = html; this.box.classList.remove('hidden');
+    this.box.querySelectorAll('[data-fs]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); void onFullscreenButton(); }));
     return this.box;
   }
   private hide(): void { this.box.classList.add('hidden'); this.box.innerHTML = ''; }
@@ -127,8 +129,10 @@ export class App {
   private splash(): void {
     this.show(`<div class="splash"><h1 class="logo"><span>La Copa del</span><b>Bosque Arcoíris</b></h1>
       <p class="sub">Un juego para jugar en familia</p>
-      <button class="btn big primary pulse" id="go">¡Toca para empezar!</button></div>`, 'screen center');
-    const go = () => { services.audio?.unlock(); this.menu(); };
+      <button class="btn big primary pulse" id="go">¡Toca para empezar!</button>
+      <button class="btn small fs-btn" data-fs>⛶ Pantalla completa</button></div>`, 'screen center');
+    // on phones and tablets the first tap also goes full screen (the browser only allows it from a tap)
+    const go = () => { services.audio?.unlock(); if (isPhoneLike() && !isFull()) void enterFullscreen(); this.menu(); };
     this.on('#go', go);
   }
 
@@ -146,6 +150,7 @@ export class App {
         <button class="btn big" data-a="wardrobe">Vestuario</button>
         <button class="btn big" data-a="settings">Ajustes</button>
       </div>
+      <button class="btn small fs-btn" data-fs>⛶ Pantalla completa</button>
       <p class="foot">Copas ganadas: ${cups}</p></div>`, 'screen center');
     this.on('[data-a]', (el) => {
       const a = el.dataset.a;
@@ -278,6 +283,7 @@ export class App {
       <button class="btn big primary" id="resume">Seguir jugando</button>
       <button class="btn big" id="restart">Repetir la prueba</button>
       <button class="btn big" id="opts">Ajustes</button>
+      <button class="btn small fs-btn" data-fs>⛶ Pantalla completa</button>
       <button class="btn big ghost" id="quit">Salir al menú</button></div></div>`, 'screen center dim');
     this.on('#resume', () => this.resume());
     this.on('#restart', () => { this.hide(); this.paused = false; services.audio?.pause(false); this.startScene(); });

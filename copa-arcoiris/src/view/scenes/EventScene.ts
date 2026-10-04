@@ -45,6 +45,7 @@ export class EventScene extends Phaser.Scene {
   private colorById = new Map<number, number>();
   private ptr: Phaser.GameObjects.Image | null = null;
   private pinataImg: Phaser.GameObjects.Image | null = null;
+  private sueloLayer: Phaser.Tilemaps.TilemapLayer | null = null;
   private hitSwing = 0;
 
   constructor() { super('Event'); }
@@ -52,7 +53,7 @@ export class EventScene extends Phaser.Scene {
   init(cfg: EventConfig) {
     this.cfg = cfg;
     this.acc = 0; this.simClock = 0; this.overT = 0; this.doneSent = false; this.paused = false; this.hudT = 0;
-    this.views.clear(); this.itemViews.clear(); this.shotViews.clear(); this.boxViews = []; this.moverViews = []; this.hongos = []; this.pinataImg = null;
+    this.views.clear(); this.itemViews.clear(); this.shotViews.clear(); this.boxViews = []; this.moverViews = []; this.hongos = []; this.pinataImg = null; this.sueloLayer = null;
     this.colorById.clear();
   }
 
@@ -97,11 +98,31 @@ export class EventScene extends Phaser.Scene {
     const depths: Record<string, number> = { suelo: -9000, fachada: -8900, deco_suelo: -8800 };
     for (const [name, d] of Object.entries(depths)) {
       const l = tm.createLayer(name, ts, 0, 0);
-      if (l) l.setDepth(d);
+      if (l) { l.setDepth(d); if (name === 'suelo') this.sueloLayer = l as Phaser.Tilemaps.TilemapLayer; }
     }
     const front = tm.createLayer('frente', ts, 0, 0);
     if (front) front.setDepth(100000);
-    void raw;
+    this.buildEdges(raw);
+  }
+
+  /** Wide screens show more than the map: the ground continues past both ends (the edge column repeats) so there is never an empty strip. */
+  private buildEdges(raw: TiledMap): void {
+    const mode = String(this.world.map.props.camera ?? 'fixed');
+    if (mode === 'follow') return;
+    const W = raw.width, H = raw.height, EXT = 10;
+    const layers = ['suelo', 'fachada', 'deco_suelo'].map((n) => raw.layers.find((l) => l.name === n)?.data).filter((d): d is number[] => !!d);
+    for (const side of [-1, 1]) {
+      const rt = this.add.renderTexture(side < 0 ? -EXT * 16 : W * 16, 0, EXT * 16, H * 16).setOrigin(0, 0).setDepth(-9100);
+      for (const data of layers) for (let k = 0; k < EXT; k++) {
+        const srcX = side < 0 ? 0 : W - 1;                               // the edge column repeats outward
+        const dstX = side < 0 ? EXT - 1 - k : k;
+        for (let y = 0; y < H; y++) {
+          const g = data[y * W + srcX];
+          if (g > 0) rt.stamp('tiles16', g - 1, dstX * 16, y * 16, { originX: 0, originY: 0 });
+        }
+      }
+      rt.render();
+    }
   }
 
   private buildProps(raw: TiledMap, map: MapData): void {
@@ -273,24 +294,18 @@ export class EventScene extends Phaser.Scene {
     if (this.hudT > 0.08) { this.hudT = 0; services.hud?.update(w, this); }
   }
 
-  /** Last arena round: the water takes the ring between the old and the new island. */
+  /** Last arena round: the water takes the ring between the old and the new island. Both rectangles are on the 16 px tile grid, so the tiles change exactly where the sand ends. */
   private shrinkVisual(): void {
     const w = this.world, r = w.data.island as { x: number; y: number; w: number; h: number }, r0 = w.data.island0 as typeof r;
-    const raw = this.cache.tilemap.get(`map_${this.cfg.eventId}`).data as TiledMap;
-    const suelo = raw.layers.find((l) => l.name === 'suelo')?.data ?? [];
-    const tid = (suelo[12 * raw.width + 0] ?? 1) - 1;
-    const strips = [
-      [r0.x, r0.y, r0.w, r.y - r0.y], [r0.x, r.y + r.h, r0.w, r0.y + r0.h - (r.y + r.h)],
-      [r0.x, r.y, r.x - r0.x, r.h], [r.x + r.w, r.y, r0.x + r0.w - (r.x + r.w), r.h],
-    ];
-    for (const [x, y, ww, hh] of strips) {
-      if (ww <= 0 || hh <= 0) continue;
-      const ts = this.add.tileSprite(x, y, ww, hh, 'tiles16', tid).setOrigin(0, 0).setDepth(-8750).setAlpha(0);
-      this.tweens.add({ targets: ts, alpha: 1, duration: 900 });
+    const layer = this.sueloLayer;
+    const water = Number(w.map.props.tile_water) + 1, deep = Number(w.map.props.tile_deep) + 1;
+    if (!layer || !Number.isFinite(water) || !Number.isFinite(deep)) return;
+    for (let ty = r0.y / 16; ty < (r0.y + r0.h) / 16; ty++) for (let tx = r0.x / 16; tx < (r0.x + r0.w) / 16; tx++) {
+      const px = tx * 16 + 8, py = ty * 16 + 8;
+      if (px >= r.x && px < r.x + r.w && py >= r.y && py < r.y + r.h) continue;
+      layer.putTileAt((tx + ty) % 5 === 0 ? deep : water, tx, ty);
+      if ((tx + ty) % 3 === 0) this.fx.handle({ k: 'splash', x: px, y: py, z: 0 }, () => 0xffffff);
     }
-    const g = this.add.graphics().setDepth(-8745).setAlpha(0);
-    g.lineStyle(2, 0xe8fbff, 0.9).strokeRect(r.x, r.y, r.w, r.h);
-    this.tweens.add({ targets: g, alpha: 1, duration: 900 });
   }
 
   private syncPinata(): void {

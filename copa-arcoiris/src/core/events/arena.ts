@@ -39,8 +39,8 @@ function startRound(w: World): void {
   w.data.fallSeen = {};
   if (w.data.round === ROUNDS - 1) {
     const r = w.data.island0 as Island;
-    const nw = Math.round(r.w * 0.85), nh = Math.round(r.h * 0.85);
-    setIsland(w, { x: Math.round(r.x + (r.w - nw) / 2), y: Math.round(r.y + (r.h - nh) / 2), w: nw, h: nh });
+    // one tile (16 px) less on the left, right and top: stays on the tile grid so what the player sees is exactly where the sand ends
+    setIsland(w, { x: r.x + 16, y: r.y + 16, w: r.w - 32, h: r.h - 16 });
     fx(w, 'shrink', c.x, c.y);
   }
   fx(w, 'round', c.x, c.y, 0, undefined, w.data.round);

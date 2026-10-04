@@ -5,10 +5,12 @@
   <property name="ground_top" type="int" value="176"/>
   <property name="ground_bottom" type="int" value="272"/>
   <property name="freeY" type="bool" value="true"/>
-  <property name="ix" type="int" value="48"/>
-  <property name="iy" type="int" value="184"/>
-  <property name="iw" type="int" value="320"/>
+  <property name="ix" type="int" value="64"/>
+  <property name="iy" type="int" value="176"/>
+  <property name="iw" type="int" value="288"/>
   <property name="ih" type="int" value="80"/>
+  <property name="tile_water" type="int" value="16"/>
+  <property name="tile_deep" type="int" value="24"/>
  </properties>
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="suelo" width="26" height="17">
@@ -24,12 +26,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,25,
 25,17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,
-17,17,17,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,17,25,17,
-17,17,17,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,25,17,17,
-17,17,25,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,17,17,17,
-17,25,17,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,17,17,17,
-25,17,17,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,17,17,25,
-17,17,17,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,17,25,17
+17,17,17,17,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,17,17,25,17,
+17,17,17,25,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,17,25,17,17,
+17,17,25,17,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,25,17,17,17,
+17,25,17,17,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,17,17,17,17,
+25,17,17,17,14,14,14,15,14,14,14,15,14,14,14,15,14,14,14,15,14,14,17,17,17,25,
+17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,17,17,17,17,25,17
   </data>
  </layer>
  <layer id="2" name="fachada" width="26" height="17">
@@ -140,23 +142,23 @@
   <object id="24" name="bubbles" type="deco" x="86" y="276">
    <point/>
   </object>
-  <object id="25" name="dock" type="deco" x="54" y="188">
+  <object id="25" name="dock" type="deco" x="70" y="188">
    <point/>
   </object>
-  <object id="26" name="dock" type="deco" x="362" y="188">
+  <object id="26" name="dock" type="deco" x="346" y="188">
    <point/>
   </object>
-  <object id="27" name="rock" type="deco" x="78" y="262">
+  <object id="27" name="rock" type="deco" x="94" y="254">
    <point/>
   </object>
-  <object id="28" name="rock" type="deco" x="334" y="262">
+  <object id="28" name="rock" type="deco" x="318" y="254">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="7" name="props_frente">
  </objectgroup>
  <objectgroup id="8" name="colision">
-  <object id="5" name="parachoques" type="parachoques" x="196" y="212" width="24" height="14">
+  <object id="5" name="parachoques" type="parachoques" x="196" y="209" width="24" height="14">
    <properties>
     <property name="alto" type="int" value="20"/>
    </properties>
@@ -167,10 +169,10 @@
  <objectgroup id="10" name="agua">
  </objectgroup>
  <objectgroup id="11" name="huecos">
-  <object id="1" name="agua_norte" type="hueco" x="0" y="136" width="416" height="48"/>
-  <object id="2" name="agua_sur" type="hueco" x="0" y="264" width="416" height="48"/>
-  <object id="3" name="agua_oeste" type="hueco" x="0" y="184" width="48" height="80"/>
-  <object id="4" name="agua_este" type="hueco" x="368" y="184" width="48" height="80"/>
+  <object id="1" name="agua_norte" type="hueco" x="0" y="136" width="416" height="40"/>
+  <object id="2" name="agua_sur" type="hueco" x="0" y="256" width="416" height="56"/>
+  <object id="3" name="agua_oeste" type="hueco" x="0" y="176" width="64" height="80"/>
+  <object id="4" name="agua_este" type="hueco" x="352" y="176" width="64" height="80"/>
  </objectgroup>
  <objectgroup id="12" name="rebote">
  </objectgroup>
@@ -179,25 +181,25 @@
  <objectgroup id="14" name="checkpoints">
  </objectgroup>
  <objectgroup id="15" name="salidas">
-  <object id="6" name="salida0" type="salida" x="98" y="208">
+  <object id="6" name="salida0" type="salida" x="98" y="196">
    <properties>
     <property name="slot" type="int" value="0"/>
    </properties>
    <point/>
   </object>
-  <object id="7" name="salida1" type="salida" x="318" y="208">
+  <object id="7" name="salida1" type="salida" x="318" y="196">
    <properties>
     <property name="slot" type="int" value="1"/>
    </properties>
    <point/>
   </object>
-  <object id="8" name="salida2" type="salida" x="98" y="244">
+  <object id="8" name="salida2" type="salida" x="98" y="236">
    <properties>
     <property name="slot" type="int" value="2"/>
    </properties>
    <point/>
   </object>
-  <object id="9" name="salida3" type="salida" x="318" y="244">
+  <object id="9" name="salida3" type="salida" x="318" y="236">
    <properties>
     <property name="slot" type="int" value="3"/>
    </properties>
@@ -211,14 +213,14 @@
  <objectgroup id="18" name="activadores">
  </objectgroup>
  <objectgroup id="19" name="objetos">
-  <object id="10" name="centro" type="centro" x="208" y="232">
+  <object id="10" name="centro" type="centro" x="208" y="216">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="20" name="salas">
  </objectgroup>
  <objectgroup id="21" name="zonas">
-  <object id="29" name="Arena de Burbujas" type="zona" x="48" y="184" width="320" height="80">
+  <object id="29" name="Arena de Burbujas" type="zona" x="64" y="176" width="288" height="80">
    <properties>
     <property name="orden" type="int" value="1"/>
    </properties>
