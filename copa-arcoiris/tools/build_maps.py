@@ -201,8 +201,8 @@ def build_race():
         m.box(x, 196, 30, 44, 10 * (i + 1) if i < 2 else 20, "plataforma", id=f"escalon{i}")
     m.add("rebote", 2500, 218, 24, 12, name="hongo1", type="rebote", fuerza=380.0)
     m.add("rebote", 2650, 242, 24, 12, name="hongo2", type="rebote", fuerza=380.0)
-    m.add("huecos", 2560, GT, 44, 40, name="atajo", type="hueco")
-    m.fill("suelo", 2560, GT, 2604, 216, lambda tx, ty: "deep0")
+    m.add("huecos", 2560, GT, 36, 40, name="atajo", type="hueco")
+    m.fill("suelo", 2560, GT, 2596, 216, lambda tx, ty: "deep0")
     # Z5 plaza
     m.fill("suelo", 2880, GT, pw, GB, lambda tx, ty: "stone0" if (tx + ty) % 2 else "stone1")
     m.fill("suelo", 2864, 192, 2880, 256, lambda tx, ty: "stone_top" if ty * T == 192 else None)
@@ -286,10 +286,10 @@ def build_circuit():
     sx0, sx1 = x0 + 160, x0 + 270
     m.fill("suelo", sx0, GT, sx1, GB, lambda tx, ty: "shore0" if ty * T == GT else ("water0" if ty * T < 224 else "deep0"))
     m.add("agua", sx0, GT, sx1 - sx0, GB - GT, name="arroyo", type="agua", corriente=0.0)
-    for k, (cx, cy) in enumerate(((x0 + 182, 200), (x0 + 215, 232), (x0 + 248, 204))):
-        m.box(cx - 10, cy - 6, 20, 12, 6, "piedra", id=f"piedra{k}", group="plataformas")
-        m.add("rebote", cx - 10, cy - 6, 20, 12, name=f"hongo{k}", type="rebote", fuerza=380.0)
-    m.add("objetos", x0 + 248, 204, point=True, name="dorada", type="dorada", z=62)
+    # three wide mushroom stepping stones, 8 px apart, in the middle of the stream
+    for k, sx in enumerate((x0 + 160, x0 + 200, x0 + 240)):
+        m.box(sx, 204, 32 if k < 2 else 30, 28, 6, "seta", id=f"piedra{k}", group="plataformas")
+    m.add("objetos", x0 + 216, 218, point=True, name="dorada", type="dorada", z=26)
     m.add("objetos", x0 + 70, 214, point=True, name="pelota", type="pelota")
     m.add("objetos", x0 + 110, 248, point=True, name="estrella", type="estrella", z=6)
     # ---- room 3: gap with swing platforms and a low bridge
@@ -318,18 +318,19 @@ def build_circuit():
     n = m.node
     for i in range(4):
         x0, x1 = i * RW, (i + 1) * RW
-        n(f"r{i}a", x0 + 60, 226, next=[(f"r{i}e", 1), (f"r{i}h", 1)])
+        n(f"r{i}a", x0 + 60, 226, next=[(f"r{i}e0" if i in (1, 2) else f"r{i}e", 1), (f"r{i}h", 1)])
         d = f"r{i}d"
         if i == 0:
             n("r0e", x0 + 220, 226, tipo="facil", next=[(d, 1)])
             n("r0h", x0 + 96, 208, tipo="dificil", next=[("r0h2", 1)]); n("r0h2", x0 + 200, 188, tipo="dificil", next=[("r0h3", 1)])
             n("r0h3", x0 + 338, 188, tipo="dificil", next=[(d, 1)])
         elif i == 1:
-            n("r1e", x0 + 215, 232, tipo="facil", next=[(d, 1)])
-            n("r1h", x0 + 182, 200, tipo="dificil", next=[("r1h2", 1)]); n("r1h2", x0 + 215, 232, tipo="dificil", next=[("r1h3", 1)])
-            n("r1h3", x0 + 248, 204, tipo="dificil", next=[(d, 1)])
+            n("r1e0", x0 + 150, 262, tipo="facil", next=[("r1e", 1)]); n("r1e", x0 + 215, 264, tipo="facil", next=[("r1e2", 1)]); n("r1e2", x0 + 290, 236, tipo="facil", next=[(d, 1)])
+            n("r1h", x0 + 176, 218, tipo="dificil", next=[("r1h2", 1)]); n("r1h2", x0 + 216, 218, tipo="dificil", next=[("r1h3", 1)])
+            n("r1h3", x0 + 255, 218, tipo="dificil", next=[(d, 1)])
         elif i == 2:
-            n("r2e", x0 + 210, 260, tipo="facil", next=[(d, 1)])
+            n("r2e0", x0 + 118, 262, tipo="facil", next=[("r2e", 1)])
+            n("r2e", x0 + 210, 262, tipo="facil", next=[("r2e2", 1)]); n("r2e2", x0 + 300, 232, tipo="facil", next=[(d, 1)])
             n("r2h", x0 + 140, 204, tipo="dificil", next=[("r2h2", 1)]); n("r2h2", x0 + 210, 218, tipo="dificil", next=[("r2h3", 1)])
             n("r2h3", x0 + 290, 218, tipo="dificil", next=[(d, 1)])
         else:

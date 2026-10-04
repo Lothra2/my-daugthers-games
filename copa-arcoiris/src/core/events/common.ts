@@ -22,7 +22,7 @@ export function rankByValue(items: { actorId: number; value: number; detail: str
 const weightFor = (tipo: string, risk: number): number => {
   switch (tipo) {
     case 'atajo': return 0.2 + risk * 1.6;
-    case 'dificil': return 0.1 + risk * 1.8;
+    case 'dificil': return 0.05 + risk * 0.9;
     case 'agua': return 0.5 + (1 - risk) * 0.3;
     case 'facil': return 0.4 + (1 - risk) * 1.2;
     default: return 0.8 + (1 - risk) * 0.6;

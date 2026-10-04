@@ -23,7 +23,7 @@ export interface AIState {
   jumpAt: number; jumpFire: boolean; actionFire: boolean; powerFire: boolean;
   lane: number; laneT: number; powerDelay: number; powerArmed: boolean;
   lastX: number; lastY: number; stuckClock: number; stuckStage: number; backT: number; pausedUntil: number;
-  goalX: number; goalY: number; bestDist: number; bestT: number; bestProg: number; bestProgT: number;
+  goalX: number; goalY: number; bestDist: number; bestT: number; bestProg: number; bestProgT: number; wantBop: boolean; waitT: number; impatient: number;
 }
 
 const PROFILE = {
@@ -39,7 +39,7 @@ function newState(): AIState {
   return {
     speedMult: 1, nextThink: 0, held: emptyInput(), jumpAt: -1, jumpFire: false, actionFire: false, powerFire: false,
     lane: 0, laneT: 0, powerDelay: 0, powerArmed: false, lastX: 0, lastY: 0, stuckClock: 0, stuckStage: 0, backT: 0, pausedUntil: 0,
-    goalX: -1, goalY: -1, bestDist: Infinity, bestT: 0, bestProg: -1, bestProgT: 0,
+    goalX: -1, goalY: -1, bestDist: Infinity, bestT: 0, bestProg: -1, bestProgT: 0, wantBop: false, waitT: 0, impatient: 0,
   };
 }
 
@@ -79,7 +79,7 @@ export function pathBlocked(w: World, a: Actor, tx: number, ty: number): boolean
   for (let i = 1; i <= n; i++) {
     const px = a.x + (dx * i) / n, py = a.y + (dy * i) / n;
     for (const b of w.map.boxes) {
-      if (b.alto <= lim) continue;
+      if (b.alto - a.z <= lim) continue;
       const r = boxAt(b, w.t);
       if (px > r.x - 5 && px < r.x + r.w + 5 && py > r.y - 2 && py < r.y + r.h + 2) return true;
     }
@@ -157,6 +157,8 @@ export function thinkAI(w: World, a: Actor, dt: number): void {
     }
   }
 
+  // toy hits in the air are timed per frame (a short window), but with misses so rivals are not perfect
+  if (s.wantBop && !a.grounded && a.z > 12 && !a.act && a.pushCd <= 0 && w.rng.chance(0.18)) s.actionFire = true;
   const held = s.held;
   let mx = held.mx, my = held.my;
   if (s.backT > 0) { mx = -Math.sign(mx || 1); my = 0; }
@@ -187,7 +189,7 @@ function decide(w: World, a: Actor, s: AIState, err: number): void {
     const look = speed * react + 28;
     const sc = scanAhead(w, a, mx, look);
     if (sc.kind === 'box') {
-      if (sc.h <= maxJumpH(a)) {
+      if (sc.h - a.z <= maxJumpH(a)) {
         const tte = Math.max(0, (sc.d - 13) / Math.max(speed, 30));
         s.jumpAt = tte + (w.rng.chance(err) ? w.rng.range(0.1, 0.2) : 0);
       } else {
@@ -205,20 +207,24 @@ function decide(w: World, a: Actor, s: AIState, err: number): void {
       }
     }
   }
-  // periodic hazards
-  if (mx !== 0 && !goal.hold) {
+  // periodic hazards: wait for the pattern, but get impatient after a while so nobody waits forever
+  let waited = false;
+  if (mx !== 0 && !goal.hold && s.impatient <= 0) {
     for (const m of w.map.movers) {
       if (Math.abs(m.y + m.h / 2 - a.y) > m.h / 2 + 7) continue;
       const eta = moverEta(m, w.t, a.x - 8, 40 + speed * 0.4, 1.1);
       const r = moverRect(m, w.t);
-      const near = r.x < a.x + 70 && r.x + r.w > a.x - 50;
-      if (!near) continue;
+      const approaching = m.kind === 'barrido' ? (r.x < a.x + 70 && r.x + r.w > a.x - 50) : (r.x < a.x + 90 && r.x + r.w > a.x - 14);
+      if (!approaching) continue;
       if (m.kind === 'barrido') {
         if (eta < 0.5 && a.grounded) { if (w.rng.chance(1 - err)) s.jumpAt = Math.max(0, eta * 0.4); }
-        else if (eta < 1.0) mx = 0;
-      } else if (eta < 0.75) mx = 0;
+        else if (eta < 1.0) { mx = 0; waited = true; }
+      } else if (eta < 0.75) { mx = 0; waited = true; }
     }
   }
+  s.waitT = waited ? s.waitT + react : 0;
+  if (s.waitT > 2.6) { s.impatient = 1.6; s.waitT = 0; }
+  s.impatient = Math.max(0, s.impatient - react);
   s.held = { ...emptyInput(), mx, my };
 
   // actions
@@ -238,7 +244,7 @@ function decide(w: World, a: Actor, s: AIState, err: number): void {
       if (fdx > 30 && fdx < 130 && Math.abs(tt.y - a.y) < 10 && w.rng.chance(0.5 + prof.aggr * 0.5)) s.actionFire = true;
     }
   }
-  if (goal.bop && !a.grounded && a.z > 12 && !a.act) s.actionFire = true;
+  s.wantBop = !!goal.bop;
   if (goal.jumpOnArrive && a.grounded && Math.abs(dx) < 16 && Math.abs(dy) < 14 && s.jumpAt < 0) s.jumpAt = 0.01;
   if (a.power >= PHYS.maxPower && s.powerArmed && s.powerDelay <= 0 && goal.usePower && !a.act && w.rng.chance(prof.powerEager)) s.powerFire = true;
 }

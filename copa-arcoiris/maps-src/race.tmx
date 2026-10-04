@@ -542,7 +542,7 @@
   </object>
  </objectgroup>
  <objectgroup id="11" name="huecos">
-  <object id="192" name="atajo" type="hueco" x="2560" y="176" width="44" height="40"/>
+  <object id="192" name="atajo" type="hueco" x="2560" y="176" width="36" height="40"/>
  </objectgroup>
  <objectgroup id="12" name="rebote">
   <object id="190" name="hongo1" type="rebote" x="2500" y="218" width="24" height="12">
