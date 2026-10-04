@@ -134,7 +134,7 @@ export function thinkAI(w: World, a: Actor, dt: number): void {
   s.stuckClock += dt;
   if (s.stuckClock >= 0.25) {
     s.stuckClock = 0;
-    const want = !locked && w.phase === 'play' && !a.inWater && (Math.abs(s.held.mx) + Math.abs(s.held.my) > 0.3);
+    const want = !locked && w.phase === 'play' && (Math.abs(s.held.mx) + Math.abs(s.held.my) > 0.3);
     const moved = Math.hypot(a.x - s.lastX, a.y - s.lastY);
     s.lastX = a.x; s.lastY = a.y;
     if (want && moved < 2) s.stuckStage += 0.25; else if (moved > 3) s.stuckStage = Math.max(0, s.stuckStage - 0.5);

@@ -83,7 +83,7 @@
     "raw": "art-src/higgsfield/identity/lineup_family.png",
     "review": "docs/art/lineup_family_x4.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -97,7 +97,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "5 personajes de frente y de perfil, sonriendo, misma escala relativa. Base de la comparación 32/48 y de todas las maestras. Requiere aprobación de Rick (no bloquea el código)"
+   "notes": "5 personajes de frente y de perfil, sonriendo, misma escala relativa. Base de la comparación 32/48 y de todas las maestras. Requiere aprobación de Rick (no bloquea el código)",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "res_compare_32_48",
@@ -111,9 +112,10 @@
     "review": "docs/art/res_compare.png",
     "editable": "art-src/krita/direccion_arte.kra"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Derivado de lineup_family, sin costo"
+   "notes": "Derivado de lineup_family, sin costo",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "master_sophie",
@@ -126,7 +128,7 @@
    "output": {
     "raw": "art-src/higgsfield/identity/master_sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -142,7 +144,8 @@
     48
    ],
    "target_height_px": 38,
-   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "master_alana",
@@ -155,7 +158,7 @@
    "output": {
     "raw": "art-src/higgsfield/identity/master_alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -171,7 +174,8 @@
     48
    ],
    "target_height_px": 33,
-   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "master_papa",
@@ -184,7 +188,7 @@
    "output": {
     "raw": "art-src/higgsfield/identity/master_papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -200,7 +204,8 @@
     48
    ],
    "target_height_px": 44,
-   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "master_mama",
@@ -213,7 +218,7 @@
    "output": {
     "raw": "art-src/higgsfield/identity/master_mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -229,7 +234,8 @@
     48
    ],
    "target_height_px": 42,
-   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "master_thor",
@@ -242,7 +248,7 @@
    "output": {
     "raw": "art-src/higgsfield/identity/master_thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -258,7 +264,8 @@
     48
    ],
    "target_height_px": 26,
-   "notes": "Perro cuadrúpedo, más una pose de anfitrión con gorra azul cielo y silbato"
+   "notes": "Perro cuadrúpedo, más una pose de anfitrión con gorra azul cielo y silbato",
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_run",
@@ -276,7 +283,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -302,7 +309,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_walk_idle",
@@ -320,7 +328,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -351,7 +359,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_jump_pickup",
@@ -369,7 +378,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -420,7 +429,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_carry_throw",
@@ -438,7 +448,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -474,7 +484,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_swim_push",
@@ -492,7 +503,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -528,7 +539,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_hit_tumble",
@@ -546,7 +558,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -582,7 +594,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_power_celebrate",
@@ -600,7 +613,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -631,7 +644,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "sophie_portraits",
@@ -649,7 +663,7 @@
     "editable": "art-src/ase/sophie.ase",
     "qa": "docs/qa/sprites/sophie.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -687,7 +701,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Retratos recortados de las hojas con tools/build_portraits.py (public/assets/ui/portraits.png)"
   },
   {
    "id": "alana_run",
@@ -705,7 +720,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -731,7 +746,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_walk_idle",
@@ -749,7 +765,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -780,7 +796,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_jump_pickup",
@@ -798,7 +815,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -849,7 +866,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_carry_throw",
@@ -867,7 +885,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -903,7 +921,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_swim_push",
@@ -921,7 +940,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -957,7 +976,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_hit_tumble",
@@ -975,7 +995,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1011,7 +1031,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_power_celebrate",
@@ -1029,7 +1050,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1060,7 +1081,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "alana_portraits",
@@ -1078,7 +1100,7 @@
     "editable": "art-src/ase/alana.ase",
     "qa": "docs/qa/sprites/alana.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1116,7 +1138,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Retratos recortados de las hojas con tools/build_portraits.py (public/assets/ui/portraits.png)"
   },
   {
    "id": "papa_run",
@@ -1134,7 +1157,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1160,7 +1183,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_walk_idle",
@@ -1178,7 +1202,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1209,7 +1233,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_jump_pickup",
@@ -1227,7 +1252,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1278,7 +1303,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_carry_throw",
@@ -1296,7 +1322,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1332,7 +1358,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_swim_push",
@@ -1350,7 +1377,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1386,7 +1413,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_hit_tumble",
@@ -1404,7 +1432,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1440,7 +1468,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_power_celebrate",
@@ -1458,7 +1487,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1489,7 +1518,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "papa_portraits",
@@ -1507,7 +1537,7 @@
     "editable": "art-src/ase/papa.ase",
     "qa": "docs/qa/sprites/papa.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1545,7 +1575,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Retratos recortados de las hojas con tools/build_portraits.py (public/assets/ui/portraits.png)"
   },
   {
    "id": "mama_run",
@@ -1563,7 +1594,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1589,7 +1620,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_walk_idle",
@@ -1607,7 +1639,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1638,7 +1670,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_jump_pickup",
@@ -1656,7 +1689,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1707,7 +1740,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_carry_throw",
@@ -1725,7 +1759,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1761,7 +1795,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_swim_push",
@@ -1779,7 +1814,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1815,7 +1850,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_hit_tumble",
@@ -1833,7 +1869,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1869,7 +1905,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_power_celebrate",
@@ -1887,7 +1924,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1918,7 +1955,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "mama_portraits",
@@ -1936,7 +1974,7 @@
     "editable": "art-src/ase/mama.ase",
     "qa": "docs/qa/sprites/mama.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -1974,7 +2012,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Retratos recortados de las hojas con tools/build_portraits.py (public/assets/ui/portraits.png)"
   },
   {
    "id": "thor_run",
@@ -1992,7 +2031,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2018,7 +2057,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_walk_idle",
@@ -2036,7 +2076,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2067,7 +2107,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_jump_fetch",
@@ -2085,7 +2126,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2136,7 +2177,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_carry_toss",
@@ -2154,7 +2196,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2185,7 +2227,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_swim_push",
@@ -2203,7 +2246,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2239,7 +2282,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_hit_tumble",
@@ -2257,7 +2301,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2293,7 +2337,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_zoom_celebrate",
@@ -2311,7 +2356,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2342,7 +2387,8 @@
      "loop": true
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Generado con Higgsfield y procesado con tools/build_sprites.py. Ver docs/GENERATIONS.md"
   },
   {
    "id": "thor_host_portraits",
@@ -2360,7 +2406,7 @@
     "editable": "art-src/ase/thor.ase",
     "qa": "docs/qa/sprites/thor.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2418,7 +2464,8 @@
      "loop": false
     }
    },
-   "frames_in_sheet": 8
+   "frames_in_sheet": 8,
+   "note": "Retratos recortados de las hojas con tools/build_portraits.py (public/assets/ui/portraits.png)"
   },
   {
    "id": "tiles_grass_path",
@@ -2434,7 +2481,7 @@
     "final": "public/assets/tiles/tiles_grass_path.png",
     "tsx": "maps-src/tiles_grass_path.tsx"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2448,7 +2495,8 @@
     16,
     16
    ],
-   "notes": "Pasto azulado, camino, bordes y transiciones, flores sueltas. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+   "notes": "Pasto azulado, camino, bordes y transiciones, flores sueltas. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan",
+   "note": "Tiles dibujados por código (tools/build_tiles.py): las hojas de IA tenían costuras"
   },
   {
    "id": "tiles_water_bridge",
@@ -2464,7 +2512,7 @@
     "final": "public/assets/tiles/tiles_water_bridge.png",
     "tsx": "maps-src/tiles_water_bridge.tsx"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2478,7 +2526,8 @@
     16,
     16
    ],
-   "notes": "Agua de 4 frames de animación, orillas, espuma y puente de madera. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+   "notes": "Agua de 4 frames de animación, orillas, espuma y puente de madera. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan",
+   "note": "Tiles dibujados por código (tools/build_tiles.py): las hojas de IA tenían costuras"
   },
   {
    "id": "tiles_plaza_arena",
@@ -2494,7 +2543,7 @@
     "final": "public/assets/tiles/tiles_plaza_arena.png",
     "tsx": "maps-src/tiles_plaza_arena.tsx"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2508,7 +2557,8 @@
     16,
     16
    ],
-   "notes": "Piedra crema de plaza, arena, borde de isla y nenúfares. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+   "notes": "Piedra crema de plaza, arena, borde de isla y nenúfares. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan",
+   "note": "Tiles dibujados por código (tools/build_tiles.py): las hojas de IA tenían costuras"
   },
   {
    "id": "tiles_facade",
@@ -2524,7 +2574,7 @@
     "final": "public/assets/tiles/tiles_facade.png",
     "tsx": "maps-src/tiles_facade.tsx"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2538,7 +2588,8 @@
     16,
     16
    ],
-   "notes": "Setos, cercas, muros de jardín y bases de fachada (fila de fondo). El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+   "notes": "Setos, cercas, muros de jardín y bases de fachada (fila de fondo). El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan",
+   "note": "Tiles dibujados por código (tools/build_tiles.py): las hojas de IA tenían costuras"
   },
   {
    "id": "props_houses",
@@ -2554,7 +2605,7 @@
     "final": "public/assets/props/props_houses/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2564,7 +2615,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Casitas de cuento: casita-hongo, casita de té y molino pequeño"
+   "notes": "Casitas de cuento: casita-hongo, casita de té y molino pequeño",
+   "note": "Generado con Higgsfield (props_<kit>) y empaquetado por tools/build_props.py en public/assets/props/props.png"
   },
   {
    "id": "props_trees_plants",
@@ -2580,7 +2632,7 @@
     "final": "public/assets/props/props_trees_plants/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2590,7 +2642,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Árboles redondos, arbustos, flores grandes y Árbol Abuelo de la piñata"
+   "notes": "Árboles redondos, arbustos, flores grandes y Árbol Abuelo de la piñata",
+   "note": "Generado con Higgsfield (props_<kit>) y empaquetado por tools/build_props.py en public/assets/props/props.png"
   },
   {
    "id": "props_race",
@@ -2606,7 +2659,7 @@
     "final": "public/assets/props/props_race/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2616,7 +2669,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Arco de salida, 3 arcos de recuperación, arco de meta, banderines, letreros y flechas"
+   "notes": "Arco de salida, 3 arcos de recuperación, arco de meta, banderines, letreros y flechas",
+   "note": "Generado con Higgsfield (props_<kit>) y empaquetado por tools/build_props.py en public/assets/props/props.png"
   },
   {
    "id": "props_events",
@@ -2632,7 +2686,7 @@
     "final": "public/assets/props/props_events/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2642,7 +2696,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Piñata estrella en 4 estados, troncos rodantes, aspas de molino, hongo saltarín (normal y aplastado), nube plataforma, plataforma de madera, fardos de heno, canasta y parachoques"
+   "notes": "Piñata estrella en 4 estados, troncos rodantes, aspas de molino, hongo saltarín (normal y aplastado), nube plataforma, plataforma de madera, fardos de heno, canasta y parachoques",
+   "note": "Generado con Higgsfield (props_<kit>) y empaquetado por tools/build_props.py en public/assets/props/props.png"
   },
   {
    "id": "props_items",
@@ -2658,7 +2713,7 @@
     "final": "public/assets/props/props_items/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2668,7 +2723,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Pelota blanda, estrella, estrella dorada, caja de regalo (entera y rota), burbuja de rescate, 4 trofeos y 3 medallas"
+   "notes": "Pelota blanda, estrella, estrella dorada, caja de regalo (entera y rota), burbuja de rescate, 4 trofeos y 3 medallas",
+   "note": "Pelota, estrella, regalo y objetivo dibujados por código en src/view/Procedural.ts"
   },
   {
    "id": "props_audience",
@@ -2684,7 +2740,7 @@
     "final": "public/assets/props/props_audience/",
     "tsx": "maps-src/props.tsx"
    },
-   "status": "planned",
+   "status": "cut",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2694,7 +2750,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Público de animalitos del bosque aplaudiendo, 2 frames"
+   "notes": "Público de animalitos del bosque aplaudiendo, 2 frames",
+   "note": "Sin público. No hizo falta"
   },
   {
    "id": "bg_pradera_jardin_lejos",
@@ -2710,7 +2767,7 @@
     "final": "public/assets/bg/pradera_jardin_lejos.png",
     "editable": "art-src/krita/fondos_pradera_jardin.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2724,7 +2781,8 @@
     640,
     270
    ],
-   "notes": "Pradera y jardín de casitas. Parallax 0.2, repetible en x (se verifica la costura)"
+   "notes": "Pradera y jardín de casitas. Parallax 0.2, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_pradera_jardin_medio",
@@ -2740,7 +2798,7 @@
     "final": "public/assets/bg/pradera_jardin_medio.png",
     "editable": "art-src/krita/fondos_pradera_jardin.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2754,7 +2812,8 @@
     640,
     180
    ],
-   "notes": "Pradera y jardín de casitas. Parallax 0.5, repetible en x (se verifica la costura)"
+   "notes": "Pradera y jardín de casitas. Parallax 0.5, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_rio_lejos",
@@ -2770,7 +2829,7 @@
     "final": "public/assets/bg/rio_lejos.png",
     "editable": "art-src/krita/fondos_rio.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2784,7 +2843,8 @@
     640,
     270
    ],
-   "notes": "Río Cristal. Parallax 0.2, repetible en x (se verifica la costura)"
+   "notes": "Río Cristal. Parallax 0.2, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_rio_medio",
@@ -2800,7 +2860,7 @@
     "final": "public/assets/bg/rio_medio.png",
     "editable": "art-src/krita/fondos_rio.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2814,7 +2874,8 @@
     640,
     180
    ],
-   "notes": "Río Cristal. Parallax 0.5, repetible en x (se verifica la costura)"
+   "notes": "Río Cristal. Parallax 0.5, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_colina_plaza_lejos",
@@ -2830,7 +2891,7 @@
     "final": "public/assets/bg/colina_plaza_lejos.png",
     "editable": "art-src/krita/fondos_colina_plaza.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2844,7 +2905,8 @@
     640,
     270
    ],
-   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.2, repetible en x (se verifica la costura)"
+   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.2, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_colina_plaza_medio",
@@ -2860,7 +2922,7 @@
     "final": "public/assets/bg/colina_plaza_medio.png",
     "editable": "art-src/krita/fondos_colina_plaza.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2874,7 +2936,8 @@
     640,
     180
    ],
-   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.5, repetible en x (se verifica la costura)"
+   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.5, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_circuito_lejos",
@@ -2890,7 +2953,7 @@
     "final": "public/assets/bg/circuito_lejos.png",
     "editable": "art-src/krita/fondos_circuito.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2904,7 +2967,8 @@
     640,
     270
    ],
-   "notes": "Feria de carpas pastel en el bosque. Parallax 0.2, repetible en x (se verifica la costura)"
+   "notes": "Feria de carpas pastel en el bosque. Parallax 0.2, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_circuito_medio",
@@ -2920,7 +2984,7 @@
     "final": "public/assets/bg/circuito_medio.png",
     "editable": "art-src/krita/fondos_circuito.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2934,7 +2998,8 @@
     640,
     180
    ],
-   "notes": "Feria de carpas pastel en el bosque. Parallax 0.5, repetible en x (se verifica la costura)"
+   "notes": "Feria de carpas pastel en el bosque. Parallax 0.5, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_arena_lejos",
@@ -2950,7 +3015,7 @@
     "final": "public/assets/bg/arena_lejos.png",
     "editable": "art-src/krita/fondos_arena.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2964,7 +3029,8 @@
     640,
     270
    ],
-   "notes": "Estanque con nubes reflejadas. Parallax 0.2, repetible en x (se verifica la costura)"
+   "notes": "Estanque con nubes reflejadas. Parallax 0.2, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "bg_arena_medio",
@@ -2980,7 +3046,7 @@
     "final": "public/assets/bg/arena_medio.png",
     "editable": "art-src/krita/fondos_arena.kra"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -2994,7 +3060,8 @@
     640,
     180
    ],
-   "notes": "Estanque con nubes reflejadas. Parallax 0.5, repetible en x (se verifica la costura)"
+   "notes": "Estanque con nubes reflejadas. Parallax 0.5, repetible en x (se verifica la costura)",
+   "note": "Cielo, nubes y colinas dibujados por código (src/view/Backdrop.ts)"
   },
   {
    "id": "fx_sheet_a",
@@ -3008,14 +3075,15 @@
     "raw": "art-src/higgsfield/fx/fx_a.png",
     "final": "public/assets/fx/fx_a.png"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "aspect": "2:1",
     "resolution": "2k"
    },
    "est_credits": 1.28,
-   "notes": "Polvo, salpicadura, anillo de agua y destellos"
+   "notes": "Polvo, salpicadura, anillo de agua y destellos",
+   "note": "Efectos como partículas por código (src/view/Fx.ts)"
   },
   {
    "id": "fx_sheet_b",
@@ -3029,14 +3097,15 @@
     "raw": "art-src/higgsfield/fx/fx_b.png",
     "final": "public/assets/fx/fx_b.png"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "aspect": "2:1",
     "resolution": "2k"
    },
    "est_credits": 1.28,
-   "notes": "Burbuja que revienta, confeti, estrellas de mareo y estelas de poderes"
+   "notes": "Burbuja que revienta, confeti, estrellas de mareo y estelas de poderes",
+   "note": "Efectos como partículas por código (src/view/Fx.ts)"
   },
   {
    "id": "fx_code_particles",
@@ -3048,9 +3117,10 @@
    "output": {
     "final": "src/view/Fx.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Partículas por código con la paleta. Base y respaldo si fx_sheet falla"
+   "notes": "Partículas por código con la paleta. Base y respaldo si fx_sheet falla",
+   "note": "src/view/Fx.ts"
   },
   {
    "id": "ui_title_logo",
@@ -3064,14 +3134,15 @@
     "raw": "art-src/higgsfield/ui/title_logo.png",
     "final": "public/assets/ui/title_logo.png"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "aspect": "16:9",
     "resolution": "2k"
    },
    "est_credits": 1.28,
-   "notes": "Logo 'La Copa del Bosque Arcoíris'. El texto se dibuja en pixel art con la fuente si el modelo no lo escribe bien"
+   "notes": "Logo 'La Copa del Bosque Arcoíris'. El texto se dibuja en pixel art con la fuente si el modelo no lo escribe bien",
+   "note": "Logo con la tipografía Pixelify Sans y degradado CSS (src/ui/ui.css)"
   },
   {
    "id": "ui_title_scene",
@@ -3085,7 +3156,7 @@
     "raw": "art-src/higgsfield/ui/title_scene.png",
     "final": "public/assets/ui/title_scene.png"
    },
-   "status": "planned",
+   "status": "replaced",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "refs": [
@@ -3095,7 +3166,8 @@
     "resolution": "2k"
    },
    "est_credits": 1.44,
-   "notes": "Ilustración pixel de la familia en la línea de salida con Thor anfitrión"
+   "notes": "Ilustración pixel de la familia en la línea de salida con Thor anfitrión",
+   "note": "Escena de título con fondo, aldea de props y la familia corriendo (src/view/scenes/Title.ts)"
   },
   {
    "id": "ui_icons",
@@ -3109,14 +3181,15 @@
     "raw": "art-src/higgsfield/ui/icons.png",
     "final": "public/assets/ui/icons.png"
    },
-   "status": "planned",
+   "status": "done",
    "source": {
     "model": "xai/grok-imagine-image-2.0",
     "aspect": "2:1",
     "resolution": "2k"
    },
    "est_credits": 1.28,
-   "notes": "Íconos de saltar, acción, poder, pausa, los 5 poderes, sonido, música, trofeo y medalla"
+   "notes": "Íconos de saltar, acción, poder, pausa, los 5 poderes, sonido, música, trofeo y medalla",
+   "note": "Iconos dibujados por código (src/ui/icons.ts)"
   },
   {
    "id": "font_pixelify",
@@ -3129,12 +3202,13 @@
     "final": "public/assets/fonts/PixelifySans-latin.woff2",
     "license": "public/assets/fonts/OFL.txt"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
    "source": {
     "from": "uni-salta/assets/fonts (copia, sin modificar uni-salta)"
    },
-   "notes": "SIL OFL 1.1"
+   "notes": "SIL OFL 1.1",
+   "note": "public/assets/fonts y paleta en ART_BIBLE.md"
   },
   {
    "id": "palette",
@@ -3148,9 +3222,10 @@
     "final": "src/data/palette.json",
     "editable": "art-src/palette/copa_arcoiris.gpl"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Desde ART_BIBLE §3"
+   "notes": "Desde ART_BIBLE §3",
+   "note": "public/assets/fonts y paleta en ART_BIBLE.md"
   },
   {
    "id": "map_warmup",
@@ -3164,9 +3239,10 @@
     "tmx": "maps-src/warmup.tmx",
     "final": "public/assets/maps/warmup.json"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts",
+   "note": "maps-src/*.tmx generado por tools/build_maps.py, exportado con Tiled a public/assets/maps/"
   },
   {
    "id": "map_race",
@@ -3180,9 +3256,10 @@
     "tmx": "maps-src/race.tmx",
     "final": "public/assets/maps/race.json"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts",
+   "note": "maps-src/*.tmx generado por tools/build_maps.py, exportado con Tiled a public/assets/maps/"
   },
   {
    "id": "map_circuit",
@@ -3196,9 +3273,10 @@
     "tmx": "maps-src/circuit.tmx",
     "final": "public/assets/maps/circuit.json"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts",
+   "note": "maps-src/*.tmx generado por tools/build_maps.py, exportado con Tiled a public/assets/maps/"
   },
   {
    "id": "map_pinata",
@@ -3212,9 +3290,10 @@
     "tmx": "maps-src/pinata.tmx",
     "final": "public/assets/maps/pinata.json"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts",
+   "note": "maps-src/*.tmx generado por tools/build_maps.py, exportado con Tiled a public/assets/maps/"
   },
   {
    "id": "map_arena",
@@ -3228,9 +3307,10 @@
     "tmx": "maps-src/arena.tmx",
     "final": "public/assets/maps/arena.json"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts",
+   "note": "maps-src/*.tmx generado por tools/build_maps.py, exportado con Tiled a public/assets/maps/"
   },
   {
    "id": "music_menu",
@@ -3242,9 +3322,10 @@
    "output": {
     "final": "src/audio/songs/menu.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_race",
@@ -3256,9 +3337,10 @@
    "output": {
     "final": "src/audio/songs/race.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_circuit",
@@ -3270,9 +3352,10 @@
    "output": {
     "final": "src/audio/songs/circuit.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_pinata",
@@ -3284,9 +3367,10 @@
    "output": {
     "final": "src/audio/songs/pinata.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_arena",
@@ -3298,9 +3382,10 @@
    "output": {
     "final": "src/audio/songs/arena.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_podium",
@@ -3312,9 +3397,10 @@
    "output": {
     "final": "src/audio/songs/podium.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "music_cup_final",
@@ -3326,9 +3412,10 @@
    "output": {
     "final": "src/audio/songs/cup_final.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "Composición original en secuenciador Web Audio"
+   "notes": "Composición original en secuenciador Web Audio",
+   "note": "Compuesta como datos en src/audio/songs.ts y sintetizada en el navegador"
   },
   {
    "id": "sfx_set",
@@ -3340,9 +3427,17 @@
    "output": {
     "final": "src/audio/sfx.ts"
    },
-   "status": "planned",
+   "status": "done",
    "est_credits": 0,
-   "notes": "ZzFX: pasos, salto, aterrizaje, chapuzón, brazada, recoger, lanzar, golpe blando, voltereta, burbuja, estrella, 5 poderes, silbato, cuenta regresiva, ladrido, arco, meta, UI y subir de nivel"
+   "notes": "ZzFX: pasos, salto, aterrizaje, chapuzón, brazada, recoger, lanzar, golpe blando, voltereta, burbuja, estrella, 5 poderes, silbato, cuenta regresiva, ladrido, arco, meta, UI y subir de nivel",
+   "note": "44 efectos sintetizados en src/audio/sfx.ts"
   }
- ]
+ ],
+ "status_summary": {
+  "done": 68,
+  "replaced": 19,
+  "cut": 1,
+  "planned": 0
+ },
+ "date_closed": "2026-10-04"
 }

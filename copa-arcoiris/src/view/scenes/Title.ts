@@ -17,6 +17,7 @@ export class TitleScene extends Phaser.Scene {
     this.cameras.main.setRoundPixels(true);
     this.ground = this.add.tileSprite(0, h - 96, w, 96, 'tiles16', 0).setOrigin(0, 0).setDepth(-50);
     this.drawGround(w, h);
+    this.drawScenery(w, h);
     this.runners = [];
     CHAR_IDS.forEach((c, i) => {
       const meta = this.cache.json.get(`meta_${c}`) as SpriteMeta;
@@ -30,6 +31,19 @@ export class TitleScene extends Phaser.Scene {
   }
 
   private rt: Phaser.GameObjects.RenderTexture | null = null;
+  private scenery: Phaser.GameObjects.Image[] = [];
+  /** The festival village behind the track: houses, trees and tents from the props atlas. */
+  private drawScenery(w: number, h: number): void {
+    this.scenery.forEach((i) => i.destroy()); this.scenery = [];
+    const kinds = ['tree_round', 'house_mush', 'oak', 'tent', 'blossom', 'windmill', 'fir', 'house_thatch', 'lanterns', 'stall', 'blossom', 'fountain'];
+    const base = h - 7 * 16 + 22;
+    let x = 4, i = 0;
+    while (x < w) {
+      const k = kinds[i % kinds.length], fw = this.textures.get('props').get(k).width;
+      this.scenery.push(this.add.image(x + Math.floor(fw / 2), base + (i % 2) * 3, 'props', k).setOrigin(0.5, 1).setDepth(-49 + (i % 2) * 0.1));
+      x += fw + 6 + (i * 5) % 12; i++;
+    }
+  }
   private drawGround(w: number, h: number): void {
     this.ground?.destroy(); this.ground = null;
     this.rt?.destroy();
@@ -47,6 +61,7 @@ export class TitleScene extends Phaser.Scene {
   private onResize(size: Phaser.Structs.Size): void {
     this.backdrop.resize(size.width, size.height);
     this.drawGround(size.width, size.height);
+    this.drawScenery(size.width, size.height);
     this.runners.forEach((r, i) => { r.y = size.height - 70 + (i % 3) * 18; });
   }
 

@@ -363,7 +363,9 @@ export class App {
     const unlockLines: string[] = [];
     for (const h of humans) {
       const now = this.save.characters[h.charId].level, before = s.levelsBefore[h.charId] ?? 1;
-      for (const u of unlocksBetween(before, now)) unlockLines.push(`<div class="unlock"><b>${CHARS[h.charId].name}</b> subió al nivel ${u.level}: <b>${u.name}</b>. ${u.description}</div>`);
+      const ups = unlocksBetween(before, now);
+      if (ups.length === 1) unlockLines.push(`<div class="unlock"><b>${CHARS[h.charId].name}</b> subió al nivel ${ups[0].level}: <b>${ups[0].name}</b>. ${ups[0].description}</div>`);
+      else if (ups.length > 1) unlockLines.push(`<div class="unlock"><b>${CHARS[h.charId].name}</b> subió al nivel ${ups[ups.length - 1].level} y ganó: <b>${ups.map((u) => u.name).join('</b> y <b>')}</b>.</div>`);
       if (outfitsFor(now).length > 1 && this.save.characters[h.charId].outfit === 'base' && now > before) this.save.characters[h.charId].outfit = 'base';
     }
     this.save.stats.cupsPlayed++;

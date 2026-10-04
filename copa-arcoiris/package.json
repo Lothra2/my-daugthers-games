@@ -11,7 +11,8 @@
     "test": "vitest run",
     "e2e": "node tests/e2e/run.mjs",
     "maps": "python3 tools/build_maps.py && node tools/export_maps.mjs",
-    "assets": "python3 tools/build_assets.py"
+    "assets": "python3 tools/build_tiles.py && python3 tools/build_props.py && npm run maps",
+    "kra": "python3 tools/make_kra.py"
   },
   "dependencies": {
     "phaser": "4.2.1"

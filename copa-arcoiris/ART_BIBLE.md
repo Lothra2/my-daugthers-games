@@ -1,5 +1,11 @@
 # Biblia de arte · La Copa del Bosque Arcoíris
 
+> **Actualización de la Fase 2 (lo que cambió respecto a este documento).** Pantalla lógica de 426 × 240 a 640 × 384 con escala entera (no 480 × 270). Los tiles de 16 px, el cielo, las colinas, los bloques, los iconos y las partículas
+> se dibujan por código con la paleta maestra de la sección 3, sin hojas de IA. De Higgsfield salen los 5 personajes (celdas de 48 × 48, sección 9) y 5 kits de props. Los trajes son rotaciones de tono de la ropa. Retratos de 64 px recortados de las poses.
+> Pipeline real: `tools/build_sprites.py` (segmentación por manchas, una escala por personaje, paleta CIELAB, contorno #2A1B3D), `build_portraits.py`, `build_outfits.py`, `build_tiles.py`, `build_props.py`.
+> No hay `.ase` (LibreSprite no se pudo instalar). Los `.kra` están en `art-src/krita/`. Detalle y motivos en [docs/DECISIONS.md](docs/DECISIONS.md).
+
+
 ## 1. Tono
 
 Un festival deportivo dentro de un bosque mágico que se siente como una tarde de domingo feliz. La luz es cálida y viene de arriba a la izquierda.

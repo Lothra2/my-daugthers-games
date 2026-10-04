@@ -64,7 +64,8 @@ export function followRoute(w: World, a: Actor, nodes: RouteNode[], fallback: { 
   }
   if (node && pathBlocked(w, a, node.x, node.y)) {
     // a wall stands between the actor and its node (it took the other lane): re-plan on the nearest node it can actually reach
-    const alt = pool.filter((n) => n.x >= a.x - 8 && !pathBlocked(w, a, n.x, n.y)).sort((p, q) => p.x - q.x);
+    const reached = (n: RouteNode) => Math.abs(n.x - a.x) < 10 && Math.abs(n.y - a.y) < 16;   // never re-plan onto the node we are standing on: that is a deadlock
+    const alt = pool.filter((n) => n.x >= a.x - 8 && !reached(n) && !pathBlocked(w, a, n.x, n.y)).sort((p, q) => p.x - q.x);
     const best = alt.find((n) => n.tipo === 'principal' || n.tipo === 'facil') ?? alt[0];
     if (best) node = best;
   }

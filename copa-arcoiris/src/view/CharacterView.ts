@@ -86,7 +86,7 @@ export class CharacterView {
     this.sprite.setPosition(sx, sy);
     this.sprite.setScale(scale);
     this.sprite.setDepth(baseY);
-    if (a.protectT > 0 && a.immuneT <= 0 && !(act && act.kind === 'rescue')) alpha = Math.floor(simT * 14) % 2 === 0 ? 0.45 : 1;
+    if (a.protectT > 0 && a.immuneT <= 0 && !(act && act.kind === 'rescue')) alpha = Math.floor(simT * 10) % 2 === 0 ? 0.72 : 1;
     this.sprite.setAlpha(alpha);
     // shadow stays on the ground and shrinks with height, which is the landing reference
     const h = Math.max(0, a.z);

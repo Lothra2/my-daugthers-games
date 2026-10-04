@@ -1,5 +1,10 @@
 # Arquitectura técnica · La Copa del Bosque Arcoíris
 
+> **Actualización de la Fase 2 (lo que cambió respecto a este documento).** Las rutas de la IA son un grafo de puntos (`rutas_ia` con `siguiente`). Los objetos de decoración son `type="deco"` con el nombre del frame del atlas de props (`props_fondo`, `props_suelo`, `props_frente`);
+> la propiedad `split` parte un árbol entre copa y tronco. Los tiles animados usan la animación nativa de Phaser 4. Tiled 1.8 exporta `type`, no `class`. El audio es propio (`src/audio`: `sfx.ts`, `songs.ts`, `engine.ts`, `board.ts`) y no usa ZzFX.
+> `RenderTexture.drawFrame` no existe en Phaser 4: se usa `stamp`. `manualChunks` de Vite 8 debe ser una función. Las pruebas de navegador están en `tests/e2e/` y se lanzan con `npm run e2e`. Ver [docs/DECISIONS.md](docs/DECISIONS.md).
+
+
 ## 1. Stack (versiones exactas, verificadas el 2026-10-04 con un proyecto de prueba que compiló, pasó un test y arrancó en Chromium con WebGL)
 
 | Paquete | Versión | Nota |

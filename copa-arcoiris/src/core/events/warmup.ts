@@ -41,7 +41,7 @@ export function createWarmup(): EventRules {
     onBallHit(w: World, item: Item) {
       const t = w.items.find((i) => i.kind === 'target');
       if (!t || item.thrownBy === null || item.hitIds.has(-5)) return false;
-      if (Math.abs(item.x - t.x) < 14 && Math.abs(item.y - t.y) < 12 && item.z < 26) {
+      if (Math.abs(item.x - t.x) < 16 && Math.abs(item.y - t.y) < 14 && item.z < 46) {   // generous: the warmup is for a 5 year old
         item.hitIds.add(-5); w.data.hit[item.thrownBy] = true; fx(w, 'pinata', t.x, t.y, 12, item.thrownBy); item.vx *= -0.3;
         return true;
       }

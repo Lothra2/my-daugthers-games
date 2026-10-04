@@ -52,6 +52,7 @@ ok(errors.length === 0, 'no console errors ' + errors.slice(0, 3));
 {
   const g = await openGame(b, srv.url, 'autostart=event&event=race&players=1&chars=sophie,papa,mama,thor&autoplay&ff=4&skipIntro&seed=2');
   await g.page.waitForFunction(() => window.__copa && window.__copa.ready);
+  ok(!(await g.page.evaluate(() => window.__copa.audio.running)) && (await g.page.evaluate(() => window.__copa.audio.log.length)) === 0, 'no sound before the first user gesture');
   await g.page.mouse.click(300, 300);   // the user gesture that unlocks audio
   await g.page.waitForFunction(() => window.__copa.game.scene.getScene('Event')?.world?.eventT >= 12, null, { timeout: 60000 });
   const info = await g.page.evaluate(() => ({ song: window.__copa.audio.current, log: window.__copa.audio.log.slice(), running: window.__copa.audio.running }));
