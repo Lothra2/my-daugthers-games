@@ -45,3 +45,9 @@ Tope de la primera entrega: 200 créditos. Fuente de verdad: `art-src/generation
 | 2026-10-04 06:45 | xai/grok-imagine-image-2.0 | mama_swim_push | hoja mama swim_push | 1.44 | ok | 7b0909a6-6a45-48c7-8607-83301c1b0494 |
 | 2026-10-04 06:45 | xai/grok-imagine-image-2.0 | mama_hit_tumble | hoja mama hit_tumble | 1.44 | ok | c85709d3-9954-4e8a-9008-6e03ce6273b4 |
 | 2026-10-04 06:46 | xai/grok-imagine-image-2.0 | mama_power_celebrate | hoja mama power_celebrate | 1.44 | ok | 943cea1d-b6a8-4759-ae37-040fa144d244 |
+| 2026-10-04 06:53 | xai/grok-imagine-image-2.0 | papa_carry_throw | hoja papa carry_throw | 1.44 | ok | 2ff48098-f24f-433c-b80d-6881a2f64d6d |
+| 2026-10-04 06:53 | xai/grok-imagine-image-2.0 | alana_swim_push | hoja alana swim_push | 1.44 | ok | 8e6faf0d-73bd-4f19-b99a-07d537f3fccc |
+| 2026-10-04 06:53 | xai/grok-imagine-image-2.0 | thor_zoom_celebrate | hoja thor zoom_celebrate | 1.44 | ok | bc01ca9e-4211-4f6c-abb9-042867d96ed2 |
+| 2026-10-04 06:53 | xai/grok-imagine-image-2.0 | mama_carry_throw | hoja mama carry_throw | 1.44 | ok | 3149269e-29ed-4ca2-9c65-e332814ac82e |
+| 2026-10-04 06:57 | xai/grok-imagine-image-2.0 | papa_power_celebrate | hoja papa power_celebrate | 1.44 | ok | a51f49d6-6817-4c5b-98e1-c8b3d22a0e16 |
+| 2026-10-04 06:57 | xai/grok-imagine-image-2.0 | mama_swim_push | hoja mama swim_push | 1.44 | ok | 29303760-6ee4-48a4-a8f9-dab694d8297a |

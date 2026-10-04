@@ -12,14 +12,16 @@ HUMAN = {
                  "(3) top of the jump, body stretched with arms up; (4) falling, legs reaching down, arms out; (5) landing, squashed low with knees deeply bent; "
                  "(6) bending down to pick something up, hands reaching toward the ground; (7) grabbing an object at ground level, bent over; "
                  "(8) standing back up lifting both hands to chest height, no object drawn"),
- "carry_throw": ("side view facing right: (1) standing still holding both hands together in front of the chest as if carrying a ball, no ball drawn; "
-                 "(2) to (5) four-frame run cycle while holding both hands together in front of the chest, no ball drawn, leaning slightly back; "
+ "carry_throw": ("exactly eight separate poses, side view facing right: (1) standing still with both hands held together in front of the chest as if holding a ball, no ball drawn; "
+                 "(2) running pose with the right foot forward, both hands together in front of the chest; (3) running pose with the body at its lowest, hands together in front of the chest; "
+                 "(4) running pose with one knee lifted, hands together in front of the chest; (5) running pose with the body at its highest, pushing off, hands together in front of the chest; "
                  "(6) winding up to throw, one arm pulled far back, body twisted; (7) release, arm swung forward and extended, body leaning forward; "
                  "(8) follow-through, arm across the body and weight on the front foot"),
- "swim_push": ("side view facing right: (1) to (4) four-frame swimming stroke, only head and shoulders above the water line, arms alternating overhead, "
-               "the lower body hidden below a flat water line drawn as a simple light blue band; (5) winding up a playful shove, arms pulled back; "
-               "(6) shoving forward with both hands extended; (7) recovering, arms coming back; "
-               "(8) mid-air swing with a short foam pool noodle held in both hands, arms raised overhead, body in a small hop"),
+ "swim_push": ("exactly eight separate poses, side view facing right: (1) swimming stroke with the right arm reaching forward, only head and shoulders above a flat water line; "
+               "(2) swimming stroke with the left arm reaching forward, only head and shoulders above the water line; (3) swimming stroke, right arm pulling back, head and shoulders above the water line; "
+               "(4) swimming stroke, left arm pulling back, head and shoulders above the water line; (5) winding up a playful shove, arms pulled back, full body; "
+               "(6) shoving forward with both hands extended, full body; (7) recovering, arms coming back, full body; "
+               "(8) mid-air swing with a short foam pool noodle held in both hands, arms raised overhead, in a small hop"),
  "hit_tumble": ("side view facing right: (1) wobbling off-balance, arms windmilling, surprised funny face; (2) stumbling back, one leg lifted; "
                 "(3) flying through the air backwards, spinning, legs up, dizzy comic face; (4) mid-somersault upside down, comic stars around the head; "
                 "(5) landed sitting on the ground with legs out, dizzy swirl eyes, small stars circling; (6) lying flat on the back laughing with stars; "
@@ -46,6 +48,8 @@ DOG = {
  "hit_tumble": ("side view facing right: (1) wobbling off-balance with a surprised funny face; (2) stumbling back; (3) flying through the air upside down, dizzy; "
                 "(4) rolling on its back with legs up; (5) lying on its back with the tongue out and comic stars around the head; (6) flopped on the belly, dizzy eyes; "
                 "(7) shaking its body to get up; (8) sitting inside a large translucent shiny soap bubble, looking happy"),
- "zoom_celebrate": ("side view facing right: (1) to (4) four-frame super-fast zoomies run with the ears blown back and speed lines behind; "
-                    "(5) to (8) four frames of happily chasing its own tail in a circle, tail wagging, tongue out, three-quarter view"),
+ "zoom_celebrate": ("exactly eight separate poses of a boxer dog: (1) super-fast zoomies run, ears blown back, speed lines behind, side view facing right; "
+                    "(2) zoomies run with all legs stretched, ears blown back, speed lines, side view; (3) zoomies run with legs tucked, speed lines, side view; (4) zoomies run, pushing off, speed lines, side view; "
+                    "(5) happily chasing its own tail, body curved, three-quarter view; (6) chasing its tail, body turned further around, tongue out; "
+                    "(7) chasing its tail, facing the camera with a big grin; (8) chasing its tail, body curved the other way, tail wagging"),
 }
