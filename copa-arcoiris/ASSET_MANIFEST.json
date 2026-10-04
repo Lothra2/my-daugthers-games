@@ -1,0 +1,3348 @@
+{
+ "project": "La Copa del Bosque Arcoíris",
+ "version": 1,
+ "date": "2026-10-04",
+ "legend": {
+  "priority": {
+   "P0": "imprescindible para la entrega",
+   "P1": "entrega final, se puede simplificar si falta tiempo",
+   "P2": "solo si sobra"
+  },
+  "status": [
+   "planned",
+   "generating",
+   "raw_ok",
+   "processed",
+   "integrated",
+   "verified",
+   "blocked",
+   "cut"
+  ],
+  "tools": {
+   "higgsfield": "API Cloud, tools/hf.py",
+   "pixel_pipeline": "tools/build_*.py + pixlib.py (cumple el papel de LibreSprite)",
+   "ase_writer": "tools/write_ase.py, editable en LibreSprite",
+   "krita": "tools/make_kra.py + krita --export headless",
+   "tiled": "Tiled 1.8.2 CLI",
+   "code": "generado por código",
+   "copy": "copia de un asset con licencia"
+  }
+ },
+ "budget": {
+  "cap_credits": 200,
+  "warn_at": 170,
+  "planned_credits": 101.6,
+  "reserve_for_regenerations": 98.4,
+  "credit_usd": 0.0625,
+  "by_category": {
+   "character_identity": 8.64,
+   "art_direction": 0,
+   "character_animation": 57.6,
+   "tileset": 5.76,
+   "props": 8.64,
+   "background": 14.4,
+   "fx": 2.56,
+   "ui": 4.0,
+   "map": 0,
+   "audio_music": 0,
+   "audio_sfx": 0
+  },
+  "rule": "Máximo 3 intentos por asset (el primero y 2 regeneraciones). Todo P0 antes de cualquier P1 o P2"
+ },
+ "blocked_capabilities": [
+  {
+   "name": "autosprite",
+   "where": "Higgsfield API",
+   "result": "404 model_not_found (2026-10-04). Aparece en el catálogo del MCP, pero la cuenta MCP tiene 0.51 créditos",
+   "fallback": "hojas de poses con grok-imagine-image-2.0"
+  },
+  {
+   "name": "audio (sonilo_music, mirelo_text_to_audio)",
+   "where": "Higgsfield API",
+   "result": "404 model_not_found",
+   "fallback": "ZzFX + secuenciador propio"
+  },
+  {
+   "name": "LibreSprite",
+   "where": "contenedor",
+   "result": "descarga de GitHub 403 por la política de red",
+   "fallback": "pipeline Python + .ase editables"
+  }
+ ],
+ "assets": [
+  {
+   "id": "lineup_family",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/lineup_family.png",
+    "review": "docs/art/lineup_family_x4.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/private/sophie_photo.png",
+     "reference/private/alana_photo.png",
+     "reference/private/papa_photo.png",
+     "reference/private/mama_photo.png",
+     "reference/thor_identity_ref.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "5 personajes de frente y de perfil, sonriendo, misma escala relativa. Base de la comparación 32/48 y de todas las maestras. Requiere aprobación de Rick (no bloquea el código)"
+  },
+  {
+   "id": "res_compare_32_48",
+   "category": "art_direction",
+   "priority": "P0",
+   "tools": [
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "review": "docs/art/res_compare.png",
+    "editable": "art-src/krita/direccion_arte.kra"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Derivado de lineup_family, sin costo"
+  },
+  {
+   "id": "master_sophie",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/master_sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/private/sophie_photo.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "target_height_px": 38,
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+  },
+  {
+   "id": "master_alana",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/master_alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/private/alana_photo.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "target_height_px": 33,
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+  },
+  {
+   "id": "master_papa",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/master_papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/private/papa_photo.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "target_height_px": 44,
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+  },
+  {
+   "id": "master_mama",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/master_mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/private/mama_photo.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "target_height_px": 42,
+   "notes": "Hoja maestra: frente, 3/4, perfil derecho, espalda y 4 expresiones felices"
+  },
+  {
+   "id": "master_thor",
+   "category": "character_identity",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/identity/master_thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "reference/thor_identity_ref.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "target_height_px": 26,
+   "notes": "Perro cuadrúpedo, más una pose de anfitrión con gorra azul cielo y silbato"
+  },
+  {
+   "id": "sophie_run",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/run.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "run": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_walk_idle",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/walk_idle.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "walk": {
+     "frames": 6,
+     "fps": 10,
+     "loop": true
+    },
+    "idle": {
+     "frames": 2,
+     "fps": 3,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_jump_pickup",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/jump_pickup.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "jump_takeoff": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_rise": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_apex": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_fall": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "land": {
+     "frames": 1,
+     "fps": 12,
+     "loop": false
+    },
+    "pickup": {
+     "frames": 3,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_carry_throw",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/carry_throw.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "carry_idle": {
+     "frames": 1,
+     "fps": 4,
+     "loop": true
+    },
+    "carry_run": {
+     "frames": 4,
+     "fps": 14,
+     "loop": true
+    },
+    "throw": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_swim_push",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/swim_push.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "swim": {
+     "frames": 4,
+     "fps": 8,
+     "loop": true
+    },
+    "push": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    },
+    "bop": {
+     "frames": 1,
+     "fps": 10,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_hit_tumble",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/hit_tumble.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "stagger": {
+     "frames": 2,
+     "fps": 10,
+     "loop": false
+    },
+    "tumble": {
+     "frames": 5,
+     "fps": 10,
+     "loop": false
+    },
+    "rescue_pose": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_power_celebrate",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/power_celebrate.png",
+    "final": "public/assets/sprites/sophie.png",
+    "meta": "public/assets/sprites/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "power": {
+     "frames": 4,
+     "fps": 12,
+     "loop": false
+    },
+    "celebrate": {
+     "frames": 4,
+     "fps": 10,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "sophie_portraits",
+   "category": "character_animation",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/sophie/portraits.png",
+    "final": "public/assets/ui/portraits/sophie.png",
+    "meta": "public/assets/ui/portraits/sophie.json",
+    "editable": "art-src/ase/sophie.ase",
+    "qa": "docs/qa/sprites/sophie.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_sophie.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    64,
+    64
+   ],
+   "pivot": null,
+   "animations": {
+    "portrait_happy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_win": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_cheer": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_funny": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_run",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/run.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "run": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_walk_idle",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/walk_idle.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "walk": {
+     "frames": 6,
+     "fps": 10,
+     "loop": true
+    },
+    "idle": {
+     "frames": 2,
+     "fps": 3,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_jump_pickup",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/jump_pickup.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "jump_takeoff": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_rise": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_apex": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_fall": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "land": {
+     "frames": 1,
+     "fps": 12,
+     "loop": false
+    },
+    "pickup": {
+     "frames": 3,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_carry_throw",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/carry_throw.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "carry_idle": {
+     "frames": 1,
+     "fps": 4,
+     "loop": true
+    },
+    "carry_run": {
+     "frames": 4,
+     "fps": 14,
+     "loop": true
+    },
+    "throw": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_swim_push",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/swim_push.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "swim": {
+     "frames": 4,
+     "fps": 8,
+     "loop": true
+    },
+    "push": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    },
+    "bop": {
+     "frames": 1,
+     "fps": 10,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_hit_tumble",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/hit_tumble.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "stagger": {
+     "frames": 2,
+     "fps": 10,
+     "loop": false
+    },
+    "tumble": {
+     "frames": 5,
+     "fps": 10,
+     "loop": false
+    },
+    "rescue_pose": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_power_celebrate",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/power_celebrate.png",
+    "final": "public/assets/sprites/alana.png",
+    "meta": "public/assets/sprites/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "power": {
+     "frames": 4,
+     "fps": 12,
+     "loop": false
+    },
+    "celebrate": {
+     "frames": 4,
+     "fps": 10,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "alana_portraits",
+   "category": "character_animation",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/alana/portraits.png",
+    "final": "public/assets/ui/portraits/alana.png",
+    "meta": "public/assets/ui/portraits/alana.json",
+    "editable": "art-src/ase/alana.ase",
+    "qa": "docs/qa/sprites/alana.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_alana.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    64,
+    64
+   ],
+   "pivot": null,
+   "animations": {
+    "portrait_happy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_win": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_cheer": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_funny": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_run",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/run.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "run": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_walk_idle",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/walk_idle.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "walk": {
+     "frames": 6,
+     "fps": 10,
+     "loop": true
+    },
+    "idle": {
+     "frames": 2,
+     "fps": 3,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_jump_pickup",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/jump_pickup.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "jump_takeoff": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_rise": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_apex": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_fall": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "land": {
+     "frames": 1,
+     "fps": 12,
+     "loop": false
+    },
+    "pickup": {
+     "frames": 3,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_carry_throw",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/carry_throw.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "carry_idle": {
+     "frames": 1,
+     "fps": 4,
+     "loop": true
+    },
+    "carry_run": {
+     "frames": 4,
+     "fps": 14,
+     "loop": true
+    },
+    "throw": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_swim_push",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/swim_push.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "swim": {
+     "frames": 4,
+     "fps": 8,
+     "loop": true
+    },
+    "push": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    },
+    "bop": {
+     "frames": 1,
+     "fps": 10,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_hit_tumble",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/hit_tumble.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "stagger": {
+     "frames": 2,
+     "fps": 10,
+     "loop": false
+    },
+    "tumble": {
+     "frames": 5,
+     "fps": 10,
+     "loop": false
+    },
+    "rescue_pose": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_power_celebrate",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/power_celebrate.png",
+    "final": "public/assets/sprites/papa.png",
+    "meta": "public/assets/sprites/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "power": {
+     "frames": 4,
+     "fps": 12,
+     "loop": false
+    },
+    "celebrate": {
+     "frames": 4,
+     "fps": 10,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "papa_portraits",
+   "category": "character_animation",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/papa/portraits.png",
+    "final": "public/assets/ui/portraits/papa.png",
+    "meta": "public/assets/ui/portraits/papa.json",
+    "editable": "art-src/ase/papa.ase",
+    "qa": "docs/qa/sprites/papa.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_papa.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    64,
+    64
+   ],
+   "pivot": null,
+   "animations": {
+    "portrait_happy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_win": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_cheer": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_funny": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_run",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/run.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "run": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_walk_idle",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/walk_idle.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "walk": {
+     "frames": 6,
+     "fps": 10,
+     "loop": true
+    },
+    "idle": {
+     "frames": 2,
+     "fps": 3,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_jump_pickup",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/jump_pickup.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "jump_takeoff": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_rise": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_apex": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_fall": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "land": {
+     "frames": 1,
+     "fps": 12,
+     "loop": false
+    },
+    "pickup": {
+     "frames": 3,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_carry_throw",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/carry_throw.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "carry_idle": {
+     "frames": 1,
+     "fps": 4,
+     "loop": true
+    },
+    "carry_run": {
+     "frames": 4,
+     "fps": 14,
+     "loop": true
+    },
+    "throw": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_swim_push",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/swim_push.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "swim": {
+     "frames": 4,
+     "fps": 8,
+     "loop": true
+    },
+    "push": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    },
+    "bop": {
+     "frames": 1,
+     "fps": 10,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_hit_tumble",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/hit_tumble.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "stagger": {
+     "frames": 2,
+     "fps": 10,
+     "loop": false
+    },
+    "tumble": {
+     "frames": 5,
+     "fps": 10,
+     "loop": false
+    },
+    "rescue_pose": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_power_celebrate",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/power_celebrate.png",
+    "final": "public/assets/sprites/mama.png",
+    "meta": "public/assets/sprites/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "power": {
+     "frames": 4,
+     "fps": 12,
+     "loop": false
+    },
+    "celebrate": {
+     "frames": 4,
+     "fps": 10,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "mama_portraits",
+   "category": "character_animation",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/mama/portraits.png",
+    "final": "public/assets/ui/portraits/mama.png",
+    "meta": "public/assets/ui/portraits/mama.json",
+    "editable": "art-src/ase/mama.ase",
+    "qa": "docs/qa/sprites/mama.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_mama.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    64,
+    64
+   ],
+   "pivot": null,
+   "animations": {
+    "portrait_happy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_win": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_cheer": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_funny": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_run",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/run.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "run": {
+     "frames": 8,
+     "fps": 14,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_walk_idle",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/walk_idle.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "walk": {
+     "frames": 6,
+     "fps": 10,
+     "loop": true
+    },
+    "sit_idle": {
+     "frames": 2,
+     "fps": 3,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_jump_fetch",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/jump_fetch.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "jump_takeoff": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_rise": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_apex": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "jump_fall": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "land": {
+     "frames": 1,
+     "fps": 12,
+     "loop": false
+    },
+    "fetch": {
+     "frames": 3,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_carry_toss",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/carry_toss.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "carry_run": {
+     "frames": 6,
+     "fps": 14,
+     "loop": true
+    },
+    "toss": {
+     "frames": 2,
+     "fps": 12,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_swim_push",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/swim_push.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "swim_paddle": {
+     "frames": 4,
+     "fps": 8,
+     "loop": true
+    },
+    "headpush": {
+     "frames": 3,
+     "fps": 14,
+     "loop": false
+    },
+    "bop": {
+     "frames": 1,
+     "fps": 10,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_hit_tumble",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/hit_tumble.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "stagger": {
+     "frames": 2,
+     "fps": 10,
+     "loop": false
+    },
+    "roll": {
+     "frames": 5,
+     "fps": 10,
+     "loop": false
+    },
+    "rescue_pose": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_zoom_celebrate",
+   "category": "character_animation",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/zoom_celebrate.png",
+    "final": "public/assets/sprites/thor.png",
+    "meta": "public/assets/sprites/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    48,
+    48
+   ],
+   "pivot": [
+    24,
+    46
+   ],
+   "animations": {
+    "zoomies": {
+     "frames": 4,
+     "fps": 16,
+     "loop": true
+    },
+    "celebrate_tailchase": {
+     "frames": 4,
+     "fps": 10,
+     "loop": true
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "thor_host_portraits",
+   "category": "character_animation",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "ase_writer"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/thor/host_portraits.png",
+    "final": "public/assets/ui/portraits/thor.png",
+    "meta": "public/assets/ui/portraits/thor.json",
+    "editable": "art-src/ase/thor.ase",
+    "qa": "docs/qa/sprites/thor.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/master_thor.png",
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "cell": [
+    64,
+    64
+   ],
+   "pivot": null,
+   "animations": {
+    "host_whistle": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "host_point": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "host_trophy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "host_cap": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_happy": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_win": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_cheer": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    },
+    "portrait_funny": {
+     "frames": 1,
+     "fps": 0,
+     "loop": false
+    }
+   },
+   "frames_in_sheet": 8
+  },
+  {
+   "id": "tiles_grass_path",
+   "category": "tileset",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/tiles/tiles_grass_path.png",
+    "final": "public/assets/tiles/tiles_grass_path.png",
+    "tsx": "maps-src/tiles_grass_path.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "1:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "tile": [
+    16,
+    16
+   ],
+   "notes": "Pasto azulado, camino, bordes y transiciones, flores sueltas. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+  },
+  {
+   "id": "tiles_water_bridge",
+   "category": "tileset",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/tiles/tiles_water_bridge.png",
+    "final": "public/assets/tiles/tiles_water_bridge.png",
+    "tsx": "maps-src/tiles_water_bridge.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "1:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "tile": [
+    16,
+    16
+   ],
+   "notes": "Agua de 4 frames de animación, orillas, espuma y puente de madera. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+  },
+  {
+   "id": "tiles_plaza_arena",
+   "category": "tileset",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/tiles/tiles_plaza_arena.png",
+    "final": "public/assets/tiles/tiles_plaza_arena.png",
+    "tsx": "maps-src/tiles_plaza_arena.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "1:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "tile": [
+    16,
+    16
+   ],
+   "notes": "Piedra crema de plaza, arena, borde de isla y nenúfares. El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+  },
+  {
+   "id": "tiles_facade",
+   "category": "tileset",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/tiles/tiles_facade.png",
+    "final": "public/assets/tiles/tiles_facade.png",
+    "tsx": "maps-src/tiles_facade.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "1:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "tile": [
+    16,
+    16
+   ],
+   "notes": "Setos, cercas, muros de jardín y bases de fachada (fila de fondo). El pipeline corta en 16×16, prueba costuras en wrap y corrige o rehace los tiles que fallan"
+  },
+  {
+   "id": "props_houses",
+   "category": "props",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_houses.png",
+    "final": "public/assets/props/props_houses/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Casitas de cuento: casita-hongo, casita de té y molino pequeño"
+  },
+  {
+   "id": "props_trees_plants",
+   "category": "props",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_trees_plants.png",
+    "final": "public/assets/props/props_trees_plants/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Árboles redondos, arbustos, flores grandes y Árbol Abuelo de la piñata"
+  },
+  {
+   "id": "props_race",
+   "category": "props",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_race.png",
+    "final": "public/assets/props/props_race/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Arco de salida, 3 arcos de recuperación, arco de meta, banderines, letreros y flechas"
+  },
+  {
+   "id": "props_events",
+   "category": "props",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_events.png",
+    "final": "public/assets/props/props_events/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Piñata estrella en 4 estados, troncos rodantes, aspas de molino, hongo saltarín (normal y aplastado), nube plataforma, plataforma de madera, fardos de heno, canasta y parachoques"
+  },
+  {
+   "id": "props_items",
+   "category": "props",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_items.png",
+    "final": "public/assets/props/props_items/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Pelota blanda, estrella, estrella dorada, caja de regalo (entera y rota), burbuja de rescate, 4 trofeos y 3 medallas"
+  },
+  {
+   "id": "props_audience",
+   "category": "props",
+   "priority": "P2",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "tiled"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/props/props_audience.png",
+    "final": "public/assets/props/props_audience/",
+    "tsx": "maps-src/props.tsx"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Público de animalitos del bosque aplaudiendo, 2 frames"
+  },
+  {
+   "id": "bg_pradera_jardin_lejos",
+   "category": "background",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/pradera_jardin_lejos.png",
+    "final": "public/assets/bg/pradera_jardin_lejos.png",
+    "editable": "art-src/krita/fondos_pradera_jardin.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "21:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    270
+   ],
+   "notes": "Pradera y jardín de casitas. Parallax 0.2, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_pradera_jardin_medio",
+   "category": "background",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/pradera_jardin_medio.png",
+    "final": "public/assets/bg/pradera_jardin_medio.png",
+    "editable": "art-src/krita/fondos_pradera_jardin.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    180
+   ],
+   "notes": "Pradera y jardín de casitas. Parallax 0.5, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_rio_lejos",
+   "category": "background",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/rio_lejos.png",
+    "final": "public/assets/bg/rio_lejos.png",
+    "editable": "art-src/krita/fondos_rio.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "21:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    270
+   ],
+   "notes": "Río Cristal. Parallax 0.2, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_rio_medio",
+   "category": "background",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/rio_medio.png",
+    "final": "public/assets/bg/rio_medio.png",
+    "editable": "art-src/krita/fondos_rio.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    180
+   ],
+   "notes": "Río Cristal. Parallax 0.5, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_colina_plaza_lejos",
+   "category": "background",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/colina_plaza_lejos.png",
+    "final": "public/assets/bg/colina_plaza_lejos.png",
+    "editable": "art-src/krita/fondos_colina_plaza.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "21:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    270
+   ],
+   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.2, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_colina_plaza_medio",
+   "category": "background",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/colina_plaza_medio.png",
+    "final": "public/assets/bg/colina_plaza_medio.png",
+    "editable": "art-src/krita/fondos_colina_plaza.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    180
+   ],
+   "notes": "Colina de los Hongos y Plaza de la Meta. Parallax 0.5, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_circuito_lejos",
+   "category": "background",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/circuito_lejos.png",
+    "final": "public/assets/bg/circuito_lejos.png",
+    "editable": "art-src/krita/fondos_circuito.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "21:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    270
+   ],
+   "notes": "Feria de carpas pastel en el bosque. Parallax 0.2, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_circuito_medio",
+   "category": "background",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/circuito_medio.png",
+    "final": "public/assets/bg/circuito_medio.png",
+    "editable": "art-src/krita/fondos_circuito.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    180
+   ],
+   "notes": "Feria de carpas pastel en el bosque. Parallax 0.5, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_arena_lejos",
+   "category": "background",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/arena_lejos.png",
+    "final": "public/assets/bg/arena_lejos.png",
+    "editable": "art-src/krita/fondos_arena.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "21:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    270
+   ],
+   "notes": "Estanque con nubes reflejadas. Parallax 0.2, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "bg_arena_medio",
+   "category": "background",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline",
+    "krita"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/bg/arena_medio.png",
+    "final": "public/assets/bg/arena_medio.png",
+    "editable": "art-src/krita/fondos_arena.kra"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "target_px": [
+    640,
+    180
+   ],
+   "notes": "Estanque con nubes reflejadas. Parallax 0.5, repetible en x (se verifica la costura)"
+  },
+  {
+   "id": "fx_sheet_a",
+   "category": "fx",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/fx/fx_a.png",
+    "final": "public/assets/fx/fx_a.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.28,
+   "notes": "Polvo, salpicadura, anillo de agua y destellos"
+  },
+  {
+   "id": "fx_sheet_b",
+   "category": "fx",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/fx/fx_b.png",
+    "final": "public/assets/fx/fx_b.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.28,
+   "notes": "Burbuja que revienta, confeti, estrellas de mareo y estelas de poderes"
+  },
+  {
+   "id": "fx_code_particles",
+   "category": "fx",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/view/Fx.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Partículas por código con la paleta. Base y respaldo si fx_sheet falla"
+  },
+  {
+   "id": "ui_title_logo",
+   "category": "ui",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/ui/title_logo.png",
+    "final": "public/assets/ui/title_logo.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "aspect": "16:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.28,
+   "notes": "Logo 'La Copa del Bosque Arcoíris'. El texto se dibuja en pixel art con la fuente si el modelo no lo escribe bien"
+  },
+  {
+   "id": "ui_title_scene",
+   "category": "ui",
+   "priority": "P1",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/ui/title_scene.png",
+    "final": "public/assets/ui/title_scene.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "refs": [
+     "art-src/higgsfield/identity/lineup_family.png"
+    ],
+    "aspect": "16:9",
+    "resolution": "2k"
+   },
+   "est_credits": 1.44,
+   "notes": "Ilustración pixel de la familia en la línea de salida con Thor anfitrión"
+  },
+  {
+   "id": "ui_icons",
+   "category": "ui",
+   "priority": "P0",
+   "tools": [
+    "higgsfield",
+    "pixel_pipeline"
+   ],
+   "output": {
+    "raw": "art-src/higgsfield/ui/icons.png",
+    "final": "public/assets/ui/icons.png"
+   },
+   "status": "planned",
+   "source": {
+    "model": "xai/grok-imagine-image-2.0",
+    "aspect": "2:1",
+    "resolution": "2k"
+   },
+   "est_credits": 1.28,
+   "notes": "Íconos de saltar, acción, poder, pausa, los 5 poderes, sonido, música, trofeo y medalla"
+  },
+  {
+   "id": "font_pixelify",
+   "category": "ui",
+   "priority": "P0",
+   "tools": [
+    "copy"
+   ],
+   "output": {
+    "final": "public/assets/fonts/PixelifySans-latin.woff2",
+    "license": "public/assets/fonts/OFL.txt"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "source": {
+    "from": "uni-salta/assets/fonts (copia, sin modificar uni-salta)"
+   },
+   "notes": "SIL OFL 1.1"
+  },
+  {
+   "id": "palette",
+   "category": "art_direction",
+   "priority": "P0",
+   "tools": [
+    "code",
+    "krita"
+   ],
+   "output": {
+    "final": "src/data/palette.json",
+    "editable": "art-src/palette/copa_arcoiris.gpl"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Desde ART_BIBLE §3"
+  },
+  {
+   "id": "map_warmup",
+   "category": "map",
+   "priority": "P0",
+   "tools": [
+    "tiled",
+    "build_maps"
+   ],
+   "output": {
+    "tmx": "maps-src/warmup.tmx",
+    "final": "public/assets/maps/warmup.json"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+  },
+  {
+   "id": "map_race",
+   "category": "map",
+   "priority": "P0",
+   "tools": [
+    "tiled",
+    "build_maps"
+   ],
+   "output": {
+    "tmx": "maps-src/race.tmx",
+    "final": "public/assets/maps/race.json"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+  },
+  {
+   "id": "map_circuit",
+   "category": "map",
+   "priority": "P0",
+   "tools": [
+    "tiled",
+    "build_maps"
+   ],
+   "output": {
+    "tmx": "maps-src/circuit.tmx",
+    "final": "public/assets/maps/circuit.json"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+  },
+  {
+   "id": "map_pinata",
+   "category": "map",
+   "priority": "P0",
+   "tools": [
+    "tiled",
+    "build_maps"
+   ],
+   "output": {
+    "tmx": "maps-src/pinata.tmx",
+    "final": "public/assets/maps/pinata.json"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+  },
+  {
+   "id": "map_arena",
+   "category": "map",
+   "priority": "P0",
+   "tools": [
+    "tiled",
+    "build_maps"
+   ],
+   "output": {
+    "tmx": "maps-src/arena.tmx",
+    "final": "public/assets/maps/arena.json"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Generado por tools/build_maps.py, exportado con Tiled CLI y validado con maps/validate.ts"
+  },
+  {
+   "id": "music_menu",
+   "category": "audio_music",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/menu.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_race",
+   "category": "audio_music",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/race.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_circuit",
+   "category": "audio_music",
+   "priority": "P1",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/circuit.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_pinata",
+   "category": "audio_music",
+   "priority": "P1",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/pinata.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_arena",
+   "category": "audio_music",
+   "priority": "P1",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/arena.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_podium",
+   "category": "audio_music",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/podium.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "music_cup_final",
+   "category": "audio_music",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/songs/cup_final.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "Composición original en secuenciador Web Audio"
+  },
+  {
+   "id": "sfx_set",
+   "category": "audio_sfx",
+   "priority": "P0",
+   "tools": [
+    "code"
+   ],
+   "output": {
+    "final": "src/audio/sfx.ts"
+   },
+   "status": "planned",
+   "est_credits": 0,
+   "notes": "ZzFX: pasos, salto, aterrizaje, chapuzón, brazada, recoger, lanzar, golpe blando, voltereta, burbuja, estrella, 5 poderes, silbato, cuenta regresiva, ladrido, arco, meta, UI y subir de nivel"
+  }
+ ]
+}
