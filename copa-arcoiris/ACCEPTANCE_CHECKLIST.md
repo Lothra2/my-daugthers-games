@@ -6,7 +6,7 @@ Cada línea tiene su evidencia: nombre del test, captura en `docs/qa/` o comando
 Último recorrido completo: 2026-10-04. `npx vitest run` (9 archivos, 127 pruebas) y `npm run e2e` (6 suites, 0 errores de consola) más 3 copas completas en navegador.
 
 ## A. Entrega
-- [x] `npm ci && npm run build` funciona desde cero y `dist/` arranca con `npm run preview` en http://localhost:4173 (verificado en un clon limpio, ver sección F)
+- [x] `npm ci && npm run build` funciona desde cero y `dist/` arranca con `npm run preview` en http://localhost:4173 (verificado en un clon limpio de la rama: `npm ci` instala 45 paquetes, el build sale idéntico al `dist/` commiteado y el preview responde 200)
 - [x] Sin red y sin claves: no hay ninguna llamada a Higgsfield en `src/` ni en `dist/` (`grep -ril higgsfield src dist` vacío). Las suites e2e fallan ante cualquier `requestfailed` o respuesta ≥ 400 y pasan con 0
 - [x] La clave de Higgsfield no está en ningún archivo ni en el historial (`git grep` de su id sobre `git rev-list --all` vacío). `art-src/generations.jsonl` guarda las fotos como `<private-reference-photo>`
 - [x] Las fotos de la familia no están en Git (`git ls-files | grep -iE "photo|private|passport"` vacío, `reference/private/` en `.gitignore`)
