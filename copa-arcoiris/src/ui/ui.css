@@ -26,7 +26,7 @@ html, body { margin: 0; height: 100%; background: #1c1230; overflow: hidden; ove
 .hud-chips { position: absolute; top: max(78px, calc(env(safe-area-inset-top) + 70px)); left: max(10px, env(safe-area-inset-left)); display: flex; flex-direction: column; gap: 6px; }
 .chip { display: flex; align-items: center; gap: 6px; background: rgba(255,244,222,.92); border: 3px solid var(--c); border-radius: 12px; padding: 2px 8px 2px 2px; min-width: 150px; box-shadow: 0 2px 0 var(--ink); }
 .chip.human { border-width: 4px; }
-.chip-face { width: 38px; height: 38px; image-rendering: pixelated; background-repeat: no-repeat; flex: none; background-size: 152px auto; }
+.chip-face { --s: 38px; width: var(--s); height: var(--s); image-rendering: pixelated; background-repeat: no-repeat; flex: none; background-size: calc(var(--s) * 4) auto; background-position: 0 calc(var(--row) * var(--s) * -1); }
 .chip-body { flex: 1; min-width: 0; }
 .chip-name { font-size: 13px; font-weight: 700; line-height: 1; }
 .chip-bar, .chip-pow { height: 6px; background: rgba(42,27,61,.25); border-radius: 3px; overflow: hidden; margin-top: 3px; }
@@ -45,7 +45,7 @@ html, body { margin: 0; height: 100%; background: #1c1230; overflow: hidden; ove
 .arrow { position: fixed; width: 64px; height: 40px; align-items: center; justify-content: center; border: 3px solid var(--c); background: rgba(255,244,222,.92); border-radius: 12px; }
 .arrow.left::after { content: '◀'; color: var(--c); font-size: 14px; margin-left: 2px; }
 .arrow.right::before { content: '▶'; color: var(--c); font-size: 14px; margin-right: 2px; }
-.arrow-face { width: 30px; height: 30px; background-size: 120px auto; image-rendering: pixelated; }
+.arrow-face { --s: 30px; width: var(--s); height: var(--s); background-size: calc(var(--s) * 4) auto; background-position: 0 calc(var(--row) * var(--s) * -1); image-rendering: pixelated; }
 
 /* ---------- screens ---------- */
 #screens { position: fixed; inset: 0; pointer-events: none; }
@@ -145,3 +145,16 @@ html, body { margin: 0; height: 100%; background: #1c1230; overflow: hidden; ove
 body.touch-active #hud .hud-chips { top: 70px; }
 
 .cupfinal h2 { font-size: clamp(20px, 3.4vh, 28px); margin: 0; } .cupfinal .msg { margin: 0 !important; } .cupfinal .row { margin-top: 6px; } .cupfinal .btn { min-height: 52px; font-size: 20px; } .cupfinal .xp { font-size: 15px; }
+
+/* short screens (phones in landscape): compact HUD */
+@media (max-height: 480px) {
+  .hud-chips { top: 62px; gap: 3px; }
+  .chip { min-width: 0; padding: 1px 6px 1px 1px; border-width: 3px; }
+  .chip-face { --s: 30px; }
+  .chip-name, .chip-bar { display: none; }
+  .chip-pow { width: 26px; margin: 0; } .chip-score { font-size: 15px; }
+  .hud-title { font-size: 15px; } .hud-goal, .hud-lines { font-size: 12px; }
+  .hud-pause { width: 52px; height: 52px; font-size: 22px; }
+  .hud-timer { font-size: 20px; padding: 0 8px; }
+  .panel { padding: 8px 12px; } .btn { min-height: 52px; font-size: 20px; } .big-n { font-size: 40px; }
+}

@@ -12,6 +12,7 @@ export class BootScene extends Phaser.Scene {
     this.load.on('progress', (v: number) => { if (bar) bar.style.width = `${Math.round(v * 100)}%`; });
     this.load.spritesheet('tiles16', A('tiles/tiles.png'), { frameWidth: 16, frameHeight: 16 });
     this.load.image('tiles', A('tiles/tiles.png'));
+    this.load.atlas('props', A('props/props.png'), A('props/props.json'));
     for (const id of [...EVENT_ORDER, 'warmup']) this.load.tilemapTiledJSON(`map_${id}`, A(`maps/${id}.json`));
     for (const c of CHAR_IDS) {
       for (const sfx of ['', '_arcoiris', '_estrellas']) this.load.spritesheet(`char_${c}${sfx}`, A(`sprites/${c}${sfx}.png`), { frameWidth: 48, frameHeight: 48 });

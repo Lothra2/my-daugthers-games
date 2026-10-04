@@ -6,11 +6,9 @@ const srv = await startPreview();
 const b = await launch();
 const ctxOpts = { viewport: { width: 1280, height: 720 } };
 const q = `autostart=cup&players=${players}&chars=${chars}&autoplay&ff=12&skipIntro&seed=5`;
-const { page, errors, ctx } = await openGame(b, srv.url, q, ctxOpts);
-await page.waitForFunction(() => window.__copa && window.__copa.ready);
 const pre = { version: 1, stats: { warmupDone: true, cupsPlayed: 0 } };
-await ctx.addInitScript((s) => { try { localStorage.setItem('copa-arcoiris/save', JSON.stringify(s)); } catch {} }, pre);
-await page.reload(); await page.waitForFunction(() => window.__copa && window.__copa.ready);
+const { page, errors } = await openGame(b, srv.url, q, ctxOpts, (s) => { try { localStorage.setItem('copa-arcoiris/save', JSON.stringify(s)); } catch {} }, pre);
+await page.waitForFunction(() => window.__copa && window.__copa.ready);
 let n = 0;
 for (let ev = 0; ev < 4; ev++) {
   await page.waitForSelector('#next', { timeout: 240000 });

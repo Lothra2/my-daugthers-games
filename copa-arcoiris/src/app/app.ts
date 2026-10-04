@@ -33,6 +33,7 @@ interface Session {
   results: EventResult[];
   current: EventId | null;
   cfg: EventConfig | null;
+  single: EventId | null;
 }
 
 export interface AppDeps { game: Phaser.Game; router: InputRouter; kb: KeyboardInput; touch: TouchUI; store: SaveStore; hud: Hud; params: URLSearchParams }
@@ -66,6 +67,8 @@ export class App {
     window.addEventListener('resize', checkOrientation); window.addEventListener('orientationchange', checkOrientation); checkOrientation();
   }
 
+  get isPaused(): boolean { return this.paused; }
+  get isInEvent(): boolean { return this.inEvent; }
   private get save() { return this.d.store.data; }
   private persist(): void { this.d.store.save(); }
 
@@ -96,13 +99,15 @@ export class App {
 
   private autostart(): void {
     const p = this.d.params;
-    const mode = p.get('autostart') as 'cup' | 'warmup';
+    const raw = p.get('autostart')!;
+    const mode = (raw === 'event' ? 'cup' : raw) as 'cup' | 'warmup';
     const chars = (p.get('chars') ?? 'sophie').split(',') as CharId[];
     this.players = (chars.length > 1 ? 2 : 1) as 1 | 2;
     if (p.get('players')) this.players = Number(p.get('players')) as 1 | 2;
     this.picks = chars.slice(0, this.players);
     this.pickMode = mode;
     this.beginSession(mode);
+    if (raw === 'event' && this.session) { this.session.single = p.get('event') as EventId; this.session.mode = 'cup'; this.runEvent(this.session.single); }
   }
 
   private toast(text: string, ms = 4200): void {
@@ -213,8 +218,9 @@ export class App {
     ];
     this.session = {
       mode, players: this.players, picks: [...this.picks], seed: Number(this.d.params.get('seed') ?? seed), cup: new Cup(roster), roster, idx: 0,
-      xpGain: {}, levelsBefore: Object.fromEntries(this.picks.map((c) => [c, this.save.characters[c].level])), results: [], current: null, cfg: null,
+      xpGain: {}, levelsBefore: Object.fromEntries(this.picks.map((c) => [c, this.save.characters[c].level])), results: [], current: null, cfg: null, single: null,
     };
+    if (this.d.params.get('autostart') === 'event') return;
     if (mode === 'warmup' || !this.save.stats.warmupDone) this.runEvent('warmup');
     else this.runEvent(EVENT_ORDER[0]);
   }
@@ -335,9 +341,9 @@ export class App {
     const info = EVENT_INFO[ev];
     this.show(`<div class="panel wide results"><h2>${info.name}</h2><p class="msg">${EVENT_RESULT_MSG[Math.min(3, myRank - 1)]}</p>
       <div class="rlist">${rows}</div><div class="xps">${humanLines.join('')}</div>
-      <div class="row"><button class="btn big primary" id="next">${s.cup.order.length >= 4 ? 'Ver la copa' : 'Siguiente prueba'}</button></div></div>`, 'screen center');
+      <div class="row"><button class="btn big primary" id="next">${s.single ? 'Menú' : s.cup.order.length >= 4 ? 'Ver la copa' : 'Siguiente prueba'}</button></div></div>`, 'screen center');
     services.audio?.ui('fanfare');
-    this.on('#next', () => { if (s.cup.order.length >= 4) this.cupFinal(); else this.runEvent(EVENT_ORDER[s.cup.order.length]); });
+    this.on('#next', () => { if (s.single) { this.session = null; this.menu(); } else if (s.cup.order.length >= 4) this.cupFinal(); else this.runEvent(EVENT_ORDER[s.cup.order.length]); });
   }
 
   private detailFor(ev: EventId, base: string, a: { stars: number; gold: number; points: number; bursts: number }): string {

@@ -65,7 +65,133 @@
          "draworder":"topdown",
          "id":6,
          "name":"props_suelo",
-         "objects":[],
+         "objects":[
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"oak",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"split",
+                         "type":"int",
+                         "value":66
+                        }],
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":208,
+                 "y":222
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"fir",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":37,
+                 "y":173
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"bush_flower",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":112,
+                 "y":172
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"blossom",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":326,
+                 "y":172
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"balloons",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":26,
+                 "y":186
+                }, 
+                {
+                 "height":0,
+                 "id":20,
+                 "name":"balloons",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":390,
+                 "y":186
+                }, 
+                {
+                 "height":0,
+                 "id":21,
+                 "name":"bench",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":24,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":22,
+                 "name":"bench",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":23,
+                 "name":"flowers",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":58,
+                 "y":270
+                }, 
+                {
+                 "height":0,
+                 "id":24,
+                 "name":"flowers",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":358,
+                 "y":270
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -469,7 +595,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":16,
+                 "id":26,
                  "name":"pelota",
                  "point":true,
                  "rotation":0,
@@ -481,7 +607,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":17,
+                 "id":27,
                  "name":"pelota",
                  "point":true,
                  "rotation":0,
@@ -515,7 +641,7 @@
          "objects":[
                 {
                  "height":96,
-                 "id":15,
+                 "id":25,
                  "name":"Plaza de la Pi\u00f1ata",
                  "properties":[
                         {
@@ -537,7 +663,7 @@
          "y":0
         }],
  "nextlayerid":40,
- "nextobjectid":19,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "properties":[
         {

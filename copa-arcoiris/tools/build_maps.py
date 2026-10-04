@@ -105,6 +105,31 @@ def _typ(v):
     return ""
 
 
+PROPS = {k: (v["frame"]["w"], v["frame"]["h"]) for k, v in json.load(open(os.path.join(ROOT, "public/assets/props/props.json")))["frames"].items()}
+
+
+def deco(m, name, x, y, group="props_suelo", **p):
+    """Scenery sprite from the props atlas. (x, y) = bottom centre; depth sorts by y like the actors.
+    Property `split` = rows from which the lower part is drawn in the actors' layer (a tree whose crown stays behind them)."""
+    assert name in PROPS, name
+    return m.add(group, x, y, point=True, name=name, type="deco", **p)
+
+
+def row(m, x0, x1, kinds, y, gap=(6, 26), seed=0, jy=3, group="props_suelo"):
+    """Place sprites left to right in [x0, x1) cycling through `kinds`, with random gaps."""
+    r = random.Random(seed)
+    x = x0 + r.randint(0, 12)
+    i = 0
+    while True:
+        k = kinds[i % len(kinds)]
+        w = PROPS[k][0]
+        if x + w > x1:
+            break
+        deco(m, k, x + w // 2, y + r.randint(-jy, jy), group)
+        x += w + r.randint(*gap)
+        i += 1
+
+
 def pick_grass(seed=0, flowery=0.1):
     r = random.Random(seed)
     def f(tx, ty):
@@ -212,6 +237,26 @@ def build_race():
     for i, (x, nm) in enumerate(((560, "Pradera"), (1450, "Rio"), (2190, "Colina")), 1):
         m.add("checkpoints", x, 224, point=True, name=f"arco{i}", type="arco", orden=i, zona=nm)
     spawns(m, 40)
+    # scenery: trees and houses stand behind the track on the hedge line
+    row(m, 0, 520, ["oak", "bush_flower", "tree_round", "fir", "hedge_berry", "blossom"], 172, seed=1)
+    row(m, 520, 1424, ["house_mush", "bush_flower", "tree_round", "house_thatch", "hedge_berry", "windmill", "blossom", "stall", "bush_flower", "house_mush"], 172, gap=(4, 14), seed=2)
+    row(m, 1424, 1500, ["fir", "reeds"], 172, seed=3)
+    row(m, 1500, 1940, ["reeds", "tree_round", "reeds", "fir", "reeds", "blossom"], 160, gap=(30, 70), seed=33)
+    row(m, 1940, 2180, ["fir", "tree_round", "bush_flower"], 172, seed=4)
+    row(m, 2180, 2880, ["fir", "mushrooms", "oak", "hedge_berry", "blossom", "mushrooms", "tree_round", "fir"], 172, gap=(10, 30), seed=5)
+    row(m, 2880, pw - 70, ["lanterns", "tent", "fountain", "stall", "blossom", "tent", "lanterns"], 172, gap=(14, 34), seed=6)
+    for x, y in ((1560, 232), (1640, 256), (1740, 238), (1830, 258), (1900, 232)):
+        deco(m, "lily", x, y)
+    for x, y in ((1700, 250), (1790, 228)):
+        deco(m, "duck", x, y)
+    for x in (110, 250, 400):
+        deco(m, "flowers", x, 268 if x != 250 else 182)
+    deco(m, "balloons", 30, 176); deco(m, "balloons", 98, 176)
+    deco(m, "sign_arrow", 140, 180)
+    for x in (2230, 2440, 2760):
+        deco(m, "mushrooms", x, 270)
+    for x in (600, 1280):
+        deco(m, "planter", x, 183)
     # zones
     for i, (x0, x1, n) in enumerate(((0, 520, "Pradera de salida"), (520, 1424, "Jardín de las casitas"), (1424, 2180, "Río Cristal"),
                                       (2180, 2880, "Colina de los Hongos"), (2880, pw, "Plaza de la Meta")), 1):
@@ -314,6 +359,13 @@ def build_circuit():
     m.box(x0 + 262, 176, 36, 26, 20, "heno", id="heno4", group="plataformas")
     m.add("objetos", x0 + 227, 190, point=True, name="dorada", type="dorada", z=44)
     m.add("objetos", x0 + 70, 240, point=True, name="pelota", type="pelota")
+    # ---- scenery per room
+    scen = [["tree_round", "bush_flower", "oak", "hedge_berry", "fir"], ["blossom", "reeds", "tree_round", "mushrooms", "fir", "bush_flower"],
+            ["tent", "lanterns", "stall", "bush_flower", "tree_round"], ["house_mush", "windmill", "blossom", "house_thatch", "bush_flower"]]
+    for i in range(4):
+        row(m, i * RW + 4, (i + 1) * RW - 4, scen[i], 172, gap=(6, 20), seed=40 + i)
+        deco(m, "pole_pink", (i + 1) * RW - 8, GT + 4); deco(m, "pole_cyan", (i + 1) * RW - 8, GB)
+    deco(m, "balloons", 18, 176); deco(m, "balloons", 18, 270)
     # ---- AI routes per room
     n = m.node
     for i in range(4):
@@ -361,6 +413,12 @@ def build_pinata():
     m.box(c - 66, 184, 44, 22, 50, "nube", id="nube", group="plataformas", mueve="x", rango=88.0, periodo=8.0, fase=0.0)
     for i, (x, y) in enumerate(((c - 80, 196), (c + 80, 196), (c - 80, 250), (c + 80, 250))):
         m.add("salidas", x, y, point=True, name=f"salida{i}", type="salida", slot=i)
+    deco(m, "oak", c, 222, split=66)   # the Grandfather Tree: crown behind everyone, trunk in the actors' layer, piñata hangs in front of the crown
+    row(m, 0, c - 70, ["fir", "bush_flower", "tree_round", "hedge_berry"], 174, seed=60)
+    row(m, c + 70, RW, ["blossom", "hedge_berry", "fir", "bush_flower"], 174, seed=61)
+    deco(m, "balloons", 26, 186); deco(m, "balloons", RW - 26, 186)
+    deco(m, "bench", 24, 272); deco(m, "bench", RW - 24, 272)
+    deco(m, "flowers", c - 150, 270); deco(m, "flowers", c + 150, 270)
     m.add("zonas", 0, GT, pw, GB - GT, name="Plaza de la Piñata", type="zona", orden=1)
     for x, y in ((c - 48, 240), (c + 48, 240)):
         m.add("objetos", x, y, point=True, name="pelota", type="pelota")
@@ -382,10 +440,17 @@ def build_arena():
     m.add("huecos", 0, 264, pw, 48, name="agua_sur", type="hueco")
     m.add("huecos", 0, 184, ix, 80, name="agua_oeste", type="hueco")
     m.add("huecos", ix + iw, 184, pw - ix - iw, 80, name="agua_este", type="hueco")
-    m.box(c - 8, 214, 16, 12, 16, "parachoques", id="parachoques", group="colision")
+    m.box(c - 12, 212, 24, 14, 20, "parachoques", id="parachoques", group="colision")
     for i, (x, y) in enumerate(((c - 110, 208), (c + 110, 208), (c - 110, 244), (c + 110, 244))):
         m.add("salidas", x, y, point=True, name=f"salida{i}", type="salida", slot=i)
     m.add("objetos", c, 232, point=True, name="centro", type="centro")
+    for x, y in ((24, 176), (46, 262), (366, 270), (392, 178), (14, 226), (404, 232)):
+        deco(m, "lily", x, y)
+    for x, y in ((120, 168), (300, 166), (60, 282), (350, 284)):
+        deco(m, "reeds", x, y)
+    deco(m, "duck", 24, 214); deco(m, "ring", 392, 214); deco(m, "bubbles", 200, 162); deco(m, "bubbles", 86, 276)
+    deco(m, "dock", ix + 6, 188); deco(m, "dock", ix + iw - 6, 188)
+    deco(m, "rock", ix + 30, 262); deco(m, "rock", ix + iw - 34, 262)
     m.add("zonas", ix, 184, iw, 80, name="Arena de Burbujas", type="zona", orden=1)
     m.save(os.path.join(ROOT, "maps-src/arena.tmx"))
     return m
@@ -406,6 +471,10 @@ def build_warmup():
     m.add("objetos", 470, 224, point=True, name="blanco", type="blanco")
     for x in (540, 560, 580, 600):
         m.add("objetos", x, 224, point=True, name="estrella", type="estrella", z=6)
+    row(m, 0, pw, ["tree_round", "bush_flower", "fir", "hedge_berry", "oak", "blossom"], 172, seed=70)
+    deco(m, "signpost", 160, 182); deco(m, "bench", 340, 180); deco(m, "balloons", 30, 176)
+    for x in (230, 420, 520, 680):
+        deco(m, "flowers", x, 268)
     spawns(m, 40, ys=(214, 238, 194, 254))
     m.add("meta", 740, GT, 16, GB - GT, name="meta", type="meta")
     m.add("zonas", 0, GT, pw, GB - GT, name="Calentamiento", type="zona", orden=1)

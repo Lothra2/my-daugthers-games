@@ -10,12 +10,17 @@ import { services } from '../../app/services';
 import { Backdrop } from '../Backdrop';
 import { CharacterView, type SpriteMeta } from '../CharacterView';
 import { Fx } from '../Fx';
-import { archTexture, blockTextures, moverTexture } from '../Procedural';
+import { blockTextures, moverTexture } from '../Procedural';
 
 const DRAWN = new Set(['plataforma', 'seta', 'heno', 'caja', 'nube', 'piedra', 'pasarela', 'valla', 'tronco', 'parachoques']);
+/** Boxes drawn with a sprite from the props atlas. `top`: sprite centred on the top face (moves with the box). `bottom`: sits on the ground behind the footprint. */
+const SPRITE_BOX: Record<string, { frame: string; mode: 'top' | 'bottom' }> = { nube: { frame: 'cloud', mode: 'top' }, parachoques: { frame: 'bumper', mode: 'bottom' } };
+/** Horizontal origin of props whose pole is not centred. */
+const ORIGIN_X: Record<string, number> = { pole_green: 0.22, pole_pink: 0.22, pole_orange: 0.22, pole_cyan: 0.22, flag_finish: 0.22, sign_arrow: 0.29 };
+const POLES = ['pole_green', 'pole_pink', 'pole_orange', 'pole_cyan'];
 
 interface ItemView { img: Phaser.GameObjects.Image; sh: Phaser.GameObjects.Image }
-interface BoxView { id: string; top: Phaser.GameObjects.Image; front: Phaser.GameObjects.Image | null; box: MapData['boxes'][number] }
+interface BoxView { id: string; top: Phaser.GameObjects.Image; front: Phaser.GameObjects.Image | null; box: MapData['boxes'][number]; dx?: number; dy?: number }
 interface MoverView { img: Phaser.GameObjects.Image; m: MapData['movers'][number]; frames: string[] }
 
 export class EventScene extends Phaser.Scene {
@@ -39,13 +44,15 @@ export class EventScene extends Phaser.Scene {
   private lastCount = 0;
   private colorById = new Map<number, number>();
   private ptr: Phaser.GameObjects.Image | null = null;
+  private pinataImg: Phaser.GameObjects.Image | null = null;
+  private hitSwing = 0;
 
   constructor() { super('Event'); }
 
   init(cfg: EventConfig) {
     this.cfg = cfg;
     this.acc = 0; this.simClock = 0; this.overT = 0; this.doneSent = false; this.paused = false; this.hudT = 0;
-    this.views.clear(); this.itemViews.clear(); this.shotViews.clear(); this.boxViews = []; this.moverViews = []; this.hongos = [];
+    this.views.clear(); this.itemViews.clear(); this.shotViews.clear(); this.boxViews = []; this.moverViews = []; this.hongos = []; this.pinataImg = null;
     this.colorById.clear();
   }
 
@@ -101,7 +108,16 @@ export class EventScene extends Phaser.Scene {
     for (const lname of ['props_fondo', 'props_suelo', 'props_frente']) {
       const layer = raw.layers.find((l) => l.name === lname);
       for (const o of layer?.objects ?? []) {
-        if (!o.gid) continue;
+        if (!o.gid) {
+          const frame = o.name ?? '';
+          if (o.type !== 'deco' || !this.textures.get('props').has(frame)) continue;
+          const split = Number((o.properties as { name: string; value: unknown }[] | undefined)?.find((q) => q.name === 'split')?.value ?? 0);
+          const x = Math.round(o.x), y = Math.round(o.y), ox = ORIGIN_X[frame] ?? 0.5;
+          const depth = lname === 'props_fondo' ? -8000 : lname === 'props_frente' ? 100001 : y;
+          const img = this.add.image(x, y, 'props', frame).setOrigin(ox, 1).setDepth(split ? -7990 : depth);
+          if (split) this.add.image(x, y, 'props', frame).setOrigin(ox, 1).setDepth(depth).setCrop(0, split, img.width, img.height - split);
+          continue;
+        }
         const img = this.add.image(o.x, o.y, 'tiles16', o.gid - 1).setOrigin(0, 1);
         const top = (o.name ?? '').endsWith('_top');
         img.setDepth(lname === 'props_fondo' ? -8000 : lname === 'props_frente' ? 100001 : top ? o.y + 16 - 0.2 : o.y);
@@ -113,6 +129,15 @@ export class EventScene extends Phaser.Scene {
   private buildBoxes(map: MapData): void {
     for (const b of map.boxes) {
       if (!DRAWN.has(b.kind) || b.alto <= 2 || b.alto > 200) continue;
+      const sp = SPRITE_BOX[b.kind];
+      if (sp) {
+        const fr = this.textures.get('props').get(sp.frame);
+        const dx = Math.round((b.w - fr.width) / 2);
+        const dy = sp.mode === 'top' ? Math.round(b.h / 2 - fr.height / 2) : b.h - fr.height + 2 + b.alto;
+        const img = this.add.image(Math.round(b.x) + dx, Math.round(b.y - b.alto) + dy, 'props', sp.frame).setOrigin(0, 0).setDepth(sp.mode === 'top' ? b.y - 0.1 : b.y + b.h);
+        this.boxViews.push({ id: b.id, top: img, front: null, box: b, dx, dy });
+        continue;
+      }
       const k = blockTextures(this, b.kind, b.w, b.h, b.alto);
       const top = this.add.image(b.x, b.y - b.alto, k.top).setOrigin(0, 0).setDepth(b.y - 0.1);
       const front = this.add.image(b.x, b.y + b.h - b.alto, k.front).setOrigin(0, 0).setDepth(b.y + b.h);
@@ -133,20 +158,24 @@ export class EventScene extends Phaser.Scene {
   }
 
   private buildMarkers(map: MapData): void {
-    const cols = ['#4AA88E', '#FF5E7E', '#FFB23F', '#7BE3FF'];
+    const cols = [0x4aa88e, 0xff5e7e, 0xffb23f, 0x7be3ff];
+    const gt = map.groundTop, gb = map.groundBottom;
     map.checkpoints.forEach((c, i) => {
-      const key = `arch_${i}`;
-      archTexture(this, key, cols[i % cols.length], 14, 44);
-      const gt = map.groundTop, gb = map.groundBottom;
-      this.add.image(c.x, gt + 2, key).setOrigin(0.5, 1).setDepth(gt + 2);
-      this.add.image(c.x, gb, key).setOrigin(0.5, 1).setDepth(gb);
+      const frame = POLES[i % POLES.length];
+      this.add.image(Math.round(c.x), gt + 2, 'props', frame).setOrigin(ORIGIN_X[frame], 1).setDepth(gt + 2);
+      this.add.image(Math.round(c.x), gb, 'props', frame).setOrigin(ORIGIN_X[frame], 1).setDepth(gb);
       const g = this.add.graphics().setDepth(-8700);
-      g.fillStyle(Phaser.Display.Color.HexStringToColor(cols[i % cols.length]).color, 0.35).fillRect(c.x - 2, gt, 4, gb - gt);
+      g.fillStyle(cols[i % cols.length], 0.35).fillRect(c.x - 2, gt, 4, gb - gt);
     });
     if (map.goal) {
-      archTexture(this, 'arch_goal', '#2A1B3D', 20, 56, true);
-      this.add.image(map.goal.x + 8, map.groundTop + 2, 'arch_goal').setOrigin(0.5, 1).setDepth(map.groundTop + 2);
-      this.add.image(map.goal.x + 8, map.groundBottom, 'arch_goal').setOrigin(0.5, 1).setDepth(map.groundBottom);
+      this.add.image(Math.round(map.goal.x + 8), gt + 2, 'props', 'flag_finish').setOrigin(ORIGIN_X.flag_finish, 1).setDepth(gt + 2);
+      this.add.image(Math.round(map.goal.x + 8), gb, 'props', 'flag_finish').setOrigin(ORIGIN_X.flag_finish, 1).setDepth(gb);
+    }
+    const pin = this.world.data.pinata as { x: number; y: number; z: number } | undefined;
+    if (pin) {
+      this.pinataImg = this.add.image(pin.x, pin.y - pin.z, 'props', 'pinata').setOrigin(0.5, 0.5).setDepth(pin.y + 40);
+      const b = this.world.data.basket as { x: number; y: number };
+      this.add.image(Math.round(b.x), Math.round(b.y), 'props', 'basket').setOrigin(0.5, 1).setDepth(b.y);
     }
   }
 
@@ -185,6 +214,7 @@ export class EventScene extends Phaser.Scene {
   private onFx(e: GameFx): void {
     if (e.k === 'count') { this.lastCount = e.v ?? 0; services.hud?.count(e.v ?? 0); }
     else if (e.k === 'go') services.hud?.count(0);
+    else if (e.k === 'pinata') this.hitSwing = 1;
     else if (e.k === 'cp') services.hud?.banner(`¡Arco ${e.v} de ${this.world.map.checkpoints.length}!`);
     else if (e.k === 'finish') services.hud?.banner(e.who !== undefined ? `${this.world.actors.find((a) => a.id === e.who)?.name ?? ''}: ¡puesto ${e.v}!` : '');
     else if (e.k === 'bounce') { const z = this.hongos.find((h) => e.x >= h.z.x - 4 && e.x <= h.z.x + h.z.w + 4 && Math.abs(e.y - (h.z.y + h.z.h / 2)) < 16); if (z) z.t = 0.18; }
@@ -214,7 +244,7 @@ export class EventScene extends Phaser.Scene {
     for (const bv of this.boxViews) {
       if (!bv.box.move) continue;
       const r = boxAt(bv.box, w.t);
-      bv.top.setPosition(Math.round(r.x), Math.round(r.y - bv.box.alto)).setDepth(r.y - 0.1);
+      bv.top.setPosition(Math.round(r.x) + (bv.dx ?? 0), Math.round(r.y - bv.box.alto) + (bv.dy ?? 0)).setDepth(r.y - 0.1);
       bv.front?.setPosition(Math.round(r.x), Math.round(r.y + r.h - bv.box.alto)).setDepth(r.y + r.h);
     }
     for (const mv of this.moverViews) {
@@ -223,12 +253,24 @@ export class EventScene extends Phaser.Scene {
       mv.img.setTexture(mv.frames[f]).setPosition(Math.round(r.x), Math.round(r.y - mv.m.alto)).setDepth(r.y + r.h);
     }
     for (const h of this.hongos) { h.t = Math.max(0, h.t - dt); h.img.setTexture(h.t > 0 ? 'hongo1' : 'hongo0'); }
+    this.syncPinata();
     this.syncItems();
     this.syncShots();
     this.fx.update(dt);
     if (this.debugG) this.drawDebug();
     this.hudT += dt;
     if (this.hudT > 0.08) { this.hudT = 0; services.hud?.update(w, this); }
+  }
+
+  private syncPinata(): void {
+    const img = this.pinataImg, p = this.world.data.pinata as { x: number; y: number; z: number; hp: number; max: number; broken: boolean; t: number } | undefined;
+    if (!img || !p) return;
+    img.setVisible(!p.broken);
+    if (p.broken) return;
+    img.setFrame(p.hp <= 24 ? 'pinata_open' : 'pinata');
+    const hurt = Math.max(0, this.hitSwing);
+    this.hitSwing = Math.max(0, this.hitSwing - 1 / 60 * 2.2);
+    img.setPosition(Math.round(p.x + Math.sin(this.simClock * 2) * 2 + Math.sin(this.simClock * 24) * hurt * 4), Math.round(p.y - p.z)).setAngle(Math.sin(this.simClock * 2) * 3 + Math.sin(this.simClock * 18) * hurt * 14);
   }
 
   private syncItems(): void {

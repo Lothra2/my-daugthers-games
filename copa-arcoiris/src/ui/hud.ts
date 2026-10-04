@@ -41,12 +41,12 @@ export class Hud {
       const el = document.createElement('div');
       el.className = 'chip' + (a.control === 'human' ? ' human' : '');
       el.style.setProperty('--c', hex(a.stats.colorHex));
-      el.innerHTML = `<div class="chip-face" style="background-image:url(${A('ui/portraits.png')});background-position:0 -${row * 38}px"></div>
+      el.innerHTML = `<div class="chip-face" style="background-image:url(${A('ui/portraits.png')});--row:${row}"></div>
         <div class="chip-body"><div class="chip-name">${a.name}</div><div class="chip-bar"><i></i></div><div class="chip-pow"><i></i></div></div><div class="chip-score"></div>`;
       chips.appendChild(el);
       this.chips.set(a.id, { el, bar: el.querySelector('.chip-bar i')!, pow: el.querySelector('.chip-pow i')!, score: el.querySelector('.chip-score')! });
       const ar = document.createElement('div'); ar.className = 'arrow'; ar.style.setProperty('--c', hex(a.stats.colorHex)); ar.style.display = 'none';
-      ar.innerHTML = `<span class="arrow-face" style="background-image:url(${A('ui/portraits.png')});background-position:0 -${row * 30}px"></span>`;
+      ar.innerHTML = `<span class="arrow-face" style="background-image:url(${A('ui/portraits.png')});--row:${row}"></span>`;
       this.root.querySelector('.hud-arrows')!.appendChild(ar); this.arrows.set(a.id, ar);
     }
     this.root.querySelector('.hud-pause')!.addEventListener('pointerdown', (e) => { e.preventDefault(); services.router?.pause(); });

@@ -24,8 +24,9 @@ export async function launch(opts = {}) {
   return chromium.launch({ executablePath: chromePath(), args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required', ...(opts.args || [])] });
 }
 
-export async function openGame(browser, url, query = '', ctxOpts = {}) {
+export async function openGame(browser, url, query = '', ctxOpts = {}, initScript = null, initArg = null) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 720 }, ...ctxOpts });
+  if (initScript) await ctx.addInitScript(initScript, initArg);
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));

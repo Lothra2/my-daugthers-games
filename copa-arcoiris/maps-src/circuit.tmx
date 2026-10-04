@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="104" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="99">
+<map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="104" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="40" nextobjectid="129">
  <properties>
   <property name="camera"  value="room"/>
   <property name="ground_top" type="int" value="176"/>
@@ -101,6 +101,96 @@
   <object id="25" name="puerta" type="" gid="35" x="1232" y="264" width="16" height="16"/>
   <object id="33" name="puerta" type="" gid="35" x="1648" y="200" width="16" height="16"/>
   <object id="34" name="puerta" type="" gid="35" x="1648" y="264" width="16" height="16"/>
+  <object id="70" name="tree_round" type="deco" x="47" y="173">
+   <point/>
+  </object>
+  <object id="71" name="bush_flower" type="deco" x="120" y="173">
+   <point/>
+  </object>
+  <object id="72" name="oak" type="deco" x="205" y="170">
+   <point/>
+  </object>
+  <object id="73" name="hedge_berry" type="deco" x="298" y="174">
+   <point/>
+  </object>
+  <object id="74" name="fir" type="deco" x="368" y="174">
+   <point/>
+  </object>
+  <object id="75" name="pole_pink" type="deco" x="408" y="180">
+   <point/>
+  </object>
+  <object id="76" name="pole_cyan" type="deco" x="408" y="272">
+   <point/>
+  </object>
+  <object id="77" name="blossom" type="deco" x="467" y="171">
+   <point/>
+  </object>
+  <object id="78" name="reeds" type="deco" x="533" y="170">
+   <point/>
+  </object>
+  <object id="79" name="tree_round" type="deco" x="604" y="172">
+   <point/>
+  </object>
+  <object id="80" name="mushrooms" type="deco" x="669" y="174">
+   <point/>
+  </object>
+  <object id="81" name="fir" type="deco" x="726" y="173">
+   <point/>
+  </object>
+  <object id="82" name="bush_flower" type="deco" x="787" y="172">
+   <point/>
+  </object>
+  <object id="83" name="pole_pink" type="deco" x="824" y="180">
+   <point/>
+  </object>
+  <object id="84" name="pole_cyan" type="deco" x="824" y="272">
+   <point/>
+  </object>
+  <object id="85" name="tent" type="deco" x="882" y="169">
+   <point/>
+  </object>
+  <object id="86" name="lanterns" type="deco" x="966" y="174">
+   <point/>
+  </object>
+  <object id="87" name="stall" type="deco" x="1056" y="170">
+   <point/>
+  </object>
+  <object id="88" name="bush_flower" type="deco" x="1119" y="170">
+   <point/>
+  </object>
+  <object id="89" name="tree_round" type="deco" x="1189" y="169">
+   <point/>
+  </object>
+  <object id="90" name="pole_pink" type="deco" x="1240" y="180">
+   <point/>
+  </object>
+  <object id="91" name="pole_cyan" type="deco" x="1240" y="272">
+   <point/>
+  </object>
+  <object id="92" name="house_mush" type="deco" x="1294" y="171">
+   <point/>
+  </object>
+  <object id="93" name="windmill" type="deco" x="1390" y="175">
+   <point/>
+  </object>
+  <object id="94" name="blossom" type="deco" x="1477" y="172">
+   <point/>
+  </object>
+  <object id="95" name="house_thatch" type="deco" x="1574" y="174">
+   <point/>
+  </object>
+  <object id="96" name="pole_pink" type="deco" x="1656" y="180">
+   <point/>
+  </object>
+  <object id="97" name="pole_cyan" type="deco" x="1656" y="272">
+   <point/>
+  </object>
+  <object id="98" name="balloons" type="deco" x="18" y="176">
+   <point/>
+  </object>
+  <object id="99" name="balloons" type="deco" x="18" y="270">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="7" name="props_frente">
  </objectgroup>
@@ -394,7 +484,7 @@
  <objectgroup id="16" name="meta">
  </objectgroup>
  <objectgroup id="17" name="rutas_ia">
-  <object id="70" name="r0a" type="nodo" x="60" y="226">
+  <object id="100" name="r0a" type="nodo" x="60" y="226">
    <properties>
     <property name="id"  value="r0a"/>
     <property name="tipo"  value="principal"/>
@@ -403,7 +493,7 @@
    </properties>
    <point/>
   </object>
-  <object id="71" name="r0e" type="nodo" x="220" y="226">
+  <object id="101" name="r0e" type="nodo" x="220" y="226">
    <properties>
     <property name="id"  value="r0e"/>
     <property name="tipo"  value="facil"/>
@@ -412,7 +502,7 @@
    </properties>
    <point/>
   </object>
-  <object id="72" name="r0h" type="nodo" x="96" y="208">
+  <object id="102" name="r0h" type="nodo" x="96" y="208">
    <properties>
     <property name="id"  value="r0h"/>
     <property name="tipo"  value="dificil"/>
@@ -421,7 +511,7 @@
    </properties>
    <point/>
   </object>
-  <object id="73" name="r0h2" type="nodo" x="200" y="188">
+  <object id="103" name="r0h2" type="nodo" x="200" y="188">
    <properties>
     <property name="id"  value="r0h2"/>
     <property name="tipo"  value="dificil"/>
@@ -430,7 +520,7 @@
    </properties>
    <point/>
   </object>
-  <object id="74" name="r0h3" type="nodo" x="338" y="188">
+  <object id="104" name="r0h3" type="nodo" x="338" y="188">
    <properties>
     <property name="id"  value="r0h3"/>
     <property name="tipo"  value="dificil"/>
@@ -439,7 +529,7 @@
    </properties>
    <point/>
   </object>
-  <object id="75" name="r0d" type="nodo" x="402" y="226">
+  <object id="105" name="r0d" type="nodo" x="402" y="226">
    <properties>
     <property name="id"  value="r0d"/>
     <property name="tipo"  value="principal"/>
@@ -448,7 +538,7 @@
    </properties>
    <point/>
   </object>
-  <object id="76" name="r1a" type="nodo" x="476" y="226">
+  <object id="106" name="r1a" type="nodo" x="476" y="226">
    <properties>
     <property name="id"  value="r1a"/>
     <property name="tipo"  value="principal"/>
@@ -457,7 +547,7 @@
    </properties>
    <point/>
   </object>
-  <object id="77" name="r1e0" type="nodo" x="566" y="262">
+  <object id="107" name="r1e0" type="nodo" x="566" y="262">
    <properties>
     <property name="id"  value="r1e0"/>
     <property name="tipo"  value="facil"/>
@@ -466,7 +556,7 @@
    </properties>
    <point/>
   </object>
-  <object id="78" name="r1e" type="nodo" x="631" y="264">
+  <object id="108" name="r1e" type="nodo" x="631" y="264">
    <properties>
     <property name="id"  value="r1e"/>
     <property name="tipo"  value="facil"/>
@@ -475,7 +565,7 @@
    </properties>
    <point/>
   </object>
-  <object id="79" name="r1e2" type="nodo" x="706" y="236">
+  <object id="109" name="r1e2" type="nodo" x="706" y="236">
    <properties>
     <property name="id"  value="r1e2"/>
     <property name="tipo"  value="facil"/>
@@ -484,7 +574,7 @@
    </properties>
    <point/>
   </object>
-  <object id="80" name="r1h" type="nodo" x="592" y="218">
+  <object id="110" name="r1h" type="nodo" x="592" y="218">
    <properties>
     <property name="id"  value="r1h"/>
     <property name="tipo"  value="dificil"/>
@@ -493,7 +583,7 @@
    </properties>
    <point/>
   </object>
-  <object id="81" name="r1h2" type="nodo" x="632" y="218">
+  <object id="111" name="r1h2" type="nodo" x="632" y="218">
    <properties>
     <property name="id"  value="r1h2"/>
     <property name="tipo"  value="dificil"/>
@@ -502,7 +592,7 @@
    </properties>
    <point/>
   </object>
-  <object id="82" name="r1h3" type="nodo" x="671" y="218">
+  <object id="112" name="r1h3" type="nodo" x="671" y="218">
    <properties>
     <property name="id"  value="r1h3"/>
     <property name="tipo"  value="dificil"/>
@@ -511,7 +601,7 @@
    </properties>
    <point/>
   </object>
-  <object id="83" name="r1d" type="nodo" x="818" y="226">
+  <object id="113" name="r1d" type="nodo" x="818" y="226">
    <properties>
     <property name="id"  value="r1d"/>
     <property name="tipo"  value="principal"/>
@@ -520,7 +610,7 @@
    </properties>
    <point/>
   </object>
-  <object id="84" name="r2a" type="nodo" x="892" y="226">
+  <object id="114" name="r2a" type="nodo" x="892" y="226">
    <properties>
     <property name="id"  value="r2a"/>
     <property name="tipo"  value="principal"/>
@@ -529,7 +619,7 @@
    </properties>
    <point/>
   </object>
-  <object id="85" name="r2e0" type="nodo" x="950" y="262">
+  <object id="115" name="r2e0" type="nodo" x="950" y="262">
    <properties>
     <property name="id"  value="r2e0"/>
     <property name="tipo"  value="facil"/>
@@ -538,7 +628,7 @@
    </properties>
    <point/>
   </object>
-  <object id="86" name="r2e" type="nodo" x="1042" y="262">
+  <object id="116" name="r2e" type="nodo" x="1042" y="262">
    <properties>
     <property name="id"  value="r2e"/>
     <property name="tipo"  value="facil"/>
@@ -547,7 +637,7 @@
    </properties>
    <point/>
   </object>
-  <object id="87" name="r2e2" type="nodo" x="1132" y="232">
+  <object id="117" name="r2e2" type="nodo" x="1132" y="232">
    <properties>
     <property name="id"  value="r2e2"/>
     <property name="tipo"  value="facil"/>
@@ -556,7 +646,7 @@
    </properties>
    <point/>
   </object>
-  <object id="88" name="r2h" type="nodo" x="972" y="204">
+  <object id="118" name="r2h" type="nodo" x="972" y="204">
    <properties>
     <property name="id"  value="r2h"/>
     <property name="tipo"  value="dificil"/>
@@ -565,7 +655,7 @@
    </properties>
    <point/>
   </object>
-  <object id="89" name="r2h2" type="nodo" x="1042" y="218">
+  <object id="119" name="r2h2" type="nodo" x="1042" y="218">
    <properties>
     <property name="id"  value="r2h2"/>
     <property name="tipo"  value="dificil"/>
@@ -574,7 +664,7 @@
    </properties>
    <point/>
   </object>
-  <object id="90" name="r2h3" type="nodo" x="1122" y="218">
+  <object id="120" name="r2h3" type="nodo" x="1122" y="218">
    <properties>
     <property name="id"  value="r2h3"/>
     <property name="tipo"  value="dificil"/>
@@ -583,7 +673,7 @@
    </properties>
    <point/>
   </object>
-  <object id="91" name="r2d" type="nodo" x="1234" y="226">
+  <object id="121" name="r2d" type="nodo" x="1234" y="226">
    <properties>
     <property name="id"  value="r2d"/>
     <property name="tipo"  value="principal"/>
@@ -592,7 +682,7 @@
    </properties>
    <point/>
   </object>
-  <object id="92" name="r3a" type="nodo" x="1308" y="226">
+  <object id="122" name="r3a" type="nodo" x="1308" y="226">
    <properties>
     <property name="id"  value="r3a"/>
     <property name="tipo"  value="principal"/>
@@ -601,7 +691,7 @@
    </properties>
    <point/>
   </object>
-  <object id="93" name="r3e" type="nodo" x="1463" y="232">
+  <object id="123" name="r3e" type="nodo" x="1463" y="232">
    <properties>
     <property name="id"  value="r3e"/>
     <property name="tipo"  value="facil"/>
@@ -610,7 +700,7 @@
    </properties>
    <point/>
   </object>
-  <object id="94" name="r3h" type="nodo" x="1352" y="190">
+  <object id="124" name="r3h" type="nodo" x="1352" y="190">
    <properties>
     <property name="id"  value="r3h"/>
     <property name="tipo"  value="dificil"/>
@@ -619,7 +709,7 @@
    </properties>
    <point/>
   </object>
-  <object id="95" name="r3h2" type="nodo" x="1475" y="190">
+  <object id="125" name="r3h2" type="nodo" x="1475" y="190">
    <properties>
     <property name="id"  value="r3h2"/>
     <property name="tipo"  value="dificil"/>
@@ -628,7 +718,7 @@
    </properties>
    <point/>
   </object>
-  <object id="96" name="r3h3" type="nodo" x="1548" y="190">
+  <object id="126" name="r3h3" type="nodo" x="1548" y="190">
    <properties>
     <property name="id"  value="r3h3"/>
     <property name="tipo"  value="dificil"/>
@@ -637,7 +727,7 @@
    </properties>
    <point/>
   </object>
-  <object id="97" name="r3d" type="nodo" x="1650" y="226">
+  <object id="127" name="r3d" type="nodo" x="1650" y="226">
    <properties>
     <property name="id"  value="r3d"/>
     <property name="tipo"  value="principal"/>

@@ -161,6 +161,366 @@
                  "width":16,
                  "x":1648,
                  "y":264
+                }, 
+                {
+                 "height":0,
+                 "id":70,
+                 "name":"tree_round",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":47,
+                 "y":173
+                }, 
+                {
+                 "height":0,
+                 "id":71,
+                 "name":"bush_flower",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":120,
+                 "y":173
+                }, 
+                {
+                 "height":0,
+                 "id":72,
+                 "name":"oak",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":205,
+                 "y":170
+                }, 
+                {
+                 "height":0,
+                 "id":73,
+                 "name":"hedge_berry",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":298,
+                 "y":174
+                }, 
+                {
+                 "height":0,
+                 "id":74,
+                 "name":"fir",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":368,
+                 "y":174
+                }, 
+                {
+                 "height":0,
+                 "id":75,
+                 "name":"pole_pink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":408,
+                 "y":180
+                }, 
+                {
+                 "height":0,
+                 "id":76,
+                 "name":"pole_cyan",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":408,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":77,
+                 "name":"blossom",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":467,
+                 "y":171
+                }, 
+                {
+                 "height":0,
+                 "id":78,
+                 "name":"reeds",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":533,
+                 "y":170
+                }, 
+                {
+                 "height":0,
+                 "id":79,
+                 "name":"tree_round",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":604,
+                 "y":172
+                }, 
+                {
+                 "height":0,
+                 "id":80,
+                 "name":"mushrooms",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":669,
+                 "y":174
+                }, 
+                {
+                 "height":0,
+                 "id":81,
+                 "name":"fir",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":726,
+                 "y":173
+                }, 
+                {
+                 "height":0,
+                 "id":82,
+                 "name":"bush_flower",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":787,
+                 "y":172
+                }, 
+                {
+                 "height":0,
+                 "id":83,
+                 "name":"pole_pink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":824,
+                 "y":180
+                }, 
+                {
+                 "height":0,
+                 "id":84,
+                 "name":"pole_cyan",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":824,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":85,
+                 "name":"tent",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":882,
+                 "y":169
+                }, 
+                {
+                 "height":0,
+                 "id":86,
+                 "name":"lanterns",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":966,
+                 "y":174
+                }, 
+                {
+                 "height":0,
+                 "id":87,
+                 "name":"stall",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1056,
+                 "y":170
+                }, 
+                {
+                 "height":0,
+                 "id":88,
+                 "name":"bush_flower",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1119,
+                 "y":170
+                }, 
+                {
+                 "height":0,
+                 "id":89,
+                 "name":"tree_round",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1189,
+                 "y":169
+                }, 
+                {
+                 "height":0,
+                 "id":90,
+                 "name":"pole_pink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1240,
+                 "y":180
+                }, 
+                {
+                 "height":0,
+                 "id":91,
+                 "name":"pole_cyan",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1240,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":92,
+                 "name":"house_mush",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1294,
+                 "y":171
+                }, 
+                {
+                 "height":0,
+                 "id":93,
+                 "name":"windmill",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1390,
+                 "y":175
+                }, 
+                {
+                 "height":0,
+                 "id":94,
+                 "name":"blossom",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1477,
+                 "y":172
+                }, 
+                {
+                 "height":0,
+                 "id":95,
+                 "name":"house_thatch",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1574,
+                 "y":174
+                }, 
+                {
+                 "height":0,
+                 "id":96,
+                 "name":"pole_pink",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1656,
+                 "y":180
+                }, 
+                {
+                 "height":0,
+                 "id":97,
+                 "name":"pole_cyan",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":1656,
+                 "y":272
+                }, 
+                {
+                 "height":0,
+                 "id":98,
+                 "name":"balloons",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":18,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":99,
+                 "name":"balloons",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":18,
+                 "y":270
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1262,7 +1622,7 @@
          "objects":[
                 {
                  "height":0,
-                 "id":70,
+                 "id":100,
                  "name":"r0a",
                  "point":true,
                  "properties":[
@@ -1295,7 +1655,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":71,
+                 "id":101,
                  "name":"r0e",
                  "point":true,
                  "properties":[
@@ -1328,7 +1688,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":72,
+                 "id":102,
                  "name":"r0h",
                  "point":true,
                  "properties":[
@@ -1361,7 +1721,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":73,
+                 "id":103,
                  "name":"r0h2",
                  "point":true,
                  "properties":[
@@ -1394,7 +1754,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":74,
+                 "id":104,
                  "name":"r0h3",
                  "point":true,
                  "properties":[
@@ -1427,7 +1787,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":75,
+                 "id":105,
                  "name":"r0d",
                  "point":true,
                  "properties":[
@@ -1460,7 +1820,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":76,
+                 "id":106,
                  "name":"r1a",
                  "point":true,
                  "properties":[
@@ -1493,7 +1853,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":77,
+                 "id":107,
                  "name":"r1e0",
                  "point":true,
                  "properties":[
@@ -1526,7 +1886,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":78,
+                 "id":108,
                  "name":"r1e",
                  "point":true,
                  "properties":[
@@ -1559,7 +1919,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":79,
+                 "id":109,
                  "name":"r1e2",
                  "point":true,
                  "properties":[
@@ -1592,7 +1952,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":80,
+                 "id":110,
                  "name":"r1h",
                  "point":true,
                  "properties":[
@@ -1625,7 +1985,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":81,
+                 "id":111,
                  "name":"r1h2",
                  "point":true,
                  "properties":[
@@ -1658,7 +2018,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":82,
+                 "id":112,
                  "name":"r1h3",
                  "point":true,
                  "properties":[
@@ -1691,7 +2051,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":83,
+                 "id":113,
                  "name":"r1d",
                  "point":true,
                  "properties":[
@@ -1724,7 +2084,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":84,
+                 "id":114,
                  "name":"r2a",
                  "point":true,
                  "properties":[
@@ -1757,7 +2117,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":85,
+                 "id":115,
                  "name":"r2e0",
                  "point":true,
                  "properties":[
@@ -1790,7 +2150,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":86,
+                 "id":116,
                  "name":"r2e",
                  "point":true,
                  "properties":[
@@ -1823,7 +2183,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":87,
+                 "id":117,
                  "name":"r2e2",
                  "point":true,
                  "properties":[
@@ -1856,7 +2216,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":88,
+                 "id":118,
                  "name":"r2h",
                  "point":true,
                  "properties":[
@@ -1889,7 +2249,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":89,
+                 "id":119,
                  "name":"r2h2",
                  "point":true,
                  "properties":[
@@ -1922,7 +2282,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":90,
+                 "id":120,
                  "name":"r2h3",
                  "point":true,
                  "properties":[
@@ -1955,7 +2315,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":91,
+                 "id":121,
                  "name":"r2d",
                  "point":true,
                  "properties":[
@@ -1988,7 +2348,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":92,
+                 "id":122,
                  "name":"r3a",
                  "point":true,
                  "properties":[
@@ -2021,7 +2381,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":93,
+                 "id":123,
                  "name":"r3e",
                  "point":true,
                  "properties":[
@@ -2054,7 +2414,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":94,
+                 "id":124,
                  "name":"r3h",
                  "point":true,
                  "properties":[
@@ -2087,7 +2447,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":95,
+                 "id":125,
                  "name":"r3h2",
                  "point":true,
                  "properties":[
@@ -2120,7 +2480,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":96,
+                 "id":126,
                  "name":"r3h3",
                  "point":true,
                  "properties":[
@@ -2153,7 +2513,7 @@
                 }, 
                 {
                  "height":0,
-                 "id":97,
+                 "id":127,
                  "name":"r3d",
                  "point":true,
                  "properties":[
@@ -2749,7 +3109,7 @@
          "y":0
         }],
  "nextlayerid":40,
- "nextobjectid":99,
+ "nextobjectid":129,
  "orientation":"orthogonal",
  "properties":[
         {

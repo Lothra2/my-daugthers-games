@@ -51,3 +51,8 @@ Tope de la primera entrega: 200 créditos. Fuente de verdad: `art-src/generation
 | 2026-10-04 06:53 | xai/grok-imagine-image-2.0 | mama_carry_throw | hoja mama carry_throw | 1.44 | ok | 3149269e-29ed-4ca2-9c65-e332814ac82e |
 | 2026-10-04 06:57 | xai/grok-imagine-image-2.0 | papa_power_celebrate | hoja papa power_celebrate | 1.44 | ok | a51f49d6-6817-4c5b-98e1-c8b3d22a0e16 |
 | 2026-10-04 06:57 | xai/grok-imagine-image-2.0 | mama_swim_push | hoja mama swim_push | 1.44 | ok | 29303760-6ee4-48a4-a8f9-dab694d8297a |
+| 2026-10-04 07:48 | xai/grok-imagine-image-2.0 | props_houses | props houses | 1.28 | ok | 5675a2ae-748c-44f4-85ab-19f7037fd4e8 |
+| 2026-10-04 07:48 | xai/grok-imagine-image-2.0 | props_race | props race | 1.28 | ok | d5c68c91-b829-4037-b828-75a0c0008356 |
+| 2026-10-04 07:48 | xai/grok-imagine-image-2.0 | props_trees | props trees | 1.28 | ok | 434dd1ba-0184-4e5c-a176-81a1f13f589b |
+| 2026-10-04 07:49 | xai/grok-imagine-image-2.0 | props_water | props water | 1.28 | ok | 0f7db82c-7eb4-42ee-a114-eaa1444d575f |
+| 2026-10-04 07:50 | xai/grok-imagine-image-2.0 | props_events | props events | 1.28 | ok | 7c8284be-e591-41a8-8384-683c0d586e04 |

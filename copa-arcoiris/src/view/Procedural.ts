@@ -145,16 +145,46 @@ export function blockTextures(scene: Phaser.Scene, kind: string, w: number, h: n
   const kt = `blkT_${kind}_${w}_${h}`, kf = `blkF_${kind}_${w}_${alto}`;
   canvasTex(scene, kt, w, h, (c) => {
     r(c, st.top, 0, 0, w, h);
-    for (let x = 0; x < w; x += 3) r(c, st.top2, x + ((x / 3) % 2), (x * 5) % Math.max(1, h), 2, 1);
+    if (kind === 'pasarela' || kind === 'puente') {
+      // planks running along x, a gap line between planks
+      for (let y = 5; y < h; y += 6) r(c, PAL.d3, 0, y, w, 1);
+      for (let y = 0; y < h; y += 6) for (let x = 3 + ((y / 6) % 2) * 9; x < w; x += 22) r(c, PAL.d3, x, y, 1, 5);
+      for (let y = 1; y < h; y += 6) r(c, PAL.p1, 0, y, w, 1);
+    } else if (kind === 'caja') {
+      r(c, st.top2, 2, 2, w - 4, h - 4);
+      r(c, st.front2, 2, Math.floor(h / 2), w - 4, 1);
+      r(c, st.front2, Math.floor(w / 2), 2, 1, h - 4);
+    } else if (kind === 'heno') {
+      for (let y = 1; y < h; y += 3) r(c, st.top2, 0, y, w, 1);
+      for (let x = 2; x < w; x += 7) r(c, PAL.p2, x, 0, 1, h);
+    } else {
+      for (let x = 0; x < w; x += 3) r(c, st.top2, x + ((x / 3) % 2), (x * 5) % Math.max(1, h), 2, 1);
+    }
     if (kind === 'seta') for (let x = 4; x < w - 2; x += 8) r(c, PAL.white, x, 2 + (x % 3), 3, Math.min(2, h - 2));
     if (kind === 'plataforma') { r(c, PAL.g1, 1, 1, w - 2, 1); }
     r(c, st.edge, 0, 0, w, 1); r(c, st.edge, 0, 0, 1, h); r(c, st.edge, w - 1, 0, 1, h);
   });
   canvasTex(scene, kf, w, Math.max(1, alto), (c) => {
     r(c, st.front, 0, 0, w, alto);
-    for (let y = 2; y < alto; y += 4) r(c, st.front2, 0, y, w, 1);
-    if (kind === 'caja') { for (let x = 4; x < w; x += 8) r(c, st.front2, x, 0, 1, alto); }
-    if (kind === 'heno') { for (let x = 3; x < w; x += 6) r(c, PAL.p2, x, 1, 1, Math.max(1, alto - 2)); }
+    if (kind === 'pasarela' || kind === 'puente') {
+      for (let x = 0; x < w; x += 8) { r(c, PAL.d3, x, 0, 1, alto); r(c, PAL.d1, x + 1, 1, 1, alto - 2); }
+      r(c, PAL.d4, 0, alto - 3, w, 3);
+      for (let x = 10; x < w - 6; x += 60) { r(c, PAL.d4, x, 0, 6, alto); r(c, PAL.d3, x + 1, 1, 1, alto - 1); }
+    } else if (kind === 'caja') {
+      r(c, st.front2, 0, 0, w, 2); r(c, st.front2, 0, alto - 2, w, 2);
+      for (let y0 = 0; y0 + 20 <= alto || y0 === 0; y0 += 20) {
+        const hh = Math.min(20, alto - y0);
+        r(c, st.front2, 0, y0, 3, hh); r(c, st.front2, w - 3, y0, 3, hh); r(c, st.front2, 0, y0, w, 2);
+        for (let k = 3; k < Math.min(w - 6, hh - 2); k++) { r(c, PAL.d3, 2 + Math.floor(k * (w - 6) / Math.max(1, hh - 4)), y0 + k, 2, 1); }
+        for (const [nx, ny] of [[1, 1], [w - 3, 1]]) r(c, PAL.p1, nx, y0 + ny + 1, 1, 1);
+      }
+    } else if (kind === 'heno') {
+      for (let y = 2; y < alto; y += 3) r(c, st.front2, 0, y, w, 1);
+      for (let x = 3; x < w; x += 6) r(c, PAL.p2, x, 1, 1, Math.max(1, alto - 2));
+      r(c, PAL.p4, Math.floor(w / 3), 0, 1, alto); r(c, PAL.p4, Math.floor(2 * w / 3), 0, 1, alto);
+    } else {
+      for (let y = 2; y < alto; y += 4) r(c, st.front2, 0, y, w, 1);
+    }
     if (kind === 'seta') { r(c, PAL.m2, 0, 0, w, 2); for (let x = 4; x < w - 2; x += 10) r(c, PAL.white, x, 3, 3, 2); }
     if (kind === 'plataforma') { r(c, PAL.g3, 0, 0, w, 2); for (let x = 1; x < w; x += 5) r(c, PAL.p4, x, 4 + ((x * 7) % 5), 2, 1); }
     r(c, st.edge, 0, 0, w, 1); r(c, st.edge, 0, alto - 1, w, 1); r(c, st.edge, 0, 0, 1, alto); r(c, st.edge, w - 1, 0, 1, alto);
@@ -173,6 +203,8 @@ export function moverTexture(scene: Phaser.Scene, kind: string, w: number, h: nu
       r(c, PAL.d2, 1, 1, w - 2, h - 2);
       for (let x = 2 + (frame ? 2 : 0); x < w - 1; x += 4) r(c, PAL.d3, x, 1, 1, h - 2);
       r(c, PAL.d1, 2, 1, 2, h - 2);
+      r(c, PAL.d1, Math.floor(w / 2) - 1, 1, 2, h - 2); r(c, PAL.d4, w - 3, 1, 2, h - 2); r(c, PAL.d4, 1, 1, 1, h - 2);
+      for (let y = 3; y < h - 2; y += 9) r(c, PAL.d4, 2, y, w - 4, 1);
       const cx = (w - 1) / 2, cy = h + alto / 2 - 0.5, rad = Math.min(w, alto) / 2;
       for (let y = h; y < H; y++) for (let x = 0; x < w; x++) {
         const d = Math.hypot(x - cx, y - cy);

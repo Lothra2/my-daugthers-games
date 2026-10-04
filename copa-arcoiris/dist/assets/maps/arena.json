@@ -65,7 +65,223 @@
          "draworder":"topdown",
          "id":6,
          "name":"props_suelo",
-         "objects":[],
+         "objects":[
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":24,
+                 "y":176
+                }, 
+                {
+                 "height":0,
+                 "id":12,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":46,
+                 "y":262
+                }, 
+                {
+                 "height":0,
+                 "id":13,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":366,
+                 "y":270
+                }, 
+                {
+                 "height":0,
+                 "id":14,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":178
+                }, 
+                {
+                 "height":0,
+                 "id":15,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":14,
+                 "y":226
+                }, 
+                {
+                 "height":0,
+                 "id":16,
+                 "name":"lily",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":404,
+                 "y":232
+                }, 
+                {
+                 "height":0,
+                 "id":17,
+                 "name":"reeds",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":120,
+                 "y":168
+                }, 
+                {
+                 "height":0,
+                 "id":18,
+                 "name":"reeds",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":300,
+                 "y":166
+                }, 
+                {
+                 "height":0,
+                 "id":19,
+                 "name":"reeds",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":60,
+                 "y":282
+                }, 
+                {
+                 "height":0,
+                 "id":20,
+                 "name":"reeds",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":350,
+                 "y":284
+                }, 
+                {
+                 "height":0,
+                 "id":21,
+                 "name":"duck",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":24,
+                 "y":214
+                }, 
+                {
+                 "height":0,
+                 "id":22,
+                 "name":"ring",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":214
+                }, 
+                {
+                 "height":0,
+                 "id":23,
+                 "name":"bubbles",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":200,
+                 "y":162
+                }, 
+                {
+                 "height":0,
+                 "id":24,
+                 "name":"bubbles",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":86,
+                 "y":276
+                }, 
+                {
+                 "height":0,
+                 "id":25,
+                 "name":"dock",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":54,
+                 "y":188
+                }, 
+                {
+                 "height":0,
+                 "id":26,
+                 "name":"dock",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":362,
+                 "y":188
+                }, 
+                {
+                 "height":0,
+                 "id":27,
+                 "name":"rock",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":78,
+                 "y":262
+                }, 
+                {
+                 "height":0,
+                 "id":28,
+                 "name":"rock",
+                 "point":true,
+                 "rotation":0,
+                 "type":"deco",
+                 "visible":true,
+                 "width":0,
+                 "x":334,
+                 "y":262
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -89,21 +305,21 @@
          "name":"colision",
          "objects":[
                 {
-                 "height":12,
+                 "height":14,
                  "id":5,
                  "name":"parachoques",
                  "properties":[
                         {
                          "name":"alto",
                          "type":"int",
-                         "value":16
+                         "value":20
                         }],
                  "rotation":0,
                  "type":"parachoques",
                  "visible":true,
-                 "width":16,
-                 "x":200,
-                 "y":214
+                 "width":24,
+                 "x":196,
+                 "y":212
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -378,7 +594,7 @@
          "objects":[
                 {
                  "height":80,
-                 "id":11,
+                 "id":29,
                  "name":"Arena de Burbujas",
                  "properties":[
                         {
@@ -400,7 +616,7 @@
          "y":0
         }],
  "nextlayerid":40,
- "nextobjectid":13,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "properties":[
         {
