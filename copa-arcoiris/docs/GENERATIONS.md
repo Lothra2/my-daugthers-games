@@ -56,3 +56,5 @@ Tope de la primera entrega: 200 créditos. Fuente de verdad: `art-src/generation
 | 2026-10-04 07:48 | xai/grok-imagine-image-2.0 | props_trees | props trees | 1.28 | ok | 434dd1ba-0184-4e5c-a176-81a1f13f589b |
 | 2026-10-04 07:49 | xai/grok-imagine-image-2.0 | props_water | props water | 1.28 | ok | 0f7db82c-7eb4-42ee-a114-eaa1444d575f |
 | 2026-10-04 07:50 | xai/grok-imagine-image-2.0 | props_events | props events | 1.28 | ok | 7c8284be-e591-41a8-8384-683c0d586e04 |
+| 2026-10-04 11:46 | xai/grok-imagine-image-2.0 | title_art_a | title key art a | 2.08 | ok | 6435234c-e118-419d-a1b5-417f4f4f7e57 |
+| 2026-10-04 11:47 | xai/grok-imagine-image-2.0 | title_art_b | title key art b | 2.08 | ok | ffea42f3-9b2d-42e8-97f6-8f03ffbb279d |

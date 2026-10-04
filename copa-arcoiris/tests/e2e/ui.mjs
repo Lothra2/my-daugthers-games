@@ -15,7 +15,9 @@ const shot = (page, n) => page.screenshot({ path: `docs/qa/shots/ui_${n}.png` })
 {
   const { ctx, page, errors } = await openGame(b, srv.url, '', { viewport: { width: 1280, height: 720 } }, seed, SAVE);
   await page.waitForFunction(() => window.__copa?.ready);
+  ok(await page.evaluate(() => { const i = document.getElementById('title-art'); return !i.classList.contains('hidden') && i.complete && i.naturalWidth === 640; }), 'the family title illustration shows on the first screen');
   await page.click('#go', { force: true }); await page.waitForSelector('[data-a=settings]');
+  ok(await page.evaluate(() => document.getElementById('title-art').classList.contains('hidden')), 'the illustration gives way to the menu');
   await page.click('[data-a=settings]'); await page.waitForSelector('#mus'); await shot(page, 'settings');
   await page.$eval('#mus', (e) => { e.value = '30'; e.dispatchEvent(new Event('input')); });
   await page.$eval('#sfx', (e) => { e.value = '55'; e.dispatchEvent(new Event('input')); });

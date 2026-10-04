@@ -127,16 +127,33 @@ export class App {
 
   // ------------------------------------------------------------------ screens
   private splash(): void {
-    this.show(`<div class="splash"><h1 class="logo"><span>La Copa del</span><b>Bosque Arcoíris</b></h1>
-      <p class="sub">Un juego para jugar en familia</p>
-      <button class="btn big primary pulse" id="go">¡Toca para empezar!</button>
-      <button class="btn small fs-btn" data-fs>⛶ Pantalla completa</button></div>`, 'screen center');
+    this.titleArt(true);
+    this.show(`<div class="splash art"><div class="splash-top"><h1 class="logo"><span>La Copa del</span><b>Bosque Arcoíris</b></h1>
+      <p class="sub">Un juego para jugar en familia</p></div>
+      <div class="splash-btns"><button class="btn big primary pulse" id="go">¡Toca para empezar!</button>
+      <button class="btn small fs-btn" data-fs>⛶ Pantalla completa</button></div></div>`, 'screen center');
     // on phones and tablets the first tap also goes full screen (the browser only allows it from a tap)
     const go = () => { services.audio?.unlock(); if (isPhoneLike() && !isFull()) void enterFullscreen(); this.menu(); };
     this.on('#go', go);
   }
 
+  /** The family illustration behind the first screen. It only covers the splash: the menu goes back to the running family. */
+  private titleArt(on: boolean): void {
+    const img = document.getElementById('title-art') as HTMLImageElement | null;
+    if (!img) return;
+    img.classList.toggle('hidden', !on);
+    if (!on) return;
+    const fit = () => {
+      // 640x360 art: crisp pixels when the screen shows it at a whole multiple, smooth otherwise
+      const k = Math.max(innerWidth / 640, innerHeight / 360);
+      img.style.imageRendering = Math.abs(k - Math.round(k)) < 0.02 ? 'pixelated' : 'auto';
+    };
+    fit(); window.addEventListener('resize', fit);
+    img.dataset.fit = '1';
+  }
+
   menu(): void {
+    this.titleArt(false);
     this.setInEvent(false);
     this.d.game.scene.stop('Event');
     if (!this.d.game.scene.isActive('Title')) this.d.game.scene.start('Title');

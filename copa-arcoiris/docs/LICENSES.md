@@ -16,6 +16,7 @@ Todo lo que viaja dentro del juego (`dist/`) y de dónde sale. Nada se descarga 
 | Pieza | Origen | Notas |
 |---|---|---|
 | Sophie, Alana, Papá, Mamá y Thor (hojas de sprites, trajes, retratos) | Generados con Higgsfield `xai/grok-imagine-image-2.0` a partir de las fotos de pasaporte de la familia y la referencia de Thor. Procesados con `tools/build_sprites.py` (segmentación, escala, paleta, contorno) | Las fotos **no están en Git**. Solo salen los dibujos. Cada generación consta en [GENERATIONS.md](GENERATIONS.md) |
+| Ilustración de título (`public/assets/ui/title.png`) | Higgsfield, mismo modelo, a partir de la alineación familiar y los recortes limpios de los personajes. `tools/gen_title.py` y `tools/build_title.py` | Los dibujos de la familia en estilo del juego |
 | Props de escenario (árboles, casas, banderines, piñata, nube, hongo, agua) | Higgsfield, mismo modelo. Procesados con `tools/build_props.py` | Atlas en `public/assets/props/` |
 | Tiles de 16 px (pasto, camino, agua, puente, plaza, arena) | Dibujados por código en `tools/build_tiles.py` | Sin IA. Paleta maestra de `ART_BIBLE.md` |
 | Cielo, nubes, colinas, bloques, troncos, iconos, partículas | Dibujados por código (`src/view/Procedural.ts`, `Backdrop.ts`, `src/ui/icons.ts`) | Sin archivos de imagen |
