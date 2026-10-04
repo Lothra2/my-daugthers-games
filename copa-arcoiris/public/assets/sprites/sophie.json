@@ -1,0 +1,83 @@
+{
+ "cell": [
+  48,
+  48
+ ],
+ "pivot": [
+  24,
+  46
+ ],
+ "anims": {
+  "run": {
+   "start": 0,
+   "frames": 8,
+   "fps": 14,
+   "loop": true
+  },
+  "walk": {
+   "start": 8,
+   "frames": 6,
+   "fps": 10,
+   "loop": true
+  },
+  "idle": {
+   "start": 14,
+   "frames": 2,
+   "fps": 3,
+   "loop": true
+  },
+  "jump_takeoff": {
+   "start": 16,
+   "frames": 1,
+   "fps": 0,
+   "loop": false
+  },
+  "jump_rise": {
+   "start": 17,
+   "frames": 1,
+   "fps": 0,
+   "loop": false
+  },
+  "jump_apex": {
+   "start": 18,
+   "frames": 1,
+   "fps": 0,
+   "loop": false
+  },
+  "jump_fall": {
+   "start": 19,
+   "frames": 1,
+   "fps": 0,
+   "loop": false
+  },
+  "land": {
+   "start": 20,
+   "frames": 1,
+   "fps": 12,
+   "loop": false
+  },
+  "pickup": {
+   "start": 21,
+   "frames": 3,
+   "fps": 12,
+   "loop": false
+  }
+ },
+ "sheets": [
+  {
+   "name": "run",
+   "row": 0,
+   "scale": 0.0578
+  },
+  {
+   "name": "walk_idle",
+   "row": 1,
+   "scale": 0.0533
+  },
+  {
+   "name": "jump_pickup",
+   "row": 2,
+   "scale": 0.0575
+  }
+ ]
+}

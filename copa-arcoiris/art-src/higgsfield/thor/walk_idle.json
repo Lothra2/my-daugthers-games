@@ -1,0 +1,19 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "thor_walk_idle",
+ "purpose": "hoja thor walk_idle",
+ "request_id": "c0e39981-fd85-4051-93a1-fc5880563474",
+ "credits": 1.44,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi style boxer dog with a big head and a compact body, happy face. a happy boxer dog, light fawn short coat, black muzzle mask, white chest bib and white paws, floppy folded ears, short tail, sky-blue collar, tongue out, mischievous friendly eyes, four legs, side view like a real dog. The reference image shows the character model sheet: keep the exact same face, hair, outfit colors and proportions in every frame. Do not add any other character. Keep the figure the same size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: (1) to (6) six-frame trot cycle, side view facing right, legs moving in diagonal pairs, head bobbing, tail wagging; (7) sitting happily facing right with the tail wagging to one side; (8) sitting with the tail wagging to the other side. Each figure is about 14 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/thor/walk_idle.png"
+ ]
+}

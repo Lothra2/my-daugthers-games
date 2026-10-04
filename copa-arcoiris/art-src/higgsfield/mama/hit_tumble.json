@@ -1,0 +1,19 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "mama_hit_tumble",
+ "purpose": "hoja mama hit_tumble",
+ "request_id": "c85709d3-9954-4e8a-9008-6e03ce6273b4",
+ "credits": 1.44,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi sports-festival character with a BIG head (about 40 percent of the body height) and a compact body, happy smiling face, rosy cheeks. an elegant determined mom in her late 30s, long wavy jet-black hair with a center part falling past her shoulders, thin arched eyebrows, light brown eyes, light tan skin, small silver earrings, warm confident smile, purple sports jacket with white trim and a white star on the chest, dark purple shorts, white sneakers, tall slim graceful posture. The reference image shows the character model sheet: keep the exact same face, hair, outfit colors and proportions in every frame. Do not add any other character. Keep the figure the same size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: side view facing right: (1) wobbling off-balance, arms windmilling, surprised funny face; (2) stumbling back, one leg lifted; (3) flying through the air backwards, spinning, legs up, dizzy comic face; (4) mid-somersault upside down, comic stars around the head; (5) landed sitting on the ground with legs out, dizzy swirl eyes, small stars circling; (6) lying flat on the back laughing with stars; (7) getting up, pushing off the ground with one hand; (8) sitting inside a large translucent shiny soap bubble, waving happily. Each figure is about 21 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/mama/hit_tumble.png"
+ ]
+}
