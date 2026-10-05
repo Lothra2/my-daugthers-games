@@ -14,7 +14,7 @@
 ## Cómo se trabaja
 ```bash
 cd copa-arcoiris && npm ci
-npm test                 # 127 pruebas unitarias, incluye 50 copas completas simuladas
+npm test                 # 135 pruebas unitarias, incluye 50 copas completas simuladas
 npm run build            # tsc + vite, escribe dist/ (dist/ SE COMMITEA: es lo que sirve Pages)
 npm run preview          # http://localhost:4173
 npm run e2e              # smoke, ui, warmup, input, audio, events (Chromium del entorno, no instalar nada)
@@ -29,6 +29,7 @@ Todo se probó con bots y capturas en Chromium. **Nadie ha jugado ni escuchado e
 Bordes vacíos en pantallas anchas rellenados, árboles redondos en las colinas, isla de la Arena alineada a la cuadrícula, botón de pausa táctil arreglado (lo tapaba la capa táctil), pantalla completa con pasos para iPhone, menús compactos en teléfonos acostados, ilustración de título con la familia.
 
 ## Pendiente, por orden de valor
+0. **Huecos:** el dibujo de los huecos no coincide con el rectángulo lógico (atajo de la carrera: 12 px más ancho y 8 px más bajo. Hueco y puente del Circuito sala 3: 6 a 8 px). Además solo el centro de los pies decide la caída. Rick pidió dejarlo para después. Ver `docs/DECISIONS.md`. También queda decidir si subir el ritmo de la carrera para quitar el patinaje de pies (se vería más rápido).
 1. Que Rick juegue con Sophie y Alana y reporte qué les cuesta o aburre. Arreglar solo eso.
 2. Modo fácil para Alana (rivales más lentos, más protección, rescate más rápido). Hoy solo hay Tranquilo y Campeón.
 3. Ajustar el sonido de oído (`/?sounds` en local o en la web de Pages).
