@@ -1,0 +1,19 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "sophie_jump_pickup",
+ "purpose": "hoja sophie jump_pickup",
+ "request_id": "d433aced-db16-401f-942c-b63c5b6d56b3",
+ "credits": 1.44,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi sports-festival character with a BIG head (about 40 percent of the body height) and a compact body, happy smiling face, rosy cheeks. a cheerful 7-year-old girl, long straight jet-black hair falling loose past her shoulders with a slightly off-center part, a lime-green sports headband, dark brown eyes, straight defined eyebrows, light tan skin, tiny stud earrings, big happy open smile, lime green t-shirt with white trim and a white star on the chest, dark green shorts, white sneakers, adventurous energetic attitude. The reference image shows the character model sheet: keep the exact same face, hair, outfit colors and proportions in every frame. Do not add any other character. Keep the figure the same size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: side view facing right: (1) crouching to jump, knees bent, arms back; (2) rising in the air, legs tucked slightly, arms up; (3) top of the jump, body stretched with arms up; (4) falling, legs reaching down, arms out; (5) landing, squashed low with knees deeply bent; (6) bending down to pick something up, hands reaching toward the ground; (7) grabbing an object at ground level, bent over; (8) standing back up lifting both hands to chest height, no object drawn. Each figure is about 19 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/sophie/jump_pickup.png"
+ ]
+}

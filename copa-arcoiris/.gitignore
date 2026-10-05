@@ -1,0 +1,12 @@
+node_modules/
+# dist/ is a deliverable and is committed on purpose
+test-results/
+playwright-report/
+__pycache__/
+.DS_Store
+*.key
+.env
+.env.*
+# Family photos and their upload URLs never go to Git
+reference/private/
+art-src/private/

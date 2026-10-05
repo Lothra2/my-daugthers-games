@@ -1,0 +1,19 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "alana_jump_pickup",
+ "purpose": "hoja alana jump_pickup",
+ "request_id": "84a9de00-7073-4212-988d-a44e2e0235cb",
+ "credits": 1.44,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi sports-festival character with a BIG head (about 40 percent of the body height) and a compact body, happy smiling face, rosy cheeks. a playful 4-year-old girl, chin-length fluffy black bob with a side part, TWO butterfly hair clips (one pink on one side and one purple on the other), big round dark brown eyes, round chubby cheeks with blush, light tan skin, giggling smile, pink t-shirt with small flutter sleeves, white trim and a white star on the chest, dark pink shorts, white sneakers. The reference image shows the character model sheet: keep the exact same face, hair, outfit colors and proportions in every frame. Do not add any other character. Keep the figure the same size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: side view facing right: (1) crouching to jump, knees bent, arms back; (2) rising in the air, legs tucked slightly, arms up; (3) top of the jump, body stretched with arms up; (4) falling, legs reaching down, arms out; (5) landing, squashed low with knees deeply bent; (6) bending down to pick something up, hands reaching toward the ground; (7) grabbing an object at ground level, bent over; (8) standing back up lifting both hands to chest height, no object drawn. Each figure is about 17 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/alana/jump_pickup.png"
+ ]
+}

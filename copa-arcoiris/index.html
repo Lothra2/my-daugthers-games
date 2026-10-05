@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#2A1B3D" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Copa Arcoíris" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%232A1B3D'/%3E%3Cpath d='M8 2l1.7 3.9 4.3.4-3.2 2.8 1 4.2L8 11l-3.8 2.3 1-4.2L2 6.3l4.3-.4z' fill='%23FFD447'/%3E%3C/svg%3E" />
+  <title>La Copa del Bosque Arcoíris</title>
+  <link rel="stylesheet" href="/src/ui/ui.css" />
+</head>
+<body>
+  <div id="stage">
+    <img id="title-art" class="hidden" src="assets/ui/title.png" alt="" draggable="false" />
+    <div id="game"></div>
+    <div id="ui"></div>
+    <div id="touch"></div>
+  </div>
+  <div id="rotate">Gira el dispositivo para jugar en horizontal</div>
+  <div id="loading"><div>Cargando el bosque…</div><div class="bar"><i id="loadbar"></i></div></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

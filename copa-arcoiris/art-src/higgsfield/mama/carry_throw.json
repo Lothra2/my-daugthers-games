@@ -1,0 +1,19 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "mama_carry_throw",
+ "purpose": "hoja mama carry_throw",
+ "request_id": "3149269e-29ed-4ca2-9c65-e332814ac82e",
+ "credits": 1.44,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Cute chibi sports-festival character with a BIG head (about 40 percent of the body height) and a compact body, happy smiling face, rosy cheeks. an elegant determined mom in her late 30s, long wavy jet-black hair with a center part falling past her shoulders, thin arched eyebrows, light brown eyes, light tan skin, small silver earrings, warm confident smile, purple sports jacket with white trim and a white star on the chest, dark purple shorts, white sneakers, tall slim graceful posture. The reference image shows the character model sheet: keep the exact same face, hair, outfit colors and proportions in every frame. Do not add any other character. Keep the figure the same size in every frame. Draw exactly 8 frames in ONE horizontal row, equally spaced, every frame the same size, all standing on the same invisible ground line, plenty of empty space between frames so no frame touches another. Frames: exactly eight separate poses, side view facing right: (1) standing still with both hands held together in front of the chest as if holding a ball, no ball drawn; (2) running pose with the right foot forward, both hands together in front of the chest; (3) running pose with the body at its lowest, hands together in front of the chest; (4) running pose with one knee lifted, hands together in front of the chest; (5) running pose with the body at its highest, pushing off, hands together in front of the chest; (6) winding up to throw, one arm pulled far back, body twisted; (7) release, arm swung forward and extended, body leaning forward; (8) follow-through, arm across the body and weight on the front foot. Each figure is about 21 percent of the image height. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark. Solid flat cyan (#00C8FF) background, nothing else.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium",
+  "image_urls": [
+   "<private-reference-photo>"
+  ]
+ },
+ "outputs": [
+  "art-src/higgsfield/mama/carry_throw.png"
+ ]
+}

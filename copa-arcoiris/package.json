@@ -1,0 +1,27 @@
+{
+  "name": "copa-del-bosque-arcoiris",
+  "private": true,
+  "version": "1.0.0",
+  "description": "La Copa del Bosque Arcoiris. Juego familiar de pixel art con Phaser, TypeScript y Vite.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host --port 4173 --strictPort",
+    "test": "vitest run",
+    "e2e": "node tests/e2e/run.mjs",
+    "maps": "python3 tools/build_maps.py && node tools/export_maps.mjs",
+    "assets": "python3 tools/build_tiles.py && python3 tools/build_props.py && npm run maps",
+    "kra": "python3 tools/make_kra.py"
+  },
+  "dependencies": {
+    "phaser": "4.2.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
+  }
+}

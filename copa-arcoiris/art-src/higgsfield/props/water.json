@@ -1,0 +1,16 @@
+{
+ "endpoint": "xai/grok-imagine-image-2.0",
+ "asset": "props_water",
+ "purpose": "props water",
+ "request_id": "0f7db82c-7eb4-42ee-a114-eaa1444d575f",
+ "credits": 1.28,
+ "args": {
+  "prompt": "16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark, bright cheerful candy colors, teal-green foliage, warm sand and wood, fairytale forest sports festival for children. A prop kit sheet with: (1) a cluster of green lily pads with a pink flower, (2) a mossy grey rock, (3) a group of tall green reeds, (4) a yellow rubber duck, (5) a round swim ring float, (6) a small wooden dock post with a rope, (7) a cluster of three large shiny soap bubbles, (8) a smooth white pebble pile. Draw exactly 8 separate objects in a grid of 2 rows and 4 columns, side view, each object fully isolated with a wide empty gap around it so none touches another, all sitting on their own invisible ground line. Solid flat cyan (#00C8FF) background, nothing else. 16-bit Super Nintendo style pixel art, chunky hard square pixels, a clean 1-pixel dark plum outline (#2A1B3D), flat cel shading with one highlight and one shadow tone, light from the top left, no anti-aliasing, no gradients, no blur, no text, no labels, no watermark, bright cheerful candy colors, teal-green foliage, warm sand and wood, fairytale forest sports festival for children.",
+  "resolution": "2k",
+  "aspect_ratio": "2:1",
+  "quality": "medium"
+ },
+ "outputs": [
+  "art-src/higgsfield/props/water.png"
+ ]
+}
