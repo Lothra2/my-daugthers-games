@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { PHYS, POWER } from '../core/data';
 import type { Actor } from '../core/world';
+import { LoopClock } from './anim';
 
 export interface AnimMeta { start: number; frames: number; fps: number; loop: boolean }
 export interface SpriteMeta { cell: [number, number]; pivot: [number, number]; anims: Record<string, AnimMeta> }
@@ -25,6 +26,13 @@ export function frameOf(meta: SpriteMeta, name: string, clock: number, progress?
   return a.start + i;
 }
 
+/** One-shot actions that must stay on screen long enough to be seen: every pose lasts at least this long (seconds), even when the game action itself is shorter. */
+const MIN_POSE = 0.07;
+const SHORT_ACTIONS = new Set(['pickup', 'throw', 'push', 'stagger', 'power']);
+const AFTER_ACTION = new Set(['idle', 'walk', 'run', 'carry']);
+/** A runner whose input drops to zero for a moment (the AI does it often, a thumb sliding on the joystick too) keeps its legs moving this long before the standing pose appears. */
+const IDLE_DELAY = 0.1;
+
 export class CharacterView {
   readonly sprite: Phaser.GameObjects.Sprite;
   readonly shadow: Phaser.GameObjects.Image;
@@ -32,6 +40,12 @@ export class CharacterView {
   readonly marker: Phaser.GameObjects.Image | null;
   readonly bubble: Phaser.GameObjects.Image;
   private clock = 0;
+  private loops = new LoopClock();
+  private prevState = '';
+  private locoName: string | null = null;   // walk or run pose shown last, kept for IDLE_DELAY after the speed reaches zero
+  private idleT = 0;
+  private actT = 0;                                                  // seconds since the current one-shot action began
+  private hold: { name: string; frames: number; visual: number } | null = null;   // an action cut short by the game, finished on screen
   private meta: SpriteMeta;
   private names: typeof HUMAN;
 
@@ -52,18 +66,19 @@ export class CharacterView {
     const a = this.actor, n = this.names;
     this.clock += dt;
     const speed = Math.hypot(a.vx, a.vy);
-    let name = n.idle, clock = this.clock, prog: number | undefined;
+    let name = n.idle, prog: number | undefined;
+    let loop = false, want = 1;   // loop: the animation cycles; want: the speed it should cycle at
     const act = a.act;
     switch (a.state) {
-      case 'idle': name = n.idle; break;
-      case 'walk': name = n.walk; clock = this.clock * Math.max(0.6, speed / PHYS.walk); break;
-      case 'run': name = n.run; clock = this.clock * Math.max(0.7, Math.min(1.25, speed / a.stats.run)); break;
-      case 'jumpRise': name = a.stateT < 0.06 ? n.takeoff : Math.abs(a.vz) < 60 ? n.apex : n.rise; break;
+      case 'idle': name = n.idle; loop = true; break;
+      case 'walk': name = n.walk; loop = true; want = Math.max(0.6, speed / PHYS.walk); break;
+      case 'run': name = n.run; loop = true; want = Math.max(0.7, Math.min(1.25, speed / a.stats.run)); break;
+      case 'jumpRise': name = a.stateT < 0.07 ? n.takeoff : Math.abs(a.vz) < 60 ? n.apex : n.rise; break;
       case 'jumpFall': name = Math.abs(a.vz) < 60 ? n.apex : n.fall; break;
       case 'land': name = n.land; break;
-      case 'swim': name = n.swim; clock = this.clock * Math.max(0.7, speed / 40); break;
+      case 'swim': name = n.swim; loop = true; want = Math.max(0.7, speed / 40); break;
       case 'pickup': name = n.pickup; prog = act ? act.t / act.dur : 0; break;
-      case 'carry': name = speed > 10 ? n.carryRun : n.carryIdle; clock = this.clock * Math.max(0.7, speed / a.stats.run); break;
+      case 'carry': name = speed > 10 ? n.carryRun : n.carryIdle; loop = true; want = Math.max(0.7, speed / a.stats.run); break;
       case 'throw': name = n.throw; prog = act ? act.t / act.dur : 0; break;
       case 'push': name = n.push; prog = act ? act.t / act.dur : 0; break;
       case 'bop': name = n.bop; break;
@@ -72,11 +87,34 @@ export class CharacterView {
       case 'getup': name = n.land; break;
       case 'fall': name = n.fall; break;
       case 'rescue': name = n.rescue; break;
-      case 'power': name = n.power; prog = act ? act.t / act.dur : 0; if (a.stats.isDog) { prog = undefined; } break;
-      case 'celebrate': case 'finished': name = n.celebrate; clock = this.clock * 1.0; break;
+      case 'power': name = n.power; prog = act ? act.t / act.dur : 0; if (a.stats.isDog) { prog = undefined; loop = true; } break;
+      case 'celebrate': case 'finished': name = n.celebrate; loop = true; break;
     }
-    if (a.powerKind === 'zoom' && a.powerT > 0 && (a.state === 'run' || a.state === 'walk')) name = n.power;
-    this.sprite.setFrame(frameOf(this.meta, name, clock, prog));
+    if (a.powerKind === 'zoom' && a.powerT > 0 && (a.state === 'run' || a.state === 'walk')) { name = n.power; loop = true; }
+    // the pace follows the real speed but eases toward it, so a change of input never makes the legs stutter
+    const moving = a.state === 'walk' || a.state === 'run' || (a.state === 'carry' && name === n.carryRun);
+    const still = a.state === 'idle' || (a.state === 'carry' && name === n.carryIdle);
+    if (moving) { this.locoName = name; this.idleT = 0; }
+    else if (still && this.locoName && a.grounded && !a.act && (a.state === 'carry') === (this.locoName === n.carryRun)) {
+      this.idleT += dt;
+      if (this.idleT < IDLE_DELAY) { name = this.locoName; loop = true; want = 0.7; } else this.locoName = null;
+    } else this.locoName = null;
+    // one-shot actions: stretch the poses of a very short action (Alana's instant pickup lasts 0.1 s for 3 poses) to MIN_POSE each, purely visual
+    if (a.state !== this.prevState) { if (!(this.hold && AFTER_ACTION.has(a.state))) this.actT = 0; this.prevState = a.state; }
+    const inAction = SHORT_ACTIONS.has(a.state) && prog !== undefined && !!act;
+    if (inAction) {
+      this.actT += dt;
+      const frames = this.meta.anims[name]?.frames ?? 1, visual = Math.max(act!.dur, frames * MIN_POSE);
+      if (visual > act!.dur) prog = this.actT / visual;
+      this.hold = visual > act!.dur ? { name, frames, visual } : null;
+    } else if (this.hold && AFTER_ACTION.has(a.state)) {
+      this.actT += dt;
+      if (this.actT >= this.hold.visual) this.hold = null;
+      else { name = this.hold.name; prog = this.actT / this.hold.visual; loop = false; }
+    } else this.hold = null;
+    this.loops.ease(want, dt);
+    const frame = prog !== undefined ? frameOf(this.meta, name, this.clock, prog) : loop ? this.loops.frame(this.meta.anims, name, dt) : frameOf(this.meta, name, this.clock);
+    this.sprite.setFrame(frame);
     this.sprite.setFlipX(a.facing < 0);
 
     const sx = Math.round(a.x), baseY = Math.round(a.y);

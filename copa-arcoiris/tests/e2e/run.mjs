@@ -1,6 +1,6 @@
 // Runs the browser suites one after another. Each suite starts its own preview server on port 4173, so they cannot run in parallel.
 import { spawnSync } from 'node:child_process';
-const suites = process.argv.slice(2).length ? process.argv.slice(2) : ['smoke', 'ui', 'warmup', 'input', 'audio', 'events'];
+const suites = process.argv.slice(2).length ? process.argv.slice(2) : ['smoke', 'ui', 'warmup', 'input', 'audio', 'animation', 'events'];
 let bad = 0;
 for (const s of suites) {
   console.log(`\n=== ${s}`);

@@ -266,7 +266,7 @@ export class EventScene extends Phaser.Scene {
     const w = this.world;
     this.syncCamera(dt);
     for (const v of this.views.values()) {
-      v.update(dt, this.simClock);
+      v.update(this.paused ? 0 : dt, this.simClock);   // frozen poses while paused
       const a = v.actor;
       if (a.act?.kind === 'power' && a.powerKind === 'rainbow') this.fx.trail('rainbow', a.x, a.y, a.z, this.simClock);
       else if (a.powerKind === 'zoom' && a.powerT > 0 && Math.hypot(a.vx, a.vy) > 40 && Math.floor(this.simClock * 30) % 3 === 0) this.fx.trail('dust', a.x - a.facing * 8, a.y, 0, this.simClock);
