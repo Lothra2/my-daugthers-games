@@ -454,7 +454,7 @@ export class Game extends Phaser.Scene {
     while (this.floorViews.length < segs.length) {
       this.floorViews.push({ top: this.add.tileSprite(0, 0, 8, 8, 'floor_w1').setOrigin(0, 0).setDepth(10), fill: this.add.rectangle(0, 0, 8, 8, 0xffffff).setOrigin(0, 0).setDepth(9.5) });
     }
-    this.drawPits(segs, camX);
+    this.drawEdges(camX);
     this.floorViews.forEach((v, i) => {
       const seg = segs[i];
       if (!seg) { v.top.setVisible(false); v.fill.setVisible(false); return; }
@@ -472,35 +472,18 @@ export class Game extends Phaser.Scene {
     });
   }
 
-  // a gap is a dark shaft through the floor in that world's own colours: outlined edges, shaded walls, mist at the bottom
-  drawPits(segs, camX) {
-    if (!this.pitGfx) { this.pitGfx = this.add.graphics().setDepth(9); }
-    const g = this.pitGfx, H = this.H, W = this.W;
+  // A gap just lets the background show through. Only the cut ends of the floor get a thin dark outline so they
+  // read as clean edges. Drawn from the real floor spans, so it never pops in or out while the gap is on screen.
+  drawEdges(camX) {
+    if (!this.pitGfx) { this.pitGfx = this.add.graphics().setDepth(10.5); }
+    const g = this.pitGfx, s = this.sim, H = this.H, W = this.W;
     g.clear();
-    const mix = (c, k) => ((Math.round(c[0] * k) << 16) | (Math.round(c[1] * k) << 8) | Math.round(c[2] * k));
-    for (let i = 0; i < segs.length - 1; i++) {
-      const x0 = Math.round(segs[i][1] - camX), x1 = Math.round(segs[i + 1][0] - camX);
-      if (x1 - x0 < 2 || x1 < -10 || x0 > W + 10) continue;
-      const t = this.app.worldAssets.worlds[segs[i][2]].tiles;
-      const top = this.groundY - t.surface + 1, w = x1 - x0, bt = t.bottom;
-      const rows = Math.ceil((H - top) / 4);
-      for (let k = 0; k < rows; k++) {
-        const f = k / Math.max(1, rows - 1);
-        g.fillStyle(mix(bt, 0.5 - 0.34 * f), 1).fillRect(x0, top + k * 4, w, 4);
-      }
-      // walls: left lit a little, right in shadow
-      const wl = Math.min(8, Math.floor(w / 4));
-      g.fillStyle(mix(bt, 0.62), 1).fillRect(x0, top, wl, H - top);
-      g.fillStyle(mix(bt, 0.16), 1).fillRect(x1 - wl, top, wl, H - top);
-      // dithered shadow band just under the lip, so it never reads as a slab
-      for (let xx = x0; xx < x1; xx += 2) g.fillStyle(0x1E1330, 0.55).fillRect(xx, top + ((xx >> 1) & 1) * 2, 2, 8);
-      // crisp outlines on both cut edges
-      g.fillStyle(0x1E1330, 1).fillRect(x0, top - 3, 2, H - top + 3).fillRect(x1 - 2, top - 3, 2, H - top + 3);
-      // rounded lips
-      g.fillStyle(0x1E1330, 1).fillRect(x0 + 2, top - 3, 2, 2).fillRect(x1 - 4, top - 3, 2, 2);
-      // mist glowing at the bottom
-      for (let xx = x0 + 6; xx < x1 - 6; xx += 6) g.fillStyle(0xFFFFFF, 0.1 + 0.06 * Math.sin(this.t * 2 + xx)).fillRect(xx, H - 14 - ((xx >> 2) % 3) * 3, 6, 5);
-      if (Math.random() < 0.12) this.fx.emit({ x: x0 + 8 + Math.random() * Math.max(1, w - 16), y: H - 6, key: 'px_dot2', vy: -(24 + Math.random() * 30), vx: 0, life: 1.4, tint: 0xFFFFFF, screen: true, fade: true, g: 0, depth: 9.5 });
+    for (const sp of s.floor) {
+      const t = this.app.worldAssets.worlds[this.worldVis(Math.max(sp.x0, Math.min(sp.x1 - 1, camX + W / 2)))].tiles;
+      const top = this.groundY - t.surface;
+      const xl = Math.round(sp.x0 - camX), xr = Math.round(sp.x1 - camX);
+      if (xl > 2 && xl < W + 4) g.fillStyle(0x1E1330, 1).fillRect(xl, top, 2, H - top);
+      if (xr > -4 && xr < W - 2) g.fillStyle(0x1E1330, 1).fillRect(xr - 2, top, 2, H - top);
     }
   }
 

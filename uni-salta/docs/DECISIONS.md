@@ -37,5 +37,5 @@ Plan original: `uni-salta/PLAN.md` (revisión 2). Lo construido difiere así:
 
 ## Run cycle speed, pits, lap difficulty
 - Run animation speed is capped at 1.1x (about 2.2 cycles a second). Two bounces per cycle with a 0 to 3 px lift sync to the steps.
-- Gaps are shafts in the world's own colours with outlined edges, shaded walls, a dithered lip shadow and mist.
+- Gaps show the background through (no fill). Only the cut floor ends get a thin outline, drawn from the real floor spans so nothing pops in or out.
 - Lap difficulty: speed cap rises 45 px/s per lap up to 740, hearts get scarcer, breathers shorter, harder chunks weighted up, one flag per world on laps 3 and 4 and none from lap 5. All chunks stay solvable at lap 5 speeds (validator).

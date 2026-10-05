@@ -1,5 +1,5 @@
 // UNI-SALTA service worker: caches the whole game so it plays offline after the first visit.
-const VERSION = 'uni-salta-a5441909a2';
+const VERSION = 'uni-salta-b11a2b0fe1';
 const RUNTIME = VERSION + '-runtime';
 
 self.addEventListener('install', (e) => {
