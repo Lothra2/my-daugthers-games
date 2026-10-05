@@ -112,6 +112,11 @@ export class Sim {
     return Math.min(5, TIER_CAP[w - 1] + (lap - 1));
   }
 
+  speedCap() { return Math.min(CFG.SPEED_CAP_MAX, CFG.SPEED_CAP + CFG.LAP_CAP_STEP * (this.lap - 1)); }
+
+  // later laps get meaner: fewer hearts, less breathing room, fewer flags, harder chunks, faster
+  lapHard() { return Math.max(0, this.lap - 1); }
+
   targetSpeed() {
     let base;
     if (this.mode === 'easy') {
@@ -120,7 +125,7 @@ export class Sim {
     } else {
       const [a, b] = CFG.WORLD_SPEED[this.world - 1];
       base = (a + (b - a) * this.progress()) * Math.pow(CFG.LAP_SPEED_MULT, this.lap - 1);
-      base = Math.min(CFG.SPEED_CAP, base);
+      base = Math.min(this.speedCap(), base);
     }
     return base;
   }
@@ -166,7 +171,7 @@ export class Sim {
     }
     const g = this.gen;
     const wx = this.worldAtX(g.spawnX);
-    if (!g.gateDone && g.spawnX >= this.gateX() && this.gateIsPortal()) { g.gateDone = true; this.worldBreather = 2; }
+    if (!g.gateDone && g.spawnX >= this.gateX() && this.gateIsPortal()) { g.gateDone = true; this.worldBreather = this.lap >= 3 ? 1 : 2; }
     const lapx = wx === 1 && this.world === CFG.NUM_WORLDS ? this.lap + 1 : this.lap;
     if (this.bossAtGate() && g.spawnX >= this.gateX() - 200) { const id = this.rng.pick(ARENA); return CHUNKS.find((c) => c.id === id); }
     const sprint = this.power && this.power.kind === 'fast';
@@ -186,7 +191,7 @@ export class Sim {
     // prefer tiers near the cap, still keep variety
     const weights = pool2.map((c) => {
       let w = c.weight;
-      if (!needBreather && !sprint) w *= 1 + Math.max(0, c.tier - 1) * 0.4 * (this.tierCap(wx, lapx) >= c.tier ? 1 : 0);
+      if (!needBreather && !sprint) w *= (1 + Math.max(0, c.tier - 1) * 0.4 * (this.tierCap(wx, lapx) >= c.tier ? 1 : 0)) * (c.tier >= 3 ? 1 + 0.25 * Math.max(0, lapx - 1) : 1);
       return w;
     });
     const total = weights.reduce((a, b) => a + b, 0);
@@ -244,8 +249,8 @@ export class Sim {
   }
 
   choosePower() {
-    if (this.lives < CFG.LIVES && this.mode === 'normal' && this.gen.heartCd <= 0 && this.rng.chance(0.3)) {
-      this.gen.heartCd = 9;
+    if (this.lives < CFG.LIVES && this.mode === 'normal' && this.gen.heartCd <= 0 && this.rng.chance(0.3 / (1 + 0.5 * this.lapHard()))) {
+      this.gen.heartCd = 9 + 2 * this.lapHard();
       return 'heart';
     }
     this.gen.heartCd = Math.max(0, this.gen.heartCd - 1);
@@ -586,7 +591,7 @@ export class Sim {
     const f = this.formations[e.f];
     f.done++;
     this.emit('coin', { x: e.x, y: e.y, n: f.done });
-    if (this.coinsForHeart >= CFG.HEART_EVERY_COINS) {
+    if (this.coinsForHeart >= CFG.HEART_EVERY_COINS + 60 * this.lapHard()) {
       this.coinsForHeart = 0;
       if (this.lives < CFG.LIVES && this.mode === 'normal') { this.lives++; this.emit('heart_get', { x: e.x, y: e.y, bonus: false }); } else { this.score += 500; this.emit('bonus', { x: e.x, y: e.y, pts: 500 }); }
     }
@@ -729,7 +734,8 @@ export class Sim {
     this.cpIdx = 0;
     if (this.mode === 'easy') { this.cpPlan = []; return; }
     const len = this.worldLenM() * CFG.METER;
-    this.cpPlan = [0.36, 0.7].map((f) => this.worldStartX + len * f);
+    const marks = this.lap >= 5 ? [] : this.lap >= 3 ? [0.5] : [0.36, 0.7];   // fewer safety nets on later laps
+    this.cpPlan = marks.map((f) => this.worldStartX + len * f);
   }
 
   saveCheckpoint(kind) {

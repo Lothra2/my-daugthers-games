@@ -34,3 +34,8 @@ Plan original: `uni-salta/PLAN.md` (revisión 2). Lo construido difiere así:
 - Two checkpoint flags per world (36% and 70%) plus one at the boss door. Dying with a saved flag rewinds with full hearts and keeps the score, once per flag. Not in easy mode, where nobody can die.
 - Power afterimages are cleared when the power ends.
 - Candy: never stacked within 30 px, and low candy is skipped within 46 px of a gap edge.
+
+## Run cycle speed, pits, lap difficulty
+- Run animation speed is capped at 1.1x (about 2.2 cycles a second). Two bounces per cycle with a 0 to 3 px lift sync to the steps.
+- Gaps are shafts in the world's own colours with outlined edges, shaded walls, a dithered lip shadow and mist.
+- Lap difficulty: speed cap rises 45 px/s per lap up to 740, hearts get scarcer, breathers shorter, harder chunks weighted up, one flag per world on laps 3 and 4 and none from lap 5. All chunks stay solvable at lap 5 speeds (validator).

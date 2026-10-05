@@ -30,7 +30,7 @@ for (const ch of CHUNKS) {
   for (const w of ch.worlds) {
     const [a, b] = CFG.WORLD_SPEED[w - 1];
     speeds.add(w + ':' + (ch.modes.includes('easy') && !ch.modes.includes('normal') ? CFG.EASY_SPEED[0] : a));
-    speeds.add(w + ':' + (ch.modes.includes('easy') && !ch.modes.includes('normal') ? CFG.EASY_CAP : Math.min(CFG.SPEED_CAP, b * Math.pow(CFG.LAP_SPEED_MULT, 2))));
+    speeds.add(w + ':' + (ch.modes.includes('easy') && !ch.modes.includes('normal') ? CFG.EASY_CAP : Math.min(CFG.SPEED_CAP_MAX, b * Math.pow(CFG.LAP_SPEED_MULT, 4))));
   }
   const fails = [];
   for (const sw of speeds) {

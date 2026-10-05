@@ -6,7 +6,7 @@ const s = await startServer(8900 + Math.floor(Math.random() * 100));
 const { browser, page, errors } = await launch({ width: 932, height: 430, dpr: 1 });
 for (const id of list) {
   const ch = CHUNKS.find((c) => c.id === id);
-  const world = ch.worlds[0];
+  const world = +(process.env.W || ch.worlds[0]);
   await page.goto(`${s.url}/index.html?skipTitle&chunk=${id}&world=${world}&seed=5&autoplay&god&mode=${ch.modes.includes('normal') ? 'normal' : 'easy'}`);
   await page.waitForFunction(() => window.UNISALTA?.game?.scene.isActive('Game'), null, { timeout: 30000 });
   // wait until the first hazard is ~ 330px ahead of the player (or timeout)

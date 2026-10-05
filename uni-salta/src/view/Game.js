@@ -472,22 +472,35 @@ export class Game extends Phaser.Scene {
     });
   }
 
-  // gaps read as a deep misty pit: a violet gradient with a soft rim, so the sky horizon never looks like ground
+  // a gap is a dark shaft through the floor in that world's own colours: outlined edges, shaded walls, mist at the bottom
   drawPits(segs, camX) {
     if (!this.pitGfx) { this.pitGfx = this.add.graphics().setDepth(9); }
     const g = this.pitGfx, H = this.H, W = this.W;
     g.clear();
+    const mix = (c, k) => ((Math.round(c[0] * k) << 16) | (Math.round(c[1] * k) << 8) | Math.round(c[2] * k));
     for (let i = 0; i < segs.length - 1; i++) {
       const x0 = Math.round(segs[i][1] - camX), x1 = Math.round(segs[i + 1][0] - camX);
-      if (x1 - x0 < 2 || x1 < 0 || x0 > W) continue;
+      if (x1 - x0 < 2 || x1 < -10 || x0 > W + 10) continue;
       const t = this.app.worldAssets.worlds[segs[i][2]].tiles;
-      const top = this.groundY - t.surface;
-      const steps = Math.ceil((H - top) / 6);
-      for (let k = 0; k < steps; k++) {
-        const f = Math.min(1, k / Math.max(1, steps - 1));
-        const r = Math.round(150 - 90 * f), gg = Math.round(120 - 80 * f), b = Math.round(200 - 70 * f);
-        g.fillStyle((r << 16) | (gg << 8) | b, 1).fillRect(x0, top + k * 6, x1 - x0, 6);
+      const top = this.groundY - t.surface + 1, w = x1 - x0, bt = t.bottom;
+      const rows = Math.ceil((H - top) / 4);
+      for (let k = 0; k < rows; k++) {
+        const f = k / Math.max(1, rows - 1);
+        g.fillStyle(mix(bt, 0.5 - 0.34 * f), 1).fillRect(x0, top + k * 4, w, 4);
       }
+      // walls: left lit a little, right in shadow
+      const wl = Math.min(8, Math.floor(w / 4));
+      g.fillStyle(mix(bt, 0.62), 1).fillRect(x0, top, wl, H - top);
+      g.fillStyle(mix(bt, 0.16), 1).fillRect(x1 - wl, top, wl, H - top);
+      // dithered shadow band just under the lip, so it never reads as a slab
+      for (let xx = x0; xx < x1; xx += 2) g.fillStyle(0x1E1330, 0.55).fillRect(xx, top + ((xx >> 1) & 1) * 2, 2, 8);
+      // crisp outlines on both cut edges
+      g.fillStyle(0x1E1330, 1).fillRect(x0, top - 3, 2, H - top + 3).fillRect(x1 - 2, top - 3, 2, H - top + 3);
+      // rounded lips
+      g.fillStyle(0x1E1330, 1).fillRect(x0 + 2, top - 3, 2, 2).fillRect(x1 - 4, top - 3, 2, 2);
+      // mist glowing at the bottom
+      for (let xx = x0 + 6; xx < x1 - 6; xx += 6) g.fillStyle(0xFFFFFF, 0.1 + 0.06 * Math.sin(this.t * 2 + xx)).fillRect(xx, H - 14 - ((xx >> 2) % 3) * 3, 6, 5);
+      if (Math.random() < 0.12) this.fx.emit({ x: x0 + 8 + Math.random() * Math.max(1, w - 16), y: H - 6, key: 'px_dot2', vy: -(24 + Math.random() * 30), vx: 0, life: 1.4, tint: 0xFFFFFF, screen: true, fade: true, g: 0, depth: 9.5 });
     }
   }
 
@@ -758,7 +771,9 @@ export class Game extends Phaser.Scene {
       const m = this.app.meta[key];
       spr.setOrigin(m.pivot[0] / m.cell[0], m.pivot[1] / m.cell[1]);
     }
-    spr.anims.timeScale = key.includes('run') ? Math.max(0.75, s.speed / 250) * (s.power && s.power.kind === 'slow' ? 0.9 : 1) : 1;
+    // run cycle speed is capped: faster than about 2.2 cycles a second reads as a blur, not as running
+    const fastRun = key === 'unicorn_run_fast';
+    spr.anims.timeScale = fastRun ? 0.8 : key.includes('run') ? Math.min(1.1, Math.max(0.8, s.speed / 270)) * (s.power && s.power.kind === 'slow' ? 0.85 : 1) : 1;
     this.squashStretch(spr, p, s, dt, key);
     // blink while invulnerable
     if (p.invul > 0 && !s.rescue && s.dying <= 0) spr.setAlpha(this.app.save.settings.reduceFlash ? 0.7 : (Math.floor(this.blinkT * 20) % 2 ? 0.35 : 1)); else spr.setAlpha(1);
@@ -901,14 +916,18 @@ export class Game extends Phaser.Scene {
     } else if (this.landT > 0) { ty = 0.86; tx = 1.12; q.airT = 0; }
     else if (p.crouch) { ty = 0.94; tx = 1.05; tl = 0.05; q.airT = 0; }
     else if (key.includes('run')) {
-      const ph = ((spr.anims.currentFrame ? spr.anims.currentFrame.index : 0) % 2);
-      ty = 1 + (ph ? 0.025 : -0.02); tl = 0.05; q.airT = 0;
+      const fi = spr.anims.currentFrame ? spr.anims.currentFrame.index : 1;
+      const n = key === 'unicorn_run_fast' ? 4 : 8;
+      const step = Math.abs(Math.sin((fi - 1) / n * Math.PI * 2));   // two bounces per cycle, one per step
+      ty = 1 + 0.03 * step - 0.01; tl = 0.05 + 0.02 * step; q.airT = 0; q.lift = Math.round(step * 3);
     }
     if (this.stompT > 0) { ty = 1.12; tx = 0.92; }
     if (this.hitT > 0) { tx = 1.1; ty = 0.9; }
     const kk = 1 - Math.pow(0.0005, dt);
     q.x += (tx - q.x) * kk; q.y += (ty - q.y) * kk; q.lean += (tl - q.lean) * kk;
     spr.setScale(q.x, q.y);
+    if (p.onGround && key.includes('run') && q.lift) spr.y -= q.lift;
+    if (!(p.onGround && key.includes('run'))) q.lift = 0;
     spr.setRotation(s.dying > 0 || s.over || s.rescue ? 0 : q.lean);
     // sliding crouch: kicks up a trail of dust and sugar
     if (p.onGround && p.crouch && s.dying <= 0) {

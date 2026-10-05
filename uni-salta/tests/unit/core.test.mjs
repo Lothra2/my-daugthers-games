@@ -92,7 +92,7 @@ test('speed rises across a world and by lap', () => {
   assert.ok(s.targetSpeed() > a);
   const l2 = new Sim({ seed: 1, world: 1, lap: 2 });
   assert.ok(l2.targetSpeed() > a);
-  assert.ok(new Sim({ seed: 1, world: 6, lap: 9 }).targetSpeed() <= CFG.SPEED_CAP);
+  assert.ok(new Sim({ seed: 1, world: 6, lap: 9 }).targetSpeed() <= CFG.SPEED_CAP_MAX);
 });
 
 test('checkpoints: dying with a saved flag rewinds with full hearts and keeps the score', () => {
@@ -128,4 +128,13 @@ test('candy is never stacked and never floats low beside a gap', () => {
     for (const a of coins) for (const b of coins) if (a !== b && a.f !== b.f) assert.ok(Math.abs(a.x - b.x) >= 28 || Math.abs(a.y - b.y) >= 28, `coins overlap at ${a.x},${a.y}`);
     for (const c of coins) if (c.y < 80) assert.ok(!sim.nearGap(c.x, 40), 'low candy beside a gap');
   }
+});
+
+test('later laps are harder: higher speed cap, fewer flags, scarcer hearts', () => {
+  const l1 = new Sim({ seed: 3, world: 9, lap: 1 }), l5 = new Sim({ seed: 3, world: 9, lap: 5 });
+  assert.ok(l5.speedCap() > l1.speedCap() + 100);
+  assert.ok(l5.targetSpeed() > l1.targetSpeed());
+  assert.equal(new Sim({ seed: 3, world: 2, lap: 1 }).cpPlan.length, 2);
+  assert.equal(new Sim({ seed: 3, world: 2, lap: 3 }).cpPlan.length, 1);
+  assert.equal(l5.cpPlan.length, 0);
 });

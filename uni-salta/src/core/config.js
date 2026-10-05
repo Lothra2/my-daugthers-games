@@ -41,7 +41,9 @@ export const CFG = {
   WORLD_SPEED: [[230, 260], [270, 300], [310, 340], [350, 380], [390, 420], [430, 460], [440, 470], [450, 480], [460, 490]],
   WORLD_LEN_M: [360, 400, 440, 480, 520, 560, 480, 500, 520],
   LAP_SPEED_MULT: 1.08,
-  SPEED_CAP: 560,
+  SPEED_CAP: 560,       // top speed on lap 1
+  LAP_CAP_STEP: 45,     // the cap rises this much each lap
+  SPEED_CAP_MAX: 740,
   EASY_SPEED: [150, 200],
   EASY_CAP: 250,
   EASY_LEN_M: 300,

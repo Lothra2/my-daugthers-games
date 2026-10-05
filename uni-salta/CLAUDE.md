@@ -13,6 +13,8 @@ Pixel art endless runner for Rick's daughters (Sophie, 7, original concept. Alan
 - 9 worlds (`CFG.NUM_WORLDS`), portal gate seam between worlds, bosses at the end of world 6 (Serpent Queen) and 9 (Ghost King) with reflectable gold orbs, power-up cutscenes (`src/view/Cutscene.js`), 2 checkpoint flags per world plus one at the boss door (revive once per flag, keeps score).
 - Art pipeline: Higgsfield sheets in `art-src/higgsfield/h*`, built by `tools/build_*.py` (`build_new.py` is the latest wave). Palettes in `src/data/palette.json`.
 
+- Laps get harder: speed cap +45 per lap (max 740), fewer hearts and flags, validator checks lap 5 speeds.
+
 ## Hard-won lessons
 - The Game scene object is reused on restart: reset every lazily created field in `Game.create` (this caused the boss freeze).
 - Avoid `structuredClone`, `replaceAll`, `||=` (older tablets). Never give a TileSprite zero width.
