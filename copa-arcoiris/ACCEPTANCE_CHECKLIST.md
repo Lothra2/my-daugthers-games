@@ -3,7 +3,7 @@
 Cada línea tiene su evidencia: nombre del test, captura en `docs/qa/` o comando. **[x]** significa que se ejecutó aquí y pasó. **[~]** es parcial y dice qué falta.
 **[ ]** es PENDIENTE y dice por qué. Nada se marca como probado en un dispositivo que no estuvo disponible.
 
-Último recorrido completo: 2026-10-05. `npx vitest run` (10 archivos, 135 pruebas) y `npm run e2e` (6 suites, 0 errores de consola) más 3 copas completas en navegador.
+Último recorrido completo: 2026-10-05. `npx vitest run` (10 archivos, 135 pruebas) y `npm run e2e` (7 suites, 0 errores de consola). Las copas completas en navegador se corrieron por última vez antes del cambio de animación, que solo toca la vista.
 
 ## A. Entrega
 - [x] `npm ci && npm run build` funciona desde cero y `dist/` arranca con `npm run preview` en http://localhost:4173 (verificado en un clon limpio de la rama: `npm ci` instala 45 paquetes, el build sale idéntico al `dist/` commiteado y el preview responde 200)
